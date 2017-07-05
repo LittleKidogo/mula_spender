@@ -1,0 +1,12 @@
+{
+  "name": "component-lib",
+  "version": "0.0.1",
+  "description": "This is  my component library that I use to build applications on the web.",
+  "main": "index.js",
+  "author": "Zacck Osiemo <coderv63@gmail.com> (http://zacck.github.io)",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^15.6.1",
+    "webpack": "^3.0.0"
+  }
+}
