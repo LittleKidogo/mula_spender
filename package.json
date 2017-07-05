@@ -5,6 +5,11 @@
   "main": "index.js",
   "author": "Zacck Osiemo <coderv63@gmail.com> (http://zacck.github.io)",
   "license": "MIT",
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/zacck/Component-Lib.git"
+  },
   "dependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
