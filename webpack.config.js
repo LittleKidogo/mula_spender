@@ -47,7 +47,6 @@ module.exports = {
       assets: true,
       colors: true,
       errors: true,
-      errorDetails: true,
       hash: true
     },
     devServer:{
@@ -64,13 +63,7 @@ module.exports = {
         }
       }),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-         compress: {
-           warnings: false,
-           drop_console: false,
-         }
-       }),
-       new HtmlWebpackPlugin({
+      new HtmlWebpackPlugin({
         title: 'Component Library',
         template: 'index-template.html'
       }),
