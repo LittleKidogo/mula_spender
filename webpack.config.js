@@ -8,10 +8,18 @@ var PRODUCTION = process.env.NODE_ENV === 'production';
 var TEST = process.env.NODE_ENV === 'test'
 
 module.exports = {
-    entry: "./src/lib.jsx",
+    entry: {
+      app:["./src/lib.jsx"],
+      vendor: [
+                "react",
+                "styled-components",
+                "react-router-dom"
+              ]
+    },
     output:  {
       path: path.resolve(__dirname, "dist"),
       filename: "[name].bundle.js",
+      chunkFilename: "[name].bundle.js",
       publicPath: "/"
     },
     module: {
@@ -37,9 +45,8 @@ module.exports = {
       ],
     },
     performance: {
-      hints: "warning",
-      maxAssetSize: 200000,
-      maxEntrypointSize: 400000
+      maxAssetSize: 600000,
+      maxEntrypointSize: 600000
     },
     devtool: "source-map",
     context: __dirname,
@@ -68,8 +75,13 @@ module.exports = {
         title: 'Component Library',
         template: 'index-template.html'
       }),
-      new webpack.optimize.CommonsChunkPlugin({
-       name: 'common' // Specify the common bundle's name.
-     })
+      new webpack.optimize.CommonsChunkPlugin({name:'vendor', filename:'vendor.[hash:12].min.js'}),
+      new webpack.optimize.ModuleConcatenationPlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false,
+          drop_console: false,
+        }
+      })
     ]
 }

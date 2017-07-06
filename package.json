@@ -10,7 +10,7 @@
     "url": "https://github.com/zacck/Component-Lib.git"
   },
   "scripts": {
-    "dev": "NODE_ENV=development webpack-dev-server --watch" 
+    "dev": "NODE_ENV=development webpack-dev-server --watch"
   },
   "dependencies": {
     "babel-core": "^6.25.0",
@@ -21,6 +21,7 @@
     "html-webpack-plugin": "^2.29.0",
     "jest": "^20.0.4",
     "react": "^15.6.1",
+    "react-code-splitting": "^1.1.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.1",
     "styled-components": "^2.1.1",
