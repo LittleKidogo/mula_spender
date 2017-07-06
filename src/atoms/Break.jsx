@@ -14,7 +14,7 @@ export class Break extends Component {
         </Title>
         <CompRow>
           <CompItem>
-            <p>item <StockBreak></StockBreak>text</p>
+            <p>49 Chiappini St. <StockBreak></StockBreak>Cape Town, Western Cape, <StockBreak></StockBreak>South Africa</p>
           </CompItem>
         </CompRow>
       </CompSection>
