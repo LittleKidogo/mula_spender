@@ -18,7 +18,6 @@ export class Code extends Component {
             <Title>some javascript</Title>
             <StockCode>
               var p = 0;
-              <br></br>
               const q = p++;
             </StockCode>
           </CompItem>

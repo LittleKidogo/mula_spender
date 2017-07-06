@@ -9,6 +9,7 @@ import Bdi from 'Bdi'
 import Break from 'Break'
 import Cite from 'Cite'
 import Code from 'Code'
+import Data from 'Data'
 import {App, CompList, Title, List, ListItem, CompPane, CompRow} from 'Views'
 import Paragraph from 'Paragraph'
 ReactDOM.render((
@@ -41,6 +42,10 @@ ReactDOM.render((
           <Link to={'/code'}>
             <ListItem>{'code'}</ListItem>
           </Link>
+          <Link to={'/data'}>
+            <ListItem>{'data'}</ListItem>
+          </Link>
+
         </List>
       </CompList>
       <CompPane>
@@ -56,6 +61,7 @@ ReactDOM.render((
             <Route exact={true} path="/br" component={Break}/>
             <Route exact={true} path="/cite" component={Cite}/>
             <Route exact={true} path="/code" component={Code}/>
+            <Route exact={true} path="/data" component={Data}/>
         </CompRow>
       </CompPane>
     </App>
