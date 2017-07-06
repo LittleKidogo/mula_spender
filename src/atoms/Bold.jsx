@@ -20,4 +20,4 @@ export class Bold extends Component {
   }
 }
 
-export default Bold;
+export default Bold

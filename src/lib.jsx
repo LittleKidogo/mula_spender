@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Anchor from 'Anchor'
 import Abbr from 'Abbr'
 import Bold from 'Bold'
+import Bdi from 'Bdi'
 import {App, CompList, Title, List, ListItem, CompPane, CompRow} from 'Views'
 import Paragraph from 'Paragraph'
 ReactDOM.render((
@@ -25,6 +26,9 @@ ReactDOM.render((
           <Link to={'/b'}>
             <ListItem>{'b'}</ListItem>
           </Link>
+          <Link to={'/bdi'}>
+            <ListItem>{'bdi'}</ListItem>
+          </Link>
         </List>
       </CompList>
       <CompPane>
@@ -36,6 +40,7 @@ ReactDOM.render((
             <Route exact={true} path="/p" component={Paragraph}/>
             <Route exact={true} path="/abbr" component={Abbr}/>
             <Route exact={true} path="/b" component={Bold}/>
+            <Route exact={true} path="/bdi" component={Bdi}/>
         </CompRow>
       </CompPane>
     </App>
