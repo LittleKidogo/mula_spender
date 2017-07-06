@@ -11,7 +11,10 @@ export class Bdi extends Component {
         </Title>
         <CompRow>
           <CompItem >
-            <p dir="ltr"> this is the text <bdi> arabic text</bdi></p>
+            <p dir="rtl"> this is the text <bdi> arabic text</bdi></p>
+          </CompItem>
+          <CompItem>
+            <p dir="rtl"> this is the text <bdo> using bdo</bdo></p>
           </CompItem>
         </CompRow>
       </CompSection>
