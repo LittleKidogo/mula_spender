@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route} from 'react-router-dom'
 import styled from 'styled-components'
 import Anchor from 'Anchor'
 import Abbr from 'Abbr'
+import Bold from 'Bold'
 import {App, CompList, Title, List, ListItem, CompPane, CompRow} from 'Views'
 import Paragraph from 'Paragraph'
 ReactDOM.render((
@@ -21,6 +22,9 @@ ReactDOM.render((
           <Link to={'/abbr'}>
             <ListItem>{'abbr'}</ListItem>
           </Link>
+          <Link to={'/b'}>
+            <ListItem>{'b'}</ListItem>
+          </Link>
         </List>
       </CompList>
       <CompPane>
@@ -31,6 +35,7 @@ ReactDOM.render((
             <Route exact={true} path="/a" component={Anchor}/>
             <Route exact={true} path="/p" component={Paragraph}/>
             <Route exact={true} path="/abbr" component={Abbr}/>
+            <Route exact={true} path="/b" component={Bold}/>
         </CompRow>
       </CompPane>
     </App>
