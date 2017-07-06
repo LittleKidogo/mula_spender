@@ -29,7 +29,8 @@ module.exports = {
     resolve:{
       modules:[
         "node_modules",
-        path.resolve(__dirname, "src")
+        path.resolve(__dirname, "src"),
+        path.resolve(__dirname, "src/atoms")
       ],
       extensions: [
         ".js", ".jsx"
