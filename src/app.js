@@ -6,7 +6,7 @@ import {App} from 'Views';
 ReactDOM.render(
   <BrowserRouter>
     <App>
-      <p> Name </p>
+      <p> Budget App </p>
     </App>
   </BrowserRouter>,
   document.getElementById('lib'),
