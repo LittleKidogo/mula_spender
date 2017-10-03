@@ -1,10 +1,10 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
-var DEVELOPMENT = process.env.NODE_ENV === 'development';
-var PRODUCTION = process.env.NODE_ENV === 'production';
-var TEST = process.env.NODE_ENV === 'test';
+const DEVELOPMENT = process.env.NODE_ENV === 'development';
+const PRODUCTION = process.env.NODE_ENV === 'production';
+const TEST = process.env.NODE_ENV === 'test';
 
 module.exports = {
   entry: {
