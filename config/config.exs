@@ -12,7 +12,7 @@ config :spender,
 # Configures the endpoint
 config :spender, SpenderWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "kFSuszRy92cs3/GKGgteeXiWWuxXK9l0YNtp+7v6mPljA6dv8k0gg6XefhmghimW",
+  secret_key_base: "2hzBoOeLgWfnFQ0kiEMPz3yLS0+f2GUx1HmCp/zJd9p7dyU1gdAGVWsJjyGTGTon",
   render_errors: [view: SpenderWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Spender.PubSub,
            adapter: Phoenix.PubSub.PG2]

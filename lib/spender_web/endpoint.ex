@@ -36,7 +36,7 @@ defmodule SpenderWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_spender_key",
-    signing_salt: "KzihWhm7"
+    signing_salt: "9UX8Dw8j"
 
   plug SpenderWeb.Router
 
