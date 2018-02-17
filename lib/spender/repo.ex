@@ -1,4 +1,7 @@
 defmodule Spender.Repo do
+  @moduledoc """
+  Module to use for Database Interactions
+  """
   use Ecto.Repo, otp_app: :spender
 
   @doc """
