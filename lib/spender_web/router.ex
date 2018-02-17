@@ -1,4 +1,7 @@
 defmodule SpenderWeb.Router do
+  @moduledoc """
+  A module to map HTTP verb/path to controller/actions
+  """
   use SpenderWeb, :router
 
   pipeline :browser do
@@ -15,12 +18,23 @@ defmodule SpenderWeb.Router do
 
   scope "/", SpenderWeb do
     pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
+    get "/", WelcomeController, :index
+    get "/hello/:messenger", WelcomeController, :show
+    get "/showtext/:id", WelcomeController, :showtext
+    get "/user/:id", WelcomeController, :showuser
+    get "/userhtml/:id", WelcomeController, :htmluser
+    get "redirect_test", WelcomeController, :redirect_test, as: :redirect_test
+    resources "/users", UserController, only: [:index, :show, :edit, :update]
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SpenderWeb do
-  #   pipe_through :api
+  # scope "/", SpenderWeb do
+  #   get "/redirect_test", WelcomeController, :redirect_test, as: :redirect_test
   # end
+
+  # Other scopes may use custom stacks.
+   scope "/api", SpenderWeb do
+     pipe_through :api
+
+     resources "/reviews", ReviewController
+   end
 end
