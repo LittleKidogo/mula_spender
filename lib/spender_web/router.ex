@@ -19,6 +19,7 @@ defmodule SpenderWeb.Router do
   scope "/", SpenderWeb do
     pipe_through :browser # Use the default browser stack
     get "/", WelcomeController, :index
+    get "/hello/:messenger", WelcomeController, :show
   end
 
   # Other scopes may use custom stacks.
