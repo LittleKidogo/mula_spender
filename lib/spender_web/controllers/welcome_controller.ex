@@ -2,7 +2,10 @@ defmodule SpenderWeb.WelcomeController do
   use SpenderWeb, :controller
 
   def index(conn, _params) do
-    render conn, "index.html"
+    conn
+    |> put_flash(:info, "Welcome the budget app I am a flash message")
+    |> put_flash(:error, "Hey we have an error")
+    |> render("index.html")
   end
 
   def show(conn, %{"messenger" => messenger} = params) do
