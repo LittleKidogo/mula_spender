@@ -11,4 +11,8 @@ defmodule SpenderWeb.WelcomeController do
   def show(conn, %{"messenger" => messenger} = params) do
     render conn, "show.html", messenger: messenger
   end
+
+  def showtext(conn,%{"id" => id}) do
+    text conn, "Showing item id #{id}"
+  end
 end
