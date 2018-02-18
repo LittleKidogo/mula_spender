@@ -20,4 +20,15 @@ defmodule SpenderWeb.WelcomeController do
     user = %{name: "Sample", age: id, id: id}
     json conn, user
   end
+
+  def htmluser(conn,%{"id" => id}) do
+    user = %{name: "Sample", age: id, id: id}
+    html conn, """
+    <html>
+      <p>Name: #{user.name}</p>
+      <p>Age: #{user.age} years</p>
+    </html>
+    """
+  end
+
 end

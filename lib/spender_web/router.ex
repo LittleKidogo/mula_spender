@@ -22,6 +22,7 @@ defmodule SpenderWeb.Router do
     get "/hello/:messenger", WelcomeController, :show
     get "/showtext/:id", WelcomeController, :showtext
     get "/user/:id", WelcomeController, :showuser
+    get "/userhtml/:id", WelcomeController, :htmluser
     resources "/users", UserController, only: [:index, :show, :edit, :update]
   end
 
