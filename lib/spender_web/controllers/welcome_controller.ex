@@ -15,4 +15,9 @@ defmodule SpenderWeb.WelcomeController do
   def showtext(conn,%{"id" => id}) do
     text conn, "Showing item id #{id}"
   end
+
+  def showuser(conn,%{"id" => id}) do
+    user = %{name: "Sample", age: id, id: id}
+    json conn, user
+  end
 end
