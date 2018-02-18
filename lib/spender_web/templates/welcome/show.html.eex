@@ -1,3 +1,4 @@
 <div class="jumbotron">
   <h2> Hi! from  <%= @messenger%></h2>
+  <a href="<%= welcome_path(@conn, :index) %>">To the Welcome Page!</a>
 </div>
