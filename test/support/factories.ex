@@ -4,7 +4,7 @@ Ex Machina factories for application entities for testing
 """
 
 # with Ecto
- use ExMachina.Ecto, repo: MyApp.Repo
+ use ExMachina.Ecto, repo: Spender.Repo
 
  def user_factory do
    %Spender.User{
