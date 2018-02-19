@@ -23,8 +23,13 @@ defmodule SpenderWeb.Router do
     get "/showtext/:id", WelcomeController, :showtext
     get "/user/:id", WelcomeController, :showuser
     get "/userhtml/:id", WelcomeController, :htmluser
+    get "redirect_test", WelcomeController, :redirect_test, as: :redirect_test
     resources "/users", UserController, only: [:index, :show, :edit, :update]
   end
+
+  # scope "/", SpenderWeb do
+  #   get "/redirect_test", WelcomeController, :redirect_test, as: :redirect_test
+  # end
 
   # Other scopes may use custom stacks.
    scope "/api", SpenderWeb do
