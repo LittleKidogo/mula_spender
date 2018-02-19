@@ -10,6 +10,8 @@ defmodule Spender.User do
     field :auth_token, :string
     field :auth_provider, :string
     field :avatar, :string
+
+    timestamps()
   end
 
   def create_changeset(user, params \\ %{}) do
@@ -18,10 +20,10 @@ defmodule Spender.User do
       |> validate_required([:name])
   end
 
-  def update_changeset(user, params) do
+  def update_user(user, params) do
     user
       |> create_changeset(params)
-      |> cast(params, [:name, :id, :avatar])
+      |> cast(params, [:name, :id, :avatar, :auth_token, :auth_provider])
       |> validate_required([:name, :id, :avatar])
   end
 end
