@@ -16,7 +16,7 @@ defmodule SpenderWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", SpenderWeb do
+  scope "/api", SpenderWeb do
     pipe_through :browser # Use the default browser stack
     get "/", WelcomeController, :index
 
