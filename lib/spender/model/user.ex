@@ -19,7 +19,7 @@ defmodule Spender.User do
       |> validate_required([:name])
   end
 
-  def update_user(user, params) do
+  def update_changeset(user, params) do
     user
       |> create_changeset(params)
       |> cast(params, [:name, :id, :avatar, :auth_token, :auth_provider])
