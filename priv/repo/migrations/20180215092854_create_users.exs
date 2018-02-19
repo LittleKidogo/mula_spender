@@ -7,6 +7,8 @@ defmodule Spender.Repo.Migrations.CreateUsers do
       add :auth_token, :string
       add :auth_provider, :string
       add :avatar, :string
+
+      timestamps(inserted_at: :created_at, updated_at: :modified_at)
     end
   end
 end

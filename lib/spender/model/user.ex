@@ -11,6 +11,8 @@ defmodule Spender.User do
     field :auth_provider, :string
     field :avatar, :string
 
+    timestamps(inserted_at: :created_at, updated_at: :modified_at)
+
   end
 
   def create_changeset(user, params \\ %{}) do
