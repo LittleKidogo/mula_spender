@@ -3,16 +3,6 @@ defmodule SpenderWeb.Router do
   A module to map HTTP verb/path to controller/actions
   """
   use SpenderWeb, :router
-
-  pipeline :auth do
-    plug Spender.Auth.Pipeline
-  end
-
-  pipeline :ensure_auth do
-    plug Guardian.Plug.EnsureAuthenticated
-  end
-
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -25,13 +15,7 @@ defmodule SpenderWeb.Router do
     plug :accepts, ["json"]
   end
 
-  # maybe logged in
-  scope "/", SpenderWeb do
-    pipe_through [:browser, :auth]
 
-    get "/", UserController, :index
-    post "/", UserController, :login
-    post "/logout", UserController, :logout
   end
 
   # Definitely logged in
@@ -42,10 +26,6 @@ defmodule SpenderWeb.Router do
   end
 
   scope "/api", SpenderWeb do
-    pipe_through :browser # Use the default browser stack
-    get "/", WelcomeController, :index
-
-    resources "/users", UserController
   end
 
   # scope "/", SpenderWeb do
