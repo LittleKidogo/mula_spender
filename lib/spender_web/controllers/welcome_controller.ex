@@ -1,9 +1,7 @@
 defmodule SpenderWeb.WelcomeController do
   use SpenderWeb, :controller
+  plug Ueberauth
 
-  def index(conn, _params) do
-    render conn, "index.html", []
-  end
 
   def show(conn, %{"messenger" => messenger} = _params) do
     render conn, "show.html", messenger: messenger
