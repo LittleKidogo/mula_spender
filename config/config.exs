@@ -5,10 +5,14 @@
 # is restricted to this project.
 use Mix.Config
 
-# Guardian Configuration
-config :spender, Spender.Guardian,
-  issuer: "spender",
-  secret_key: "syDftwK1uaVP++KELCuxXIxsAUUrRT7n7959j/kurwfUToC4mUr23ZfIx2dx18h8"
+# Configure Google OAuth
+config :ueberauth, Ueberauth,
+  providers: [
+    google: {Ueberauth.Strategy.Google, [default_scope: "emails profile plus.me"]}
+  ]
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: "451680309085-qs27mf3usd4bg4pnfmmp45ugqj6q3es4.apps.googleusercontent.com",
+  client_secret: "c35CJ10lIKUsyiTxo6nw3wHs"
 
 # General application configuration
 config :spender,
