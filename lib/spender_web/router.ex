@@ -15,17 +15,22 @@ defmodule SpenderWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/auth", SpenderWeb do
+    pipe_through [:browser]
 
+    get "/:provider", AuthController, :index
+
+    get "/:provider/callback", AuthController, :new
   end
 
-  # Definitely logged in
   scope "/", SpenderWeb do
-    pipe_through [:browser, :auth, :ensure_auth]
+    pipe_through [:browser]
 
-    get "/secret", UserController, :secret
   end
 
   scope "/api", SpenderWeb do
+    pipe_through :api # Use the default browser stack
+    resources "/users", UserController, except: [:new, :edit]
   end
 
   # scope "/", SpenderWeb do

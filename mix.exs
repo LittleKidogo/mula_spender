@@ -44,7 +44,9 @@ defmodule Spender.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:guardian, "~> 1.0"}, # Authentication (JWT)
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:ueberauth, "~> 0.4"}, 
+      {:ueberauth_google, "~> 0.5"}
     ]
   end
 
