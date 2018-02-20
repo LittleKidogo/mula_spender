@@ -5,6 +5,11 @@
 # is restricted to this project.
 use Mix.Config
 
+# Guardian Configuration
+config :spender, Spender.Guardian,
+  issuer: "spender",
+  secret_key: "syDftwK1uaVP++KELCuxXIxsAUUrRT7n7959j/kurwfUToC4mUr23ZfIx2dx18h8"
+
 # General application configuration
 config :spender,
   ecto_repos: [Spender.Repo]
