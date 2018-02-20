@@ -5,11 +5,11 @@ defmodule SpenderWeb.UserView do
     %{users: Enum.map(users, &user_json/1)}
   end
 
-  def user_json(user) do
-    %{name: user.name}
-  end 
-
   def render("show.json", %{user: user}) do
     %{data: render_one(user, SpenderWeb, "user.json")}
   end
+
+  def user_json(user) do
+    %{name: user.name}
+  end 
 end
