@@ -1,47 +1,42 @@
 defmodule SpenderWeb.UserController do
   use SpenderWeb, :controller
 
-  alias Spender.{Auth, User, Guardian}
+  alias Spender.Accounts
+  alias Spender.Accounts.User
+
+  action_fallback SpenderWeb.FallbackController
 
   def index(conn, _params) do
-    changeset = Auth.change_user(%User{})
-    maybe_user = Guardian.Plug.current_resource(conn)
-    message = if maybe_user != nil do
-      "Someone is logged in"
-    else
-      "No one is logged in"
+    users = Accounts.list_users()
+    render(conn, "index.json", users: users)
+  end
+
+  def create(conn, %{"user" => user_params}) do
+    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", user_path(conn, :show, user))
+      |> render("show.json", user: user)
     end
-
-    conn
-      |> put_flash(:info, message)
-      |> render("index.html", changeset: changeset, action: user_path(conn, :login), maybe_user: maybe_user)
   end
 
-  def login(conn, %{"user" => %{"username" => username, "password" => password}}) do
-    Auth.authenticate_user(username, password)
-    |> login_reply(conn)
+  def show(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id)
+    render(conn, "show.json", user: user)
   end
 
-  defp login_reply({:error, :error}, conn) do
-    conn
-    |> put_flash(:error, :error)
-    |> redirect(to: "/")
+  def update(conn, %{"id" => id, "user" => user_params}) do
+    user = Accounts.get_user!(id)
+
+    with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
+      render(conn, "show.json", user: user)
+    end
   end
 
-  defp login_reply({:ok, user}, conn) do
-    conn
-    |> put_flash(:success, "Welcome back!")
-    |> Guardian.Plug.sign_in(user)
-    |> redirect(to: "/")
-  end
-
-  def logout(conn, _) do
-    conn
-    |> Guardian.Plug.sign_out()
-    |> redirect(to: user_path(conn, :login))
-  end
-
-  def secret(conn, _params) do
-    render(conn, "secret.html")
+  def delete(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id)
+    with {:ok, %User{}} <- Accounts.delete_user(user) do
+      send_resp(conn, :no_content, "")
+    end
   end
 end
