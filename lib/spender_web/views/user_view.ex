@@ -12,7 +12,8 @@ defmodule SpenderWeb.UserView do
 
   def render("user.json", %{user: user}) do
     %{id: user.id,
-      name: user.name,
-      avatar: user.avatar}
+      email: user.email,
+      token: user.token,
+      provider: user.provider}
   end
 end
