@@ -6,8 +6,8 @@ defmodule Spender.AccountsTest do
   describe "users" do
     alias Spender.Accounts.User
 
-    @valid_attrs %{email: "someavatar", provider: "somename", token: "sometoken"}
-    @update_attrs %{email: "someavatar", provider: "somename", token: "sometoken"}
+    @valid_attrs %{email: "someemail", provider: "someprovider", token: "sometoken"}
+    @update_attrs %{email: "someupdatedemail", provider: "someupdatedprovider", token: "someupdatedtoken"}
     @invalid_attrs %{email: "", provider: "", token: ""}
 
     def user_fixture(attrs \\ %{}) do
@@ -31,8 +31,9 @@ defmodule Spender.AccountsTest do
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
-      assert user.avatar == "some avatar"
-      assert user.name == "some name"
+      assert user.provider == "someprovider"
+      assert user.email == "someemail"
+      assert user.token == "sometoken"
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -43,8 +44,9 @@ defmodule Spender.AccountsTest do
       user = user_fixture()
       assert {:ok, user} = Accounts.update_user(user, @update_attrs)
       assert %User{} = user
-      assert user.avatar == "some updated avatar"
-      assert user.name == "some updated name"
+      assert user.provider == "someupdatedprovider"
+      assert user.token == "someupdatedtoken"
+      assert user.email == "someupdatedemail"
     end
 
     test "update_user/2 with invalid data returns error changeset" do
