@@ -15,10 +15,11 @@ defmodule SpenderWeb.Router do
     plug :accepts, ["json"]
   end
 
+# Add a scope for authorization
   scope "/auth", SpenderWeb do
     pipe_through [:browser]
 
-    get "/:provider", AuthController, :index
+    get "/:provider", AuthController, :request
 
     get "/:provider/callback", AuthController, :new
   end
@@ -26,6 +27,7 @@ defmodule SpenderWeb.Router do
   scope "/", SpenderWeb do
     pipe_through [:browser]
 
+    get "/", AuthController, :welcome
   end
 
   scope "/api", SpenderWeb do
