@@ -10,7 +10,14 @@ defmodule Spender.Mixfile do
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+        preferred_cli_env: [
+          "coveralls": :test,
+          "coveralls.detail": :test,
+          "coveralls.post": :test,
+          "coveralls.html": :test
+        ]
     ]
   end
 
@@ -33,7 +40,9 @@ defmodule Spender.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:excoveralls, "~> 0.7", only: :test}, #test reporting on the ci
       {:ex_machina,"~>2.0", only: :test},
+      {:hackney, "~> 1.8.0", override: true}, #coveralls uses this version of hackney
       {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
