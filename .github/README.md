@@ -5,8 +5,11 @@
 # MoneyLog Backend
 
 This is the Elixir backend API for `MoneyLog`
-MoneyLog is an application that helps people to spend their money as they wish,
-This would involve planning, recording and reviewing one's Money Details.
+MoneyLog is an application that helps us spend our money on stuff we want!
+Through intensive research after trying to use various 'budget' applications with Carla we came to
+develop a number of spreadsheets and some formulas that gave us much needed confidence in our
+spending. This group of spreadsheets and formulas are now being translated into an application with
+ some automation to aid us.
 
 
 ## Getting Started
@@ -19,7 +22,8 @@ To start helping go through
 ## Authors
 
 * **Zacck Osiemo** - *Initial work* - [Zacck](https://github.com/zacck )
-* **Carla Espost** - *Initial design* - [Carla](https://github.com/CIEspost)
+* **Carla Espost** - *Initial work* - [Carla](https://github.com/CIEspost)
+* **Jahil Khalfe** - *Initial work* - [Jahil](https://github.com/Cybot1711)
 
 See also the list of [contributors](https://github.com/LittleKidogo/MoneyLog/graphs/contributors) who are participating in this project.
 
