@@ -29,6 +29,6 @@ See also the list of [contributors](https://github.com/LittleKidogo/MoneyLog/gra
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## TODO
-- Add contribution guidlines
-- Add setup guidelines
-- Add project roadmap
+- [ ] Add contribution guidelines
+- [ ] Add setup guidelines
+- [ ] Add project roadmap
