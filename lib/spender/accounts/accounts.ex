@@ -37,6 +37,15 @@ defmodule Spender.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  @doc """
+  Gets a single user by their email
+
+  ## Examples
+
+      iex> get_by_email(someemail@mail.com)
+      %User{}
+  """
+
   def get_by_email(email), do: Repo.get_by(User,  email: email)
 
   @doc """
