@@ -43,7 +43,6 @@ defmodule Spender.Mixfile do
       {:excoveralls, "~> 0.7", only: :test}, #test reporting on the ci
       {:ex_machina,"~>2.0", only: :test},
       {:hackney, "~> 1.8.0", override: true}, #coveralls uses this version of hackney
-      {:guardian, "~> 1.0"}, #add guardian to handle our session
       {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
@@ -53,7 +52,7 @@ defmodule Spender.Mixfile do
       {:gettext, "~> 0.11"},
       {:guardian, "~> 1.0"}, # Authentication (JWT)
       {:cowboy, "~> 1.0"},
-      {:ueberauth, "~> 0.4"}, 
+      {:ueberauth, "~> 0.4"},
       {:ueberauth_google, "~> 0.5"}
     ]
   end

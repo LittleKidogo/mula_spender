@@ -11,6 +11,10 @@ config :ueberauth, Ueberauth,
     google: {Ueberauth.Strategy.Google, [default_scope: "emails profile plus.me"]}
   ]
 
+# configure Guardian for Session Handling
+config :spender Spender.Auth.Guardian,
+  issuer: "LittleKidogo",
+  secret_key: "bPu/MTCHe6jIsAbUgZR0jo3gaga3YCT6kBi96iOX4y+gEzUXLQ/UPQgX3GRPNKyG"
 
 # configure Google Sign In Strategy for Ueberauth
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
