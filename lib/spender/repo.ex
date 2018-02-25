@@ -1,6 +1,6 @@
 defmodule Spender.Repo do
   @moduledoc """
-  Module to use for Database Interactions
+  Module to use for Database Interactions with ecto
   """
   use Ecto.Repo, otp_app: :spender
 
