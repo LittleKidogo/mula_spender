@@ -3,7 +3,6 @@ defmodule SpenderWeb.Router do
   A module to map HTTP verb/path to controller/actions
   """
   use SpenderWeb, :router
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -16,15 +15,24 @@ defmodule SpenderWeb.Router do
     plug :accepts, ["json"]
   end
 
+# Add a scope for authorization
+  scope "/auth", SpenderWeb do
+    pipe_through [:browser]
+
+    get "/:provider", AuthController, :request
+
+    get "/:provider/callback", AuthController, :new
+  end
+
   scope "/", SpenderWeb do
-    pipe_through :browser # Use the default browser stack
-    get "/", WelcomeController, :index
-    get "/hello/:messenger", WelcomeController, :show
-    get "/showtext/:id", WelcomeController, :showtext
-    get "/user/:id", WelcomeController, :showuser
-    get "/userhtml/:id", WelcomeController, :htmluser
-    get "redirect_test", WelcomeController, :redirect_test, as: :redirect_test
-    resources "/users", UserController, only: [:index, :show, :edit, :update]
+    pipe_through [:browser]
+
+    get "/", AuthController, :welcome
+  end
+
+  scope "/api", SpenderWeb do
+    pipe_through :api # Use the default browser stack
+    resources "/users", UserController, except: [:new, :edit]
   end
 
   # scope "/", SpenderWeb do

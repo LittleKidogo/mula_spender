@@ -5,6 +5,18 @@
 # is restricted to this project.
 use Mix.Config
 
+# Configure Ueberauth OAuth
+config :ueberauth, Ueberauth,
+  providers: [
+    google: {Ueberauth.Strategy.Google, [default_scope: "emails profile plus.me"]}
+  ]
+
+
+# configure Google Sign In Strategy for Ueberauth
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: "451680309085-qs27mf3usd4bg4pnfmmp45ugqj6q3es4.apps.googleusercontent.com",
+  client_secret: "c35CJ10lIKUsyiTxo6nw3wHs"
+
 # General application configuration
 config :spender,
   ecto_repos: [Spender.Repo]

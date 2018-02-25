@@ -23,6 +23,9 @@ defmodule SpenderWeb do
       import Plug.Conn
       import SpenderWeb.Router.Helpers
       import SpenderWeb.Gettext
+
+      alias Spender.Repo
+
     end
   end
 
