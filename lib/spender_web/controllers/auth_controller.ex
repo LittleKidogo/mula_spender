@@ -8,6 +8,10 @@ defmodule SpenderWeb.AuthController do
     text conn, "Welcome to Our Api"
   end
 
+  def secret(conn, _params) do
+    text conn, "This is a secret page"
+  end
+
   # handle callback payload
   def new(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     user_params = %{token: auth.credentials.token, first_name: auth.info.first_name, last_name: auth.info.last_name, email: auth.info.email, provider: "google"}
@@ -23,7 +27,7 @@ defmodule SpenderWeb.AuthController do
         conn
         |> put_flash(:info, "Thank you for signing in!")
         |> Guardian.Plug.sign_in(user) #Load session with  user payload
-        |> text("Thank You for signing in!")
+        |> redirect(to: "/secret")
       {:error, _reason} ->
         conn
         |> put_flash(:error, "Error signing in")
