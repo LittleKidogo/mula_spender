@@ -20,6 +20,14 @@ defmodule SpenderWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import SpenderWeb.Router.Helpers
+      alias Spender.Repo
+
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query
+      import Spender.ModelCase
+      import Spender.Factories
+
 
       # The default endpoint for testing
       @endpoint SpenderWeb.Endpoint
