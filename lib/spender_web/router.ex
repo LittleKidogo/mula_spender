@@ -1,6 +1,8 @@
 defmodule SpenderWeb.Router do
+  @moduledoc """
+  A module to map HTTP verb/path to controller/actions
+  """
   use SpenderWeb, :router
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -13,14 +15,41 @@ defmodule SpenderWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", SpenderWeb do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
+  # routes that allow users whether they are logged or not
+  pipeline :auth do
+    plug Spender.Auth.BearerAuth
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SpenderWeb do
-  #   pipe_through :api
-  # end
+  # routes that require authentication
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
+
+# Add a scope for authorization
+  scope "/auth", SpenderWeb do
+    pipe_through [:browser]
+
+    get "/:provider", AuthController, :request
+
+    get "/:provider/callback", AuthController, :new
+  end
+
+  scope "/", SpenderWeb do
+    pipe_through [:browser, :auth]
+
+    get "/", AuthController, :welcome
+  end
+
+  # ensure auth pipeline
+  scope "/", SpenderWeb do
+    pipe_through [:browser, :auth, :ensure_auth]
+
+    get "/secret", AuthController, :secret
+  end
+
+  scope "/api", SpenderWeb do
+    pipe_through :api # Use the default browser stack
+    resources "/users", UserController, except: [:new, :edit]
+  end
 end
