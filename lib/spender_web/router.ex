@@ -45,15 +45,4 @@ defmodule SpenderWeb.Router do
     pipe_through :api # Use the default browser stack
     resources "/users", UserController, except: [:new, :edit]
   end
-
-  # scope "/", SpenderWeb do
-  #   get "/redirect_test", WelcomeController, :redirect_test, as: :redirect_test
-  # end
-
-  # Other scopes may use custom stacks.
-   scope "/api", SpenderWeb do
-     pipe_through :api
-
-     resources "/reviews", ReviewController
-   end
 end
