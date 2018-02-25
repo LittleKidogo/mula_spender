@@ -2,7 +2,7 @@ defmodule SpenderWeb.AuthController do
   use SpenderWeb, :controller
   plug Ueberauth
 
-  alias Spender.{Accounts, Accounts.User}
+  alias Spender.{Accounts, Accounts.User, Auth.Guardian}
 
   def welcome(conn, _params) do
     text conn, "Welcome to Our Api"
@@ -25,7 +25,6 @@ defmodule SpenderWeb.AuthController do
     case insert_or_update_user(changeset) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Thank you for signing in!")
         |> Guardian.Plug.sign_in(user) #Load session with  user payload
         |> redirect(to: "/secret")
       {:error, _reason} ->
@@ -38,7 +37,7 @@ defmodule SpenderWeb.AuthController do
   # function to sign user
   def logout(conn, _) do
     conn
-    |> Guardian.plug.sign_out()
+    |> Guardian.Plug.sign_out()
     |> redirect(to: "/")
   end
 
