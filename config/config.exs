@@ -12,7 +12,7 @@ config :ueberauth, Ueberauth,
   ]
 
 # configure Guardian for Session Handling
-config :spender Spender.Auth.Guardian,
+config :spender, Spender.Auth.Guardian,
   issuer: "LittleKidogo",
   secret_key: "bPu/MTCHe6jIsAbUgZR0jo3gaga3YCT6kBi96iOX4y+gEzUXLQ/UPQgX3GRPNKyG"
 
