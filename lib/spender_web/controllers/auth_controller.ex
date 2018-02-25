@@ -16,12 +16,13 @@ defmodule SpenderWeb.AuthController do
     create(conn, user_params)
   end
 
+  # if we can pick a user lets proceed to sign them in and add their details to the session
   def create(conn, changeset) do
     case insert_or_update_user(changeset) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "Thank you for signing in!")
-        |> put_session(:user_id, user.id)
+        |> Guardian.Plug.sign_in(user) #Load session with  user payload
         |> text("Thank You for signing in!")
       {:error, _reason} ->
         conn
@@ -29,6 +30,15 @@ defmodule SpenderWeb.AuthController do
         |> text("Error signing in")
     end
   end
+
+  # function to sign user
+  def logout(conn, _) do
+    conn
+    |> Guardian.plug.sign_out()
+    |> redirect(to: "/")
+  end
+
+
 
   defp insert_or_update_user(%{email: email}=changeset) do
     case Accounts.get_by_email(email) do
