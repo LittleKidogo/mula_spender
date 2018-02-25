@@ -15,6 +15,17 @@ defmodule SpenderWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # routes that allow users whether they are logged or not
+  pipeline :auth do
+    plug Spender.Auth.BearerAuth
+  end
+
+  # routes that require authentication
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
+
 # Add a scope for authorization
   scope "/auth", SpenderWeb do
     pipe_through [:browser]
@@ -25,7 +36,7 @@ defmodule SpenderWeb.Router do
   end
 
   scope "/", SpenderWeb do
-    pipe_through [:browser]
+    pipe_through [:browser, :auth]
 
     get "/", AuthController, :welcome
   end
