@@ -3,7 +3,7 @@ defmodule SpenderWeb.AuthControllerTest do
 
   describe "AuthController" do
     test "redirects user to Google for Authentication", %{conn: conn} do
-      conn = get conn, "/auth/google?scope=email?profile"
+      conn = get conn, "/auth/google"
       assert redirected_to(conn, 302)
     end
   end
