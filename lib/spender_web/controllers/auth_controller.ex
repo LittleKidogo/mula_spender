@@ -1,4 +1,7 @@
 defmodule SpenderWeb.AuthController do
+  @moduledoc """
+  Controller to handle ueberauth responses
+  """
   use SpenderWeb, :controller
   plug Ueberauth
 
