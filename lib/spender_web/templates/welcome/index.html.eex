@@ -1,7 +1,3 @@
 <div class="red">
   <h2> Welcome to the Spender Api</h2>
-  <form action="user/7">
-    <input type="text" id="place"/>
-    <input type="submit" text="Send"/>
-  </form>
 </div>

@@ -4,10 +4,6 @@ defmodule SpenderWeb.AuthController do
 
   alias Spender.{Accounts, Accounts.User, Auth.Guardian}
 
-  def welcome(conn, _params) do
-    text conn, "Welcome to Our Api"
-  end
-
   def secret(conn, _params) do
     text conn, "This is a secret page"
   end

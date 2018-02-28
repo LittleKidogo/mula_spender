@@ -38,7 +38,7 @@ defmodule SpenderWeb.Router do
   scope "/", SpenderWeb do
     pipe_through [:browser, :auth]
 
-    get "/", AuthController, :welcome
+    get "/", WelcomeController, :index
   end
 
   # ensure auth pipeline
