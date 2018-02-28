@@ -8,7 +8,7 @@ use Mix.Config
 # Configure Ueberauth OAuth
 config :ueberauth, Ueberauth,
   providers: [
-    google: {Ueberauth.Strategy.Google, [default_scope: "emails profile plus.me"]}
+    google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]}
   ]
 
 # configure Guardian for Session Handling
