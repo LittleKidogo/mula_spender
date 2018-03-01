@@ -2,10 +2,20 @@ defmodule SpenderWeb.AuthControllerTest do
   use SpenderWeb.ApiCase
 
   alias Spender.{Accounts.User, Repo}
-  alias AuthController
 
   @ueberauth_auth %{credentials: %{token: "kbikn86917njbn"}, info: %{first_name: "Zacck", last_name: "Osiemo", email: "zacck@moneylog.com"}, provider: "google"}
+
   @error %{credentials: %{token: "" }, info: %{first_name: "Zacck", last_name: "Osiemo", email: "zacck@moneylog.com"}, provider: "google"}
+  setup %{conn: conn} do
+    conn =
+      conn
+      |> put_req_header("accept", "application/vnd.api+json")
+      |> put_req_header("content-type", "application/vnd.api+json")
+
+    {:ok, conn: conn}
+  end
+
+
   describe "AuthController" do
     test "redirects user to Google for Authentication", %{conn: conn} do
       conn = get conn, "/auth/google"
