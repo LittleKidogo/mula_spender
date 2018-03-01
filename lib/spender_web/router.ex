@@ -34,7 +34,7 @@ defmodule SpenderWeb.Router do
 
     get "/:provider", AuthController, :request
 
-    get "/:provider/callback", AuthController, :new
+    get "/:provider/callback", AuthController, :login
   end
 
   scope "/", SpenderWeb do
