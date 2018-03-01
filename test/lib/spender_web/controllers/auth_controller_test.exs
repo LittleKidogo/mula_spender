@@ -22,6 +22,8 @@ defmodule SpenderWeb.AuthControllerTest do
       assert redirected_to(conn, 302)
     end
 
+
+
     test "creates and returns user from google information",%{conn: conn} do
       #mock a response from google
       conn = conn
@@ -39,6 +41,11 @@ defmodule SpenderWeb.AuthControllerTest do
       |> assign(:ueberauth_auth, @error)
       |> get("/auth/google/callback")
       assert json_response(conn, 422)
+    end
+
+    test "redirects user to Facebook for Authentication", %{conn: conn} do
+      conn = get conn, "/auth/google"
+      assert redirected_to(conn, 302)
     end
   end
 
