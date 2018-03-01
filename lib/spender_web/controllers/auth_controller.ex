@@ -29,7 +29,7 @@ defmodule SpenderWeb.AuthController do
       {:ok, user} ->
         conn
         |> Guardian.Plug.sign_in(user) #Load session with  user payload
-        |> redirect(to: "/secret")
+        |> render("show.json-api", data: user)
       {:error, _reason} ->
         conn
         |> put_flash(:error, "Error signing in")
