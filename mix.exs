@@ -55,7 +55,9 @@ defmodule Spender.Mixfile do
       {:cowboy, "~> 1.0"},
       {:ueberauth, "~> 0.4"},
       {:ueberauth_google, "~> 0.5"},
-      {:ueberauth_facebook, "~> 0.7"}
+      {:ueberauth_facebook, "~> 0.7"},
+      {:oauth, github: "tim/erlang-oauth"}, #for twitter
+      {:ueberauth_twitter, "~> 0.2"}
     ]
   end
 

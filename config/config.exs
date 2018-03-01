@@ -19,7 +19,8 @@ config :mime, :types, %{
 config :ueberauth, Ueberauth,
   providers: [
     google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]},
-    facebook: {Ueberauth.Strategy.Facebook, [default_scope: "email,public_profile"]}
+    facebook: {Ueberauth.Strategy.Facebook, [default_scope: "email,public_profile"]},
+    twitter: {Ueberauth.Strategy.Twitter, []}
   ]
 
 # configure Guardian for Session Handling
@@ -36,6 +37,10 @@ config :ueberauth, Ueberauth.Strategy.Google.OAuth,
 config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
   client_id: System.get_env("FACEBOOK_CLIENT_ID"),
   client_secret: System.get_env("FACEBOOK_CLIENT_SECRET")
+
+config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
+  consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
+  consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
 
 
 
