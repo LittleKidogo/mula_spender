@@ -7,7 +7,6 @@ defmodule SpenderWeb.AuthController do
 
   alias Spender.{Accounts, Accounts.User, Auth.Guardian}
 
-
   def secret(conn, _params) do
     text conn, "This is a secret page"
   end
@@ -15,18 +14,22 @@ defmodule SpenderWeb.AuthController do
   # handle callback payload
   def new(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     user_params = %{token: auth.credentials.token, first_name: auth.info.first_name, last_name: auth.info.last_name, email: auth.info.email, provider: "google"}
-
+    _changeset = User.changeset(%User{}, user_params)
     create(conn, user_params)
   end
 
   # if we can pick a user lets proceed to sign them in and add their details to the session
-
   def create(conn, changeset) do
-      with {:ok, %User{} = user} <- insert_or_update_user(changeset)
-      do
-        Guardian.Plug.sign_in(conn, user)
-        render(conn, "show.json-api", data: user)
-      end
+    case insert_or_update_user(changeset) do
+      {:ok, user} ->
+        conn
+        |> Guardian.Plug.sign_in(user)
+        |> render("show.json-api", data: user)
+      {:error, _reason} ->
+        conn
+        |> put_status(422)
+        |> render("show.json-api", data: %{"error" => "user"})
+    end
   end
 
   # function to sign user
