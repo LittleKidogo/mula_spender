@@ -36,7 +36,7 @@ defmodule SpenderWeb.AuthControllerTest do
       assert user.email == @ueberauth_auth.info.email
     end
 
-    test "errors out if error when creating user", %{conn: conn} do
+    test "errors out if error when creating user from google information", %{conn: conn} do
       conn = conn
       |> assign(:ueberauth_auth, @error)
       |> get("/auth/google/callback")
@@ -46,6 +46,25 @@ defmodule SpenderWeb.AuthControllerTest do
     test "redirects user to Facebook for Authentication", %{conn: conn} do
       conn = get conn, "/auth/google"
       assert redirected_to(conn, 302)
+    end
+
+    test "creates and returns user from facebook information",%{conn: conn} do
+      #mock a response from google
+      conn = conn
+      |> assign(:ueberauth_auth, @ueberauth_auth)
+      |> get("/auth/facebook /callback") #use the response
+
+      assert json_response(conn, 200)
+      user = Repo.get_by(User, email: @ueberauth_auth.info.email)
+      assert Repo.aggregate(User, :count, :id) == 1
+      assert user.email == @ueberauth_auth.info.email
+    end
+
+    test "errors out if error when creating user from facebook information", %{conn: conn} do
+      conn = conn
+      |> assign(:ueberauth_auth, @error)
+      |> get("/auth/facebook/callback")
+      assert json_response(conn, 422)
     end
   end
 
