@@ -24,7 +24,7 @@ defmodule SpenderWeb.AuthControllerTest do
       assert user.email == @ueberauth_auth.info.email
     end
 
-    test "errors out if error when creating uset", %{conn: conn} do
+    test "errors out if error when creating user", %{conn: conn} do
       conn = conn
       |> assign(:ueberauth_auth, @error)
       |> get("/auth/google/callback")
