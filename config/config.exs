@@ -5,6 +5,16 @@
 # is restricted to this project.
 use Mix.Config
 
+# confgure Plug for JaSerializer
+config :phoenix, :format_encoders,
+  "json-api": Poison
+
+config :mime, :types, %{
+  "application/vnd.api+json" => ["json-api"]
+}
+
+
+
 # Configure Ueberauth OAuth
 config :ueberauth, Ueberauth,
   providers: [
@@ -29,7 +39,7 @@ config :spender,
 config :spender, SpenderWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "2hzBoOeLgWfnFQ0kiEMPz3yLS0+f2GUx1HmCp/zJd9p7dyU1gdAGVWsJjyGTGTon",
-  render_errors: [view: SpenderWeb.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: SpenderWeb.ErrorView, accepts: ~w(html json json-api)], #add json-api
   pubsub: [name: Spender.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

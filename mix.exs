@@ -43,6 +43,7 @@ defmodule Spender.Mixfile do
       {:excoveralls, "~> 0.7", only: :test}, #test reporting on the ci
       {:ex_machina,"~>2.0", only: :test},
       {:hackney, "~> 1.8.0", override: true}, #coveralls uses this version of hackney
+      {:ja_serializer, "~> 0.12"},
       {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},

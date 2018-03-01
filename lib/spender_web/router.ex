@@ -12,7 +12,9 @@ defmodule SpenderWeb.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json-api", "json"]
+    plug JaSerializer.ContentTypeNegotiation
+    plug JaSerializer.Deserializer
   end
 
   # routes that allow users whether they are logged or not
@@ -28,7 +30,7 @@ defmodule SpenderWeb.Router do
 
 # Add a scope for authorization
   scope "/auth", SpenderWeb do
-    pipe_through [:browser]
+    pipe_through [:api]
 
     get "/:provider", AuthController, :request
 
