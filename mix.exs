@@ -12,7 +12,7 @@ defmodule Spender.Mixfile do
       aliases: aliases(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-        preferred_cli_env: [
+      preferred_cli_env: [
           "coveralls": :test,
           "coveralls.detail": :test,
           "coveralls.post": :test,
@@ -54,7 +54,8 @@ defmodule Spender.Mixfile do
       {:guardian, "~> 1.0"}, # Authentication (JWT)
       {:cowboy, "~> 1.0"},
       {:ueberauth, "~> 0.4"},
-      {:ueberauth_google, "~> 0.5"}
+      {:ueberauth_google, "~> 0.5"},
+      {:ueberauth_facebook, "~> 0.7"}
     ]
   end
 

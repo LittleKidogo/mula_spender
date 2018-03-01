@@ -18,7 +18,8 @@ config :mime, :types, %{
 # Configure Ueberauth OAuth
 config :ueberauth, Ueberauth,
   providers: [
-    google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]}
+    google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]},
+    facebook: {Ueberauth.Strategy.Facebook, [default_scope: "email,public_profile"]}
   ]
 
 # configure Guardian for Session Handling
@@ -30,6 +31,13 @@ config :spender, Spender.Auth.Guardian,
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
   client_id: System.get_env("GOOGLE_CLIENT_ID"),
   client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
+# configure Facebook Sign In Strategy for Ueberauth
+config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
+  client_id: System.get_env("FACEBOOK_CLIENT_ID"),
+  client_secret: System.get_env("FACEBOOK_CLIENT_SECRET")
+
+
 
 # General application configuration
 config :spender,
