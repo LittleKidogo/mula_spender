@@ -17,3 +17,9 @@ config :spender, Spender.Repo,
   database: "spender_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+
+  # configure Guardian for Session Handling
+  config :spender, Spender.Auth.Guardian,
+    issuer: "LittleKidogo",
+    secret_key: "oWbr5lRJ/g6V6E6F0RVsrVmX0eAijegb0zOUr1iwZF3Y2eIfVHLdl/FbgsSadSD9"

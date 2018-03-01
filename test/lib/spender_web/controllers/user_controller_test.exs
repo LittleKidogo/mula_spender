@@ -1,10 +1,10 @@
 defmodule SpenderWeb.UserControllerTest do
-  use SpenderWeb.ConnCase
+  use SpenderWeb.ApiCase
 
   alias Spender.Accounts
   alias Spender.Accounts.User
 
-  @create_attrs %{email: "some email", provider: "some provider", token: "sometoken"}
+  @create_attrs %{email: "some email", provider: "some provider", token: "sometoken", first_name: "Zacck", last_name: "Osiemo"}
   @update_attrs %{email: "some updated email", provider: "some updated provider", token: "someupdatedtoken"}
   @invalid_attrs %{avatar: "", email: ""}
 
@@ -14,7 +14,12 @@ defmodule SpenderWeb.UserControllerTest do
   end
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    conn =
+      conn
+      |> put_req_header("accept", "application/vnd.api+json")
+      |> put_req_header("content-type", "application/vnd.api+json")
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
@@ -30,11 +35,8 @@ defmodule SpenderWeb.UserControllerTest do
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get conn, user_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "provider" => "some provider",
-        "token" => "sometoken",
-        "email" => "some email"}
+
+      assert json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -48,14 +50,9 @@ defmodule SpenderWeb.UserControllerTest do
 
     test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
       conn = put conn, user_path(conn, :update, user), user: @update_attrs
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
+    
       conn = get conn, user_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "provider" => "some updated provider",
-        "token" => "someupdatedtoken",
-        "email" => "some updated email"}
+      assert json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user} do

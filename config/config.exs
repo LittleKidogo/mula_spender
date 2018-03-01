@@ -5,21 +5,31 @@
 # is restricted to this project.
 use Mix.Config
 
+# confgure Plug for JaSerializer
+config :phoenix, :format_encoders,
+  "json-api": Poison
+
+config :mime, :types, %{
+  "application/vnd.api+json" => ["json-api"]
+}
+
+
+
 # Configure Ueberauth OAuth
 config :ueberauth, Ueberauth,
   providers: [
-    google: {Ueberauth.Strategy.Google, [default_scope: "emails profile plus.me"]}
+    google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]}
   ]
 
 # configure Guardian for Session Handling
 config :spender, Spender.Auth.Guardian,
   issuer: "LittleKidogo",
-  secret_key: "bPu/MTCHe6jIsAbUgZR0jo3gaga3YCT6kBi96iOX4y+gEzUXLQ/UPQgX3GRPNKyG"
+  secret_key: System.get_env("MIX_SECRET")
 
 # configure Google Sign In Strategy for Ueberauth
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: "451680309085-qs27mf3usd4bg4pnfmmp45ugqj6q3es4.apps.googleusercontent.com",
-  client_secret: "c35CJ10lIKUsyiTxo6nw3wHs"
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
 
 # General application configuration
 config :spender,
@@ -29,7 +39,7 @@ config :spender,
 config :spender, SpenderWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "2hzBoOeLgWfnFQ0kiEMPz3yLS0+f2GUx1HmCp/zJd9p7dyU1gdAGVWsJjyGTGTon",
-  render_errors: [view: SpenderWeb.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: SpenderWeb.ErrorView, accepts: ~w(html json json-api)], #add json-api
   pubsub: [name: Spender.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
