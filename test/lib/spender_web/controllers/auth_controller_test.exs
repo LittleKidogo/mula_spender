@@ -64,6 +64,7 @@ defmodule SpenderWeb.AuthControllerTest do
       conn = conn
       |> assign(:ueberauth_auth, @error)
       |> get("/auth/facebook/callback")
+
       assert json_response(conn, 422)
     end
 
@@ -76,7 +77,10 @@ defmodule SpenderWeb.AuthControllerTest do
       #mock a response from google
       conn = conn
       |> assign(:ueberauth_auth, @ueberauth_auth)
+      |> fetch_session()
       |> get("/auth/twitter/callback") #use the response
+
+
 
       assert json_response(conn, 200)
       user = Repo.get_by(User, email: @ueberauth_auth.info.email)
@@ -88,6 +92,7 @@ defmodule SpenderWeb.AuthControllerTest do
       conn = conn
       |> assign(:ueberauth_auth, @error)
       |> get("/auth/twitter/callback")
+      |> fetch_session
       assert json_response(conn, 422)
     end
   end
