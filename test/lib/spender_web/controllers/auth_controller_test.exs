@@ -44,7 +44,7 @@ defmodule SpenderWeb.AuthControllerTest do
     end
 
     test "redirects user to Facebook for Authentication", %{conn: conn} do
-      conn = get conn, "/auth/google"
+      conn = get conn, "/auth/facebook"
       assert redirected_to(conn, 302)
     end
 
@@ -52,7 +52,7 @@ defmodule SpenderWeb.AuthControllerTest do
       #mock a response from google
       conn = conn
       |> assign(:ueberauth_auth, @ueberauth_auth)
-      |> get("/auth/facebook /callback") #use the response
+      |> get("/auth/facebook/callback") #use the response
 
       assert json_response(conn, 200)
       user = Repo.get_by(User, email: @ueberauth_auth.info.email)
@@ -64,6 +64,30 @@ defmodule SpenderWeb.AuthControllerTest do
       conn = conn
       |> assign(:ueberauth_auth, @error)
       |> get("/auth/facebook/callback")
+      assert json_response(conn, 422)
+    end
+
+    test "redirects user to Twitter for Authentication", %{conn: conn} do
+      conn = get conn, "/auth/twitter"
+      assert redirected_to(conn, 302)
+    end
+
+    test "creates and returns user from twitter information",%{conn: conn} do
+      #mock a response from google
+      conn = conn
+      |> assign(:ueberauth_auth, @ueberauth_auth)
+      |> get("/auth/twitter/callback") #use the response
+
+      assert json_response(conn, 200)
+      user = Repo.get_by(User, email: @ueberauth_auth.info.email)
+      assert Repo.aggregate(User, :count, :id) == 1
+      assert user.email == @ueberauth_auth.info.email
+    end
+
+    test "errors out if error when creating user from twitter information", %{conn: conn} do
+      conn = conn
+      |> assign(:ueberauth_auth, @error)
+      |> get("/auth/twitter/callback")
       assert json_response(conn, 422)
     end
   end
