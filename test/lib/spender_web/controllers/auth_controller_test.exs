@@ -1,5 +1,6 @@
 defmodule SpenderWeb.AuthControllerTest do
   use SpenderWeb.ApiCase
+  import Plug.Test
 
   alias Spender.{Accounts.User, Repo}
 
@@ -69,13 +70,16 @@ defmodule SpenderWeb.AuthControllerTest do
     end
 
     test "redirects user to Twitter for Authentication", %{conn: conn} do
-      conn = get conn, "/auth/twitter"
+      conn = conn
+        |> init_test_session(foo: "bar")
+        |> get("/auth/twitter")
       assert redirected_to(conn, 302)
     end
 
     test "creates and returns user from twitter information",%{conn: conn} do
       #mock a response from google
       conn = conn
+      |> init_test_session(foo: "bar")
       |> assign(:ueberauth_auth, @ueberauth_auth)
       |> fetch_session()
       |> get("/auth/twitter/callback") #use the response
@@ -90,9 +94,9 @@ defmodule SpenderWeb.AuthControllerTest do
 
     test "errors out if error when creating user from twitter information", %{conn: conn} do
       conn = conn
+      |> init_test_session(foo: "bar")
       |> assign(:ueberauth_auth, @error)
       |> get("/auth/twitter/callback")
-      |> fetch_session
       assert json_response(conn, 422)
     end
   end
