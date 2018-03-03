@@ -47,8 +47,6 @@ defmodule SpenderWeb.UserControllerTest do
     @tag :authenticated
     test "renders user when data is valid", %{conn: conn, current_user: user} do
       conn = put conn, user_path(conn, :update, user), user: @update_attrs
-
-      conn = get conn, user_path(conn, :show, user.id)
       assert json_response(conn, 200)["data"]
     end
 
