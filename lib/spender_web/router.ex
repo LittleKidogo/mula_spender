@@ -37,21 +37,18 @@ defmodule SpenderWeb.Router do
     get "/:provider/callback", AuthController, :login
   end
 
+  scope "/api", SpenderWeb do
+    pipe_through [:api, :auth, :ensure_auth] 
+    get "/another", AuthController, :secret
+    resources "/users", UserController, except: [:new, :edit]
+  end
+
   scope "/", SpenderWeb do
     pipe_through [:browser, :auth]
 
     get "/", WelcomeController, :index
   end
 
-  # ensure auth pipeline
-  scope "/", SpenderWeb do
-    pipe_through [:browser, :auth, :ensure_auth]
 
-    get "/secret", AuthController, :secret
-  end
 
-  scope "/api", SpenderWeb do
-    pipe_through :api # Use the default browser stack
-    resources "/users", UserController, except: [:new, :edit]
-  end
 end

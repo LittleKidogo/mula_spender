@@ -1,7 +1,6 @@
 defmodule SpenderWeb.ErrorView do
   use SpenderWeb, :view
-
-
+  use JaSerializer.PhoenixView
 
   def render("500.html", _assigns) do
     "Internal server error"

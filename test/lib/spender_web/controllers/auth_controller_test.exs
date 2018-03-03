@@ -7,14 +7,7 @@ defmodule SpenderWeb.AuthControllerTest do
   @ueberauth_auth %{credentials: %{token: "kbikn86917njbn"}, info: %{first_name: "Zacck", last_name: "Osiemo", email: "zacck@moneylog.com"}, provider: "google"}
 
   @error %{credentials: %{token: "" }, info: %{first_name: "Zacck", last_name: "Osiemo", email: "zacck@moneylog.com"}, provider: "google"}
-  setup %{conn: conn} do
-    conn =
-      conn
-      |> put_req_header("accept", "application/vnd.api+json")
-      |> put_req_header("content-type", "application/vnd.api+json")
 
-    {:ok, conn: conn}
-  end
 
 
   describe "AuthController" do
@@ -23,7 +16,10 @@ defmodule SpenderWeb.AuthControllerTest do
       assert redirected_to(conn, 302)
     end
 
-
+    test "requires Authentication when user isnt logged in", %{conn: conn} do
+      conn = get conn, "/api/another"
+      assert json_response(conn, 401)
+    end
 
     test "creates and returns user from google information",%{conn: conn} do
       #mock a response from google

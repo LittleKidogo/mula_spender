@@ -11,7 +11,7 @@ defmodule Spender.AuthenticationTestHelpers do
 
   def authenticate(conn, user) do
     # get the token for the user
-    {:ok, token, _} = user |> CodeCorps.Guardian.encode_and_sign()
+    {:ok, token, _} = user |> Spender.Auth.Guardian.encode_and_sign()
 
     # add the users token to the request header
     conn

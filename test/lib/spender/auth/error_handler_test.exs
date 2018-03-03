@@ -8,7 +8,6 @@ describe "ErrorHandler" do
     type = "Not Allowed"
     result = ErrorHandler.auth_error(conn, {type, []}, [])
     assert result.status == 401
-    assert result.resp_body == "Not Allowed"
   end
 end
 

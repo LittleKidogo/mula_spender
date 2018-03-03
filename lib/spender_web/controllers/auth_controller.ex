@@ -8,7 +8,7 @@ defmodule SpenderWeb.AuthController do
   alias Spender.{Accounts, Accounts.User, Auth.Guardian}
 
   def secret(conn, _params) do
-    text conn, "This is a secret page"
+    conn |> render("show.json-api", data: %{})
   end
 
   # handle callback payload

@@ -15,6 +15,8 @@ defmodule SpenderWeb.ApiCase do
   """
 
   use ExUnit.CaseTemplate
+  import Spender.Factories
+  use Phoenix.ConnTest
 
   using do
     quote do
@@ -29,7 +31,7 @@ defmodule SpenderWeb.ApiCase do
       import Spender.ModelCase
       import Spender.Factories
 
-    
+
 
       # The default endpoint for testing
       @endpoint SpenderWeb.Endpoint
@@ -42,7 +44,30 @@ defmodule SpenderWeb.ApiCase do
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Spender.Repo, {:shared, self()})
     end
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+
+    # modify a test using a tag
+    {conn, current_user} = cond do
+      tags[:authenticated] ->
+        build_conn()
+        |> put_req_header("accept", "application/vnd.api+json")
+        |> put_req_header("content-type", "application/vnd.api+json")
+        |> add_authentication_headers(tags[:authenticated])
+      true ->
+        conn = build_conn()
+        |> put_req_header("accept", "application/vnd.api+json")
+        |> put_req_header("content-type", "application/vnd.api+json")
+        {conn, nil}
+    end
+
+
+    {:ok, conn: conn, current_user: current_user}
   end
 
+  #add information to connection
+  defp add_authentication_headers(conn, true) do
+    user = insert(:user)
+
+    conn = conn |> Spender.AuthenticationTestHelpers.authenticate(user)
+    {conn, user}
+  end
 end
