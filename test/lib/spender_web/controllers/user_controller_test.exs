@@ -1,33 +1,26 @@
 defmodule SpenderWeb.UserControllerTest do
   use SpenderWeb.ApiCase
 
-  alias Spender.Accounts
 
   @create_attrs %{email: "some email", provider: "some provider", token: "sometoken", first_name: "Zacck", last_name: "Osiemo"}
   @update_attrs %{email: "some updated email", provider: "some updated provider", token: "someupdatedtoken"}
   @invalid_attrs %{avatar: "", email: ""}
 
-  def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@create_attrs)
-    user
-  end
-
-  setup %{conn: conn} do
-    conn =
-      conn
-      |> put_req_header("accept", "application/vnd.api+json")
-      |> put_req_header("content-type", "application/vnd.api+json")
-
-    {:ok, conn: conn}
-  end
-
-  describe "index" do
+   describe "index" do
     @tag :authenticated
     test "lists all users", %{conn: conn, current_user: _user} do
       conn = get conn, user_path(conn, :index)
       assert json_response(conn, 200)["data"]
     end
-  end
+   end
+
+  describe "show" do
+    @tag :authenticated
+    test "shows the user details", %{conn: conn, current_user: user} do
+      conn = get conn, user_path(conn, :show, user.id)
+      assert json_response(conn, 200)
+    end
+  end 
 
   describe "create user" do
     @tag :authenticated
