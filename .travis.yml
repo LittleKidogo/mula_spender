@@ -1,12 +1,13 @@
 language: elixir
-elixir: 1.5.2
+elixir:
+  - '1.5.2'
 otp_release: '19.0'
-env:
-  - MIX_ENV=test
 notifications:
     email:
         recipients:
             - coderv63@gmail.com
         on_success: never
         on_failure: always
+env:
+  - MIX_ENV=test
 script: mix coveralls.travis
