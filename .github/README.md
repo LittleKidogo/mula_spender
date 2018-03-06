@@ -13,7 +13,7 @@ with the information we needed to spend our money confidently. After some time o
 
 We love working and learning alongside the open source community and contributions are always welcome. We want to learn from you!
 To start helping go through
-- First read up on our contribution guidelines at [Contributing.md](/CONTRIBUTING.md)
+- First read up on our contribution guidelines at [Contributing.md](https://github.com/LittleKidogo/MoneyLog/blob/develop/.github/CONTRIBUTING.md)
 - The take a look at our issues and projects to see what you can work on
 
 ## Authors
