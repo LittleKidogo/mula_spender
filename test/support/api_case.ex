@@ -30,6 +30,7 @@ defmodule SpenderWeb.ApiCase do
       import Ecto.Query
       import Spender.ModelCase
       import Spender.Factories
+      import Spender.TestHelpers
 
 
 
