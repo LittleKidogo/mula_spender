@@ -10,7 +10,7 @@ defmodule SpenderWeb.UserControllerTest do
     @tag :authenticated
     test "lists all users", %{conn: conn, current_user: _user} do
       conn = get conn, user_path(conn, :index)
-      assert json_response(conn, 200)["data"]
+      assert conn |> json_response(200)
     end
    end
 
@@ -18,15 +18,18 @@ defmodule SpenderWeb.UserControllerTest do
     @tag :authenticated
     test "shows the user details", %{conn: conn, current_user: user} do
       conn = get conn, user_path(conn, :show, user.id)
-      assert json_response(conn, 200)
+
+      conn
+      |> json_response(200)
+      |> assert_id_in_response(user.id)
     end
-  end 
+  end
 
   describe "create user" do
     @tag :authenticated
     test "renders user when data is valid", %{conn: conn} do
       conn = post conn, user_path(conn, :create), user: @create_attrs
-      assert json_response(conn, 201)["data"]
+      assert conn |> json_response(201)
     end
 
     @tag :authenticated
@@ -40,7 +43,10 @@ defmodule SpenderWeb.UserControllerTest do
     @tag :authenticated
     test "renders user when data is valid", %{conn: conn, current_user: user} do
       conn = put conn, user_path(conn, :update, user), user: @update_attrs
-      assert json_response(conn, 200)["data"]
+
+      conn
+      |> json_response(200)
+      |> assert_id_in_response(user.id)
     end
 
     @tag :authenticated
