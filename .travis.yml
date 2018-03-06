@@ -4,3 +4,9 @@ otp_release: '19.0'
 env:
   - MIX_ENV=test
 script: mix coveralls.travis
+notifications: 
+    email: 
+        recipients:
+            - coderv63@gmail.com
+        on_success: never
+        on_failure: always
