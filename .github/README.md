@@ -6,14 +6,14 @@
 
 This is the Elixir backend API for `MoneyLog`
 MoneyLog is an application that helps us spend our money on stuff we want!
-Through some research after trying to use various 'budget' applications, We found that most of them did not provide us 
+Through some research after trying to use various 'budget' applications, We found that most of them did not provide us
 with the information we needed to spend our money confidently. After some time of using spreadsheets to record and plan our finances we have come to develop a group of spreadsheets and procedures that have aided us so greatly with confidence in our spending we hope to share this experience with as many people as possible through `MoneyLog`
 
 ## Getting Started
 
 We love working and learning alongside the open source community and contributions are always welcome. We want to learn from you!
 To start helping go through
-- First read up on our contribution guidelines at CONTRIBUTING
+- First read up on our contribution guidelines at [Contributing.md](/CONTRIBUTING.md)
 - The take a look at our issues and projects to see what you can work on
 
 ## Authors
