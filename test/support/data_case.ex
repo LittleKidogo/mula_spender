@@ -22,6 +22,8 @@ defmodule Spender.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Spender.DataCase
+
+      import Spender.Factories
     end
   end
 
