@@ -1,15 +1,16 @@
 defmodule Spender.MoneyLogs.Owner do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Spender.MoneyLogs.Owner
+  alias Spender.{MoneyLogs.Owner, MoneyLogs.Budget, Accounts.User}
 
 
   schema "owners" do
     field :name, :string
     field :type, :string
-    field :user_id, :id
+    has_many :budgets, Budget
+    belongs_to :user, User
 
-    timestamps()
+    timestamps(inserted_at: :created_at, updated_at: :modified_at)
   end
 
   @doc false

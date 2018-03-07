@@ -1,7 +1,7 @@
 defmodule Spender.MoneyLogs.Budget do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Spender.MoneyLogs.Budget
+  alias Spender.MoneyLogs.{Budget, Owner}
 
 
   schema "budgets" do
@@ -13,8 +13,9 @@ defmodule Spender.MoneyLogs.Budget do
     field :refined, :boolean, default: false
     field :start_date, :date
     field :status, :string
+    belongs_to :owner, Owner
 
-    timestamps(inserted_at: :created_at, updated_at: false)
+    timestamps(inserted_at: :created_at, updated_at: :modified_at)
   end
 
   @doc false

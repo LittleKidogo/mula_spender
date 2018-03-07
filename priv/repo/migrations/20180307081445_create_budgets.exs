@@ -12,7 +12,7 @@ defmodule Spender.Repo.Migrations.CreateBudgets do
       add :end_date, :date
       add :status, :string
 
-      timestamps()
+      timestamps(inserted_at: :created_at, updated_at: :modified_at)
     end
 
   end
