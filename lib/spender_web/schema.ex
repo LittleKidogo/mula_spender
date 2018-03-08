@@ -19,4 +19,14 @@ defmodule SpenderWeb.Schema do
     end
   end
 
+  mutation do
+    field :create_user, :user do
+      arg :provider, non_null(:string)
+      arg :token, non_null(:string)
+      arg :email, non_null(:string)
+
+      resolve &UserResolver.create_user/3
+    end
+  end
+
 end
