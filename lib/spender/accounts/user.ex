@@ -20,7 +20,7 @@ defmodule Spender.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:avatar, :firstname, :lastname, :email, :provider, :token])
+    |> cast(attrs, [:avatar, :first_name, :last_name, :email, :provider, :token])
     |> validate_required([:email, :provider, :token])
   end
 end
