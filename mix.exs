@@ -2,7 +2,6 @@ defmodule Spender.Mixfile do
   use Mix.Project
 
   @version "0.0.2-rclogs"
-
   def project do
     [
       app: :spender,
@@ -42,6 +41,8 @@ defmodule Spender.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:absinthe_ecto, "~> 0.1.0"},
+      {:absinthe_plug, "~> 1.3.0"},
       {:excoveralls, "~> 0.7", only: :test}, #test reporting on the ci
       {:ex_machina,"~>2.0", only: :test},
       {:hackney, "~> 1.8.0", override: true}, #coveralls uses this version of hackney
