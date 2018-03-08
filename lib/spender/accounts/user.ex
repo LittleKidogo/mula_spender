@@ -7,8 +7,8 @@ defmodule Spender.Accounts.User do
 
   schema "users" do
     field :avatar, :string
-    field :firstname, :string
-    field :lastname, :string
+    field :first_name, :string
+    field :last_name, :string
     field :email, :string
     field :provider, :string
     field :token, :string

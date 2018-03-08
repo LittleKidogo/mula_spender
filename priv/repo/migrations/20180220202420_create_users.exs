@@ -3,8 +3,8 @@ defmodule Spender.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :firstname, :string
-      add :lastname, :string
+      add :first_name, :string
+      add :last_name, :string
       add :avatar, :string
       add :email, :string
       add :provider, :string
