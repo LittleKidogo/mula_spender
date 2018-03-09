@@ -5,7 +5,7 @@ defmodule Spender.MoneyLogs do
   """
   import Ecto.Query, warn: false
   alias Spender.Repo
-  alias Spender.{Accounts, MoneyLogs.Owner, MoneyLogs.Budget}
+  alias Spender.{ MoneyLogs.Owner, MoneyLogs.Budget}
 
   def list_budgets(owner) do
     Owner
@@ -20,7 +20,6 @@ defmodule Spender.MoneyLogs do
     |> Repo.insert()
   end
 
- end
 
  def update_budget(%Budget{} = budget, attrs \\ %{}) do
    budget
