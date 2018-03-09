@@ -12,4 +12,11 @@ defmodule Spender.MoneyLogs do
     |> Repo.get(owner.id)
     |> Repo.preload(:budgets)
   end
+
+  def create_budget(%Owner{} = owner, attrs \\ %{}) do
+    %Budget{}
+    |> Budget.changeset(attrs)
+    |> Ecto.Changeset.put_change(:owner_id, owner.id)
+    |> Repo.insert()
+  end
 end

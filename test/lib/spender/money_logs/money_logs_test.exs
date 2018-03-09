@@ -3,6 +3,7 @@ defmodule Spender.MoneyLogsTest do
 
   alias Spender.MoneyLogs
 
+  @valid_budget %{name: "Budget", start_date: "2018-03-03", end_date: "2018-03-04"}
   describe "moneylogs " do
     test "list budgets/1 returns all budgets that belong to a user" do
       user = insert(:user)
@@ -12,6 +13,18 @@ defmodule Spender.MoneyLogsTest do
 
       budgets = Repo.all(MoneyLogs.Budget)
 
-      assert MoneyLogs.list_budgets(user).budgets |> Enum.sort == budgets |> Enum.sort
+      assert MoneyLogs.list_budgets(owner).budgets |> Enum.sort == budgets |> Enum.sort
+    end
+
+    test "create_budget/2 creates and returns a budget when attributes are valid" do
+      owner = insert(:owner)
+      %{name: name } = @valid_budget
+
+      {:ok, budget} = MoneyLogs.create_budget(owner, @valid_budget)
+      assert Repo.one(MoneyLogs.Budget)
+      assert budget.name == name
+    end
+
+    
   end
 end

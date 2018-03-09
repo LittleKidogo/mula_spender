@@ -1,7 +1,7 @@
 defmodule Spender.MoneyLogs.Budget do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Spender.MoneyLogs.{Budget, Owner}
+  alias Spender.MoneyLogs.{Owner}
 
 
   schema "budgets" do
