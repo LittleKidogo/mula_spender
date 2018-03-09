@@ -12,7 +12,8 @@ defmodule Spender.MoneyLogs.Budget do
     field :name, :string
     field :refined, :boolean, default: false
     field :start_date, :date
-    field :status, :string
+    # "new" "planning" "refined" "active" "expired"
+    field :status, :string, default: "new"
     belongs_to :owner, Owner
 
     timestamps(inserted_at: :created_at, updated_at: :modified_at)
@@ -23,5 +24,12 @@ defmodule Spender.MoneyLogs.Budget do
     budget
     |> cast(attrs, [:name, :refined, :amnt_in, :amnt_out, :is_active, :start_date, :end_date, :status])
     |> validate_required([:name, :start_date, :end_date])
+  end
+
+  def update_status(budget, attrs) do
+    budget
+    |> changeset(attrs)
+    |> cast(attrs, [:status])
+    |> validate_inclusion(:status, ["new","planning","refined","active","expired"])
   end
 end

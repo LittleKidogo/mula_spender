@@ -14,5 +14,21 @@ defmodule Spender.MoneyLogs.BudgetTest do
       changeset = Budget.changeset(%Budget{}, @invalid_attrs)
       refute changeset.valid?
     end
+
+    test " valid if status is accepted" do
+      ["new","planning","refined","active","expired"] |> Enum.each(fn(state) ->
+        payload = Map.put(@valid_attrs, :status, state)
+        changeset = Budget.update_status(%Budget{}, payload)
+        assert changeset.valid?
+      end)
+    end
+
+    test " invalid if status is not accepted" do
+      ["play", "budget", "owner"] |> Enum.each(fn(state) ->
+        payload = Map.put(@valid_attrs, :status, state)
+        changeset = Budget.update_status(%Budget{}, payload)
+        refute changeset.valid?
+      end)
+    end
   end
 end
