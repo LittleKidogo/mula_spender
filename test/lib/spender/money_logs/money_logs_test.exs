@@ -7,10 +7,11 @@ defmodule Spender.MoneyLogsTest do
     test "list budgets/1 returns all budgets that belong to a user" do
       user = insert(:user)
       owner = insert(:owner, user: user)
-      budget1 = insert(:budget, owner: owner)
-      budget2 = insert(:budget, owner: owner)
+      insert(:budget, owner: owner)
+      insert(:budget, owner: owner)
 
-      assert MoneyLogs.list_budgets(user) == [budget1, budget2]
-    end
+      budgets = Repo.all(MoneyLogs.Budget)
+
+      assert MoneyLogs.list_budgets(user).budgets |> Enum.sort == budgets |> Enum.sort
   end
 end
