@@ -32,7 +32,7 @@ If you find a security vulnerability, do NOT open an issue. Inform `superbike_z`
 
 Bug reports can be filed using the issue template on this projects github repository, This format enables us to respond quicker and clearly to any bug reports.
 
-##When filing an issue, make sure to answer these five questions:
+## When filing an issue, make sure to answer these four questions:
  1. What version of MoneyLog are you using (mix: version)?
  2. What did you do?
  3. What did you expect to see?
