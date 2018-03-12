@@ -12,7 +12,7 @@ defmodule Spender.Accounts.UserTest do
       assert changeset.valid?
     end
 
-    test "invalith with wrong attributes" do
+    test "invalid with wrong attributes" do
       changeset = User.changeset(%User{}, @invalid_attrs)
       refute changeset.valid?
     end
