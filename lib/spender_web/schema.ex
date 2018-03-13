@@ -4,7 +4,9 @@ defmodule SpenderWeb.Schema do
   alias Spender.{Accounts}
   alias SpenderWeb.UserResolver
 
+  @desc "A MoneyLog user"
   object :user do
+    field :id, :id
     field :avatar, :string
     field :first_name, :string
     field :last_name, :string
@@ -14,8 +16,15 @@ defmodule SpenderWeb.Schema do
   end
 
   query do
+    @desc "Get all users"
     field :all_users, list_of(:user) do
       resolve &UserResolver.all_users/3
+    end
+
+    @desc "Get user by email"
+    field :user, :user do
+      arg :email, non_null(:string)
+      resolve &UserResolver.find_user/3
     end
   end
 
