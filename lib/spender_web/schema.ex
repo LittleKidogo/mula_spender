@@ -5,12 +5,12 @@ defmodule SpenderWeb.Schema do
   alias SpenderWeb.UserResolver
 
   object :user do
-    field :avatar, non_null(:string)
-    field :first_name, non_null(:string)
-    field :last_name, non_null(:string)
-    field :email, non_null(:string)
-    field :provider, non_null(:string)
-    field :token, non_null(:string)
+    field :avatar, :string
+    field :first_name, :string
+    field :last_name, :string
+    field :email, :string
+    field :provider, :string
+    field :token, :string
   end
 
   query do
