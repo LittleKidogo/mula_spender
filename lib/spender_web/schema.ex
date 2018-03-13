@@ -2,7 +2,18 @@ defmodule SpenderWeb.Schema do
   use Absinthe.Schema
 
   alias Spender.{Accounts}
-  alias SpenderWeb.UserResolver
+  alias SpenderWeb.{UserResolver}
+  alias SpenderWeb.Schema.Middleware.ChangesetErrors
+
+
+  # match on a mutation since we can get changset errors here
+  def middleware(middleware, _field, %{identifier: :mutation}) do
+    middleware ++ [ChangesetErrors]
+  end
+  def middleware(middleware, _field, _object) do
+    middleware
+  end
+
 
   @desc "A MoneyLog user"
   object :user do
