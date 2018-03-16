@@ -2,8 +2,8 @@ defmodule Spender.WishList.ItemTest do
   use Spender.DataCase
   alias Spender.WishList.Item
 
-  @valid_attrs %{name: Soap, price: 10.3}
-  @invalid_attrs %{name: Soap, }
+  @valid_attrs %{name: "Soap", price: 10.3}
+  @invalid_attrs %{name: "Soap", }
 
   describe "item changesets" do
     test "should be valid with correct input" do
