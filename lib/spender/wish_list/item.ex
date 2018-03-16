@@ -9,9 +9,9 @@ defmodule Spender.WishList.Item do
     field :location, :string
     field :name, :string
     field :price, :float
-    field :qpm, :integer
+    field :qpm, :integer, default: 1
     field :type, :string
-    belongs_to :budget, Budget 
+    belongs_to :budget, Budget
 
     timestamps()
   end
