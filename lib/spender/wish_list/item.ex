@@ -2,6 +2,7 @@ defmodule Spender.WishList.Item do
   use Ecto.Schema
   import Ecto.Changeset
   alias Spender.WishList.Item
+  alias Spender.MoneyLogs.Budget
 
 
   schema "items" do
@@ -10,6 +11,7 @@ defmodule Spender.WishList.Item do
     field :price, :float
     field :qpm, :integer
     field :type, :string
+    belongs_to :budget, Budget 
 
     timestamps()
   end
