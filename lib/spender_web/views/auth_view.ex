@@ -3,5 +3,5 @@ defmodule SpenderWeb.AuthView do
   use SpenderWeb, :view
   use JaSerializer.PhoenixView
 
-  attributes [:first_name, :last_name, :provider, :email, :token]
+  attributes [:firstname, :lastname, :provider, :email, :token]
 end
