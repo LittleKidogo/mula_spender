@@ -2,6 +2,7 @@ defmodule Spender.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias Spender.Accounts.User
+  alias Spender.MoneyLogs.Owner
 
 
   schema "users" do
@@ -11,6 +12,7 @@ defmodule Spender.Accounts.User do
     field :email, :string
     field :provider, :string
     field :token, :string
+    has_one :owner, Owner
 
     timestamps(inserted_at: :created_at, updated_at: false)
   end
