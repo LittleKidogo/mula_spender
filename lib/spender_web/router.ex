@@ -30,7 +30,7 @@ defmodule SpenderWeb.Router do
 
 # Add a scope for authorization
   scope "/auth", SpenderWeb do
-    pipe_through [:api]
+    pipe_through [:browser]
 
     get "/:provider", AuthController, :request
 
@@ -38,7 +38,7 @@ defmodule SpenderWeb.Router do
   end
 
   scope "/api", SpenderWeb do
-    pipe_through [:api, :auth, :ensure_auth] 
+    pipe_through [:api, :auth, :ensure_auth]
     get "/another", AuthController, :secret
     resources "/users", UserController, except: [:new, :edit]
   end
