@@ -13,7 +13,7 @@ defmodule SpenderWeb.AuthController do
 
   # handle callback payload
   def login(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    user_params = %{token: auth.credentials.token, first_name: auth.info.first_name, last_name: auth.info.last_name, email: auth.info.email, provider: "google"}
+    user_params = %{token: auth.credentials.token, firstname: auth.info.first_name, lastname: auth.info.last_name, email: auth.info.email, provider: "google"}
     _changeset = User.changeset(%User{}, user_params)
     create(conn, user_params)
   end
@@ -27,7 +27,11 @@ defmodule SpenderWeb.AuthController do
   def create(conn, changeset) do
     case insert_or_update_user(changeset) do
       {:ok, user} ->
+        #encode a token for current_user
+        {:ok, token, _} = Guardian.encode_and_sign(user)
+
         conn
+        |> put_resp_header("Authorization", "Bearer #{token}")
         |> Guardian.Plug.sign_in(user)
         |> render("show.json-api", data: user)
       {:error, _reason} ->
