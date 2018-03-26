@@ -50,13 +50,9 @@ defmodule SpenderWeb.ApiCase do
     {conn, current_user} = cond do
       tags[:authenticated] ->
         build_conn()
-        |> put_req_header("accept", "application/vnd.api+json")
-        |> put_req_header("content-type", "application/vnd.api+json")
         |> add_authentication_headers(tags[:authenticated])
       true ->
         conn = build_conn()
-        |> put_req_header("accept", "application/vnd.api+json")
-        |> put_req_header("content-type", "application/vnd.api+json")
         {conn, nil}
     end
 
