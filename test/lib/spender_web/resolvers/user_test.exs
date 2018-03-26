@@ -1,5 +1,5 @@
 defmodule SpenderWeb.Resolvers.UserTest do
-  use SpenderWeb.ConnCase
+  use SpenderWeb.ApiCase
 
   alias Spender.AbsintheHelpers
 
@@ -26,28 +26,28 @@ defmodule SpenderWeb.Resolvers.UserTest do
       assert Enum.count(fetched_users) == Enum.count(loaded_users)
     end
 
+    @tag :authenticated
     test "update_user/3 should edit a saved user", %{conn: conn} do
       load_user = insert(:user)
       first_name = "Zacck"
 
       query = """
       mutation {
-        updateUser(email:#{load_user.email}, token: #{load_user.token}, provider: #{load_user.provider}, first_name: #{first_name} ) {
+        updateUser(firstName: #{first_name}) {
           firstName
-          email
         }
       }
       """
-      res = conn |> get("/graphiql", AbsintheHelpers.mutation_skeleton(query, "updateUser"))
+      res = conn |> post("/graphiql", AbsintheHelpers.mutation_skeleton(query))
 
       %{
         "data" => %{
           "user" => user
         }
-      } =json_response(res, 200)
+      } = json_response(res, 200)
 
-      assert user.email = load_user.email
-      assert user.first_name = first_name
+      assert user.email == load_user.email
+      assert user.first_name == first_name
     end
 
     end
@@ -73,6 +73,4 @@ defmodule SpenderWeb.Resolvers.UserTest do
       assert fetched_user["email"] == load_user.email
 
     end
-  end
-
 end
