@@ -32,7 +32,5 @@ defmodule Spender.MoneyLogsTest do
       {:ok, budget} = MoneyLogs.update_budget(budget, @updated_budget)
       assert budget.name  == name
     end
-
-
   end
 end

@@ -31,5 +31,12 @@ def owner_factory do
     user: build(:user)
   }
 end
+
+def wishlist_item_factory do
+  %Spender.WishList.Item {
+    name: sequence(:name, &"item-#{&1}"),
+    budget: build(:budget)
+  }
+end
 {:ok, _} = Application.ensure_all_started(:ex_machina)
 end
