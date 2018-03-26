@@ -26,10 +26,10 @@ defmodule Spender.WishList do
   Adds a wishlist item to a budget and upates the budget to planning if neccessary
   """
   @spec  add_item(Budget.t, map) :: {:ok, Item.t} | {:error, Changeset.t()}
-  def add_item(%{id: id, status: status} = budget, attrs) do
+  def add_item(%{status: status} = budget, attrs) do
     case status do
       "new" ->
-        {ok, updated_budget} = budget |> MoneyLogs.update_budget(%{status: "planning"})
+        {:ok, updated_budget} = budget |> MoneyLogs.update_budget(%{status: "planning"})
         do_add_item(updated_budget, attrs)
         _ -> do_add_item(budget, attrs)
     end
