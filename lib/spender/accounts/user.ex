@@ -7,8 +7,8 @@ defmodule Spender.Accounts.User do
 
   schema "users" do
     field :avatar, :string
-    field :firstname, :string
-    field :lastname, :string
+    field :first_name, :string
+    field :last_name, :string
     field :email, :string
     field :provider, :string
     field :token, :string
@@ -20,7 +20,7 @@ defmodule Spender.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:avatar, :firstname, :lastname, :email, :provider, :token])
+    |> cast(attrs, [:avatar, :first_name, :last_name, :email, :provider, :token])
     |> validate_required([:email, :provider, :token])
   end
 end
