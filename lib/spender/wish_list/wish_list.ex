@@ -30,11 +30,16 @@ defmodule Spender.WishList do
     case status do
       "new" ->
         {ok, updated_budget} = budget |> MoneyLogs.update_budget(%{status: "planning"})
-
-        %Item{}
-        |> Item.changeset(attrs)
-        |> Changeset.put_assoc(:budget, updated_budget)
-        |> Repo.insert()
+        do_add_item(updated_budget, attrs)
+        _ -> do_add_item(budget, attrs)
     end
+  end
+
+  @doc false
+  defp do_add_item(budget, attrs) do
+    %Item{}
+    |> Item.changeset(attrs)
+    |> Changeset.put_assoc(:budget, budget)
+    |> Repo.insert()
   end
 end
