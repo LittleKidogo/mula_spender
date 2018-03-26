@@ -13,6 +13,7 @@ defmodule SpenderWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug SpenderWeb.Context
   end
 
   # routes that allow users whether they are logged or not
