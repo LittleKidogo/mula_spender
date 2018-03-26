@@ -1,7 +1,7 @@
 defmodule Spender.MoneyLogsTest do
   use Spender.DataCase
 
-  alias Spender.MoneyLogs
+  alias Spender.{MoneyLogs, MoneyLogs.Owner}
 
   @valid_budget %{name: "Budget", start_date: "2018-03-03", end_date: "2018-03-04"}
   @updated_budget %{name: "Budget-Update", start_date: "2018-03-03", end_date: "2018-03-04"}
@@ -31,6 +31,15 @@ defmodule Spender.MoneyLogsTest do
       budget = insert(:budget, @valid_budget)
       {:ok, budget} = MoneyLogs.update_budget(budget, @updated_budget)
       assert budget.name  == name
+    end
+
+    test "create owner saves an onwer" do
+      attrs = %{name: "Zacck"}
+      user = insert(:user)
+      assert Repo.aggregate(Owner, :count, :id) == 0
+      {:ok, owner} = MoneyLogs.create_owner(user,attrs)
+      assert Repo.aggregate(Owner, :count, :id) == 1
+      assert owner.name == attrs.name
     end
   end
 end
