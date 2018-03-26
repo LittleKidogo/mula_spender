@@ -3,6 +3,7 @@ defmodule SpenderWeb.Resolvers.UserTest do
 
   alias Spender.AbsintheHelpers
 
+
   describe "User Resolver" do
     test "users/3 lists all users", %{conn: conn} do
       loaded_users = insert_list(24, :user)
@@ -28,26 +29,24 @@ defmodule SpenderWeb.Resolvers.UserTest do
 
     @tag :authenticated
     test "update_user/3 should edit a saved user", %{conn: conn} do
-      load_user = insert(:user)
+      insert(:user)
       first_name = "Zacck"
-
       query = """
-      mutation {
-        updateUser(firstName: #{first_name}) {
+      mutation($input: UserInput!) {
+        updateUser(input: $input) {
           firstName
         }
       }
       """
-      res = conn |> post("/graphiql", AbsintheHelpers.mutation_skeleton(query))
 
-      %{
+      conn = post conn, "/graphiql", query: query, variables: %{"input" => %{"firstName" => first_name}}
+      assert json_response(conn, 200) == %{
         "data" => %{
-          "user" => user
+          "updateUser" => %{
+            "firstName" => first_name
+          }
         }
-      } = json_response(res, 200)
-
-      assert user.email == load_user.email
-      assert user.first_name == first_name
+      }
     end
 
     end
