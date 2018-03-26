@@ -3,6 +3,9 @@ defmodule Spender.MoneyLogs.Owner do
   import Ecto.Changeset
   alias Spender.{MoneyLogs.Owner, MoneyLogs.Budget, Accounts.User}
 
+  @type t :: %__MODULE__{}
+
+
 
   schema "owners" do
     field :name, :string
@@ -19,5 +22,12 @@ defmodule Spender.MoneyLogs.Owner do
     |> cast(attrs, [:name, :type])
     |> validate_required([:name])
     |> unique_constraint(:user_id)
+  end
+
+  @spec create_changeset(User.t, map) :: {:ok, Owner.t} | {:error, Ecto.Changeset.t()}
+  def create_changeset(%User{} = user, attrs) do
+    %Owner{}
+    |> Owner.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:user, user)
   end
 end
