@@ -29,7 +29,6 @@ defmodule SpenderWeb.AuthController do
       {:ok, user} ->
         #encode a token for current_user
         {:ok, token, _} = Guardian.encode_and_sign(user)
-
         conn
         |> put_resp_header("authorization", "Bearer #{token}")
         |> Guardian.Plug.sign_in(user)
