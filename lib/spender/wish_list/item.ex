@@ -23,4 +23,11 @@ defmodule Spender.WishList.Item do
     |> cast(attrs, [:name, :type, :qpm, :price, :location])
     |> validate_required([:name, :price])
   end
+
+  @spec create_changeset(Budget.t, map) :: Changeset.t
+  def create_changeset(%Budget{} = budget, attrs) do
+    %Item{}
+    |> changeset(attrs)
+    |> put_assoc(:budget, budget)
+  end
 end
