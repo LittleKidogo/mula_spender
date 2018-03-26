@@ -12,9 +12,7 @@ defmodule SpenderWeb.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json-api", "json"]
-    plug JaSerializer.ContentTypeNegotiation
-    plug JaSerializer.Deserializer
+    plug :accepts, ["json"]
   end
 
   # routes that allow users whether they are logged or not
@@ -37,18 +35,17 @@ defmodule SpenderWeb.Router do
     get "/:provider/callback", AuthController, :login
   end
 
-  scope "/api", SpenderWeb do
+  scope "/" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: SpenderWeb.Schema
+  end
+
+  scope "/api" do
     pipe_through [:api, :auth, :ensure_auth]
     get "/another", AuthController, :secret
-    resources "/users", UserController, except: [:new, :edit]
+    resources "/users", UserController
   end
-
-  scope "/", SpenderWeb do
-    pipe_through [:browser, :auth]
-
-    get "/", WelcomeController, :index
-  end
-
-
 
 end
