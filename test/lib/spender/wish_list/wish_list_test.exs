@@ -18,10 +18,9 @@ defmodule Spender.WishListTest do
       {:ok, item} = WishList.add_item(budget, attrs)
       assert Repo.aggregate(Budget, :count, :id) == 1
       assert Repo.aggregate(Item, :count, :id) == 1
-      saved_item = Repo.one(Item)
       saved_budget = Repo.one(Budget)
-      assert saved_item.budget_id == budget.id
-      assert saved_item.name == attrs["name"]
+      assert item.budget_id == budget.id
+      assert item.name == attrs.name
       assert saved_budget.id == budget.id
       assert saved_budget.status == "planning"
      end
