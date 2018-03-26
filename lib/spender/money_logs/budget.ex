@@ -5,6 +5,8 @@ defmodule Spender.MoneyLogs.Budget do
   alias Spender.WishList.Item
 
 
+  @type t :: %__MODULE__{}
+  
   schema "budgets" do
     field :amnt_in, :float
     field :amnt_out, :float

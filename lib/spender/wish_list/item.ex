@@ -4,8 +4,9 @@ defmodule Spender.WishList.Item do
   alias Spender.WishList.Item
   alias Spender.MoneyLogs.Budget
 
+  @type t :: %__MODULE__{}
 
-  schema "items" do
+  schema "wishlist_items" do
     field :location, :string
     field :name, :string
     field :price, :float

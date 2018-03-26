@@ -35,7 +35,6 @@ end
 def wishlist_item_factory do
   %Spender.WishList.Item {
     name: sequence(:name, &"item-#{&1}"),
-    owner: build(:owner)
     budget: build(:budget)
   }
 end
