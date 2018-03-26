@@ -2,6 +2,7 @@ defmodule SpenderWeb.Schema do
   use Absinthe.Schema
 
   alias SpenderWeb.Resolvers
+  alias SpenderWeb.Schema.Middleware
 
   #import schema types
   import_types __MODULE__.UserTypes
@@ -22,6 +23,7 @@ defmodule SpenderWeb.Schema do
   mutation do
     field :update_user, :user do
       arg :input, non_null(:user_input)
+      middleware Middleware.Authorize, :any
       resolve &Resolvers.User.update_user/3
     end
   end
