@@ -3,6 +3,9 @@ defmodule SpenderWeb.Schema do
 
   alias SpenderWeb.Resolvers
 
+  #import schema types
+  import_types __MODULE__.UserTypes
+
   # build our queries
   query do
     field :users, list_of(:user) do
