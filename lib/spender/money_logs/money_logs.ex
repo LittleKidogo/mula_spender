@@ -5,7 +5,7 @@ defmodule Spender.MoneyLogs do
   """
   import Ecto.Query, warn: false
   alias Spender.Repo
-  alias Spender.{ MoneyLogs.Owner, MoneyLogs.Budget}
+  alias Spender.{ Accounts.User, MoneyLogs.Owner, MoneyLogs.Budget}
 
   def list_budgets(owner) do
     Owner
@@ -25,5 +25,12 @@ defmodule Spender.MoneyLogs do
    budget
    |> Budget.changeset(attrs)
    |> Repo.update()
+ end
+
+ @spec create_owner(User.t, map) :: {:ok, Owner.t} | {:error, Ecto.Changeset.t()}
+ def create_owner(%User{} = user, attrs) do
+   user
+   |> Owner.create_changeset(attrs)
+   |> Repo.insert()
  end
 end
