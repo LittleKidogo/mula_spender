@@ -26,6 +26,31 @@ defmodule SpenderWeb.Resolvers.UserTest do
       assert Enum.count(fetched_users) == Enum.count(loaded_users)
     end
 
+    test "update_user/3 should edit a saved user", %{conn: conn} do
+      load_user = insert(:user)
+      first_name = "Zacck"
+
+      query = """
+      mutation {
+        updateUser(email:#{load_user.email}, token: #{load_user.token}, provider: #{load_user.provider}, first_name: #{first_name} ) {
+          firstName
+          email
+        }
+      }
+      """
+      res = conn |> get("/graphiql", AbsintheHelpers.mutation_skeleton(query, "updateUser"))
+
+      %{
+        "data" => %{
+          "user" => user
+        }
+      } =json_response(res, 200)
+
+      assert user.email = load_user.email
+      assert user.first_name = first_name
+    end
+
+    end
     test "user/3 shows the relevant user detals", %{conn: conn} do
       load_user = insert(:user)
 
