@@ -1,12 +1,17 @@
 defmodule SpenderWeb.Schema do
   use Absinthe.Schema
 
+  alias SpenderWeb.Resolvers
+
   # build our queries
   query do
     field :users, list_of(:user) do
-      resolve fn _,_,_ ->
-        {:ok, Spender.Repo.all(Spender.Accounts.User)}
-      end
+      resolve &Resolvers.User.users/3
+    end
+
+    field :user, :user do
+      arg :id, :integer
+      resolve &Resolvers.User.user/3
     end
   end
 
