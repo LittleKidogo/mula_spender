@@ -3,7 +3,7 @@ defmodule SpenderWeb.Schema do
 
   alias SpenderWeb.Resolvers
   alias SpenderWeb.Schema.Middleware
-  
+
   #middleware
   def middleware(middleware, _field, %{identifier: :mutation}) do
     middleware ++ [Middleware.ChangesetErrors]
@@ -49,6 +49,12 @@ defmodule SpenderWeb.Schema do
       arg :input, non_null(:user_input)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.User.update_user/3
+    end
+
+    field :create_budget, :budget  do
+      arg :input, non_null(:budget_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Owner.create_budget/3
     end
   end
 end
