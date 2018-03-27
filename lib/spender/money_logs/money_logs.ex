@@ -46,4 +46,12 @@ defmodule Spender.MoneyLogs do
         {:error, "owner not found"}
     end
   end
+
+  @spec fetch_or_create_owner(User.t) :: {:ok, Owner.t}
+  def fetch_or_create_owner(user) do
+    case get_owner(user) do
+      {:ok, owner} -> {:ok, owner}
+      {:error, _} -> create_owner(user, %{"name" => user.email})
+    end
+  end
 end

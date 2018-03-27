@@ -3,6 +3,8 @@ defmodule SpenderWeb.Resolvers.OwnerTest do
 
   alias Spender.AbsintheHelpers
 
+  alias Spender.MoneyLogs.{Budget, Owner}
+
 
   describe "Owner Resolver" do
     @tag :authenticated
@@ -124,6 +126,40 @@ defmodule SpenderWeb.Resolvers.OwnerTest do
           }
         }
       }
+    end
+
+    @tag :authenticated
+    test "create_budget when owner does not exist", %{conn: conn} do
+
+      variables = %{
+        "input" => %{
+          "name" => "Food Lovers"
+        }
+      }
+
+      query = """
+      mutation($input: BudgetInput!) {
+        createBudget(input: $input) {
+          name
+        }
+      }
+      """
+
+      assert Repo.aggregate(Budget, :count, :id) == 0
+      assert Repo.aggregate(Owner, :count, :id) == 0
+
+      conn = post conn, "/graphiql", query: query, variables: variables
+      assert Repo.aggregate(Budget, :count, :id) == 1
+      assert Repo.aggregate(Owner, :count, :id) == 1
+
+      assert json_response(conn, 200) == %{
+        "data" => %{
+          "createBudget" => %{
+            "name" => variables["input"]["name"]
+          }
+        }
+      }
+
     end
   end
 end
