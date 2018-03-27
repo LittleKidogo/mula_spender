@@ -7,11 +7,14 @@ defmodule Spender.MoneyLogs do
   alias Spender.Repo
   alias Spender.{ Accounts.User, MoneyLogs.Owner, MoneyLogs.Budget}
 
-  @spec list_budgets(Owner.t) :: list(Budget.t)
-  def list_budgets(owner) do
-    Owner
-    |> Repo.get(owner.id)
-    |> Repo.preload(:budgets)
+  @spec list_budgets(Owner.t) :: {:ok, list(Budget.t)} | {:error, nil}
+  def list_budgets(%{id: id} = _owner) do
+    with [_|_] = budgets <- Repo.all(Budget, [owner_id: id]) do
+      {:ok, budgets}
+    else
+      [] ->
+        {:error, nil}
+      end
   end
 
   def create_budget(%Owner{} = owner, attrs \\ %{}) do
