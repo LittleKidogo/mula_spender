@@ -6,6 +6,7 @@ defmodule SpenderWeb.Schema do
 
   #import schema types
   import_types __MODULE__.UserTypes
+  import_types __MODULE__.MoneyLogTypes
 
   # build our queries
   query do
@@ -16,6 +17,12 @@ defmodule SpenderWeb.Schema do
     field :user, :user do
       arg :id, :integer
       resolve &Resolvers.User.user/3
+    end
+
+    field :owner, :owner do
+      arg :user_id, :integer
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Owner.get_owner/3
     end
   end
 
