@@ -97,5 +97,33 @@ defmodule SpenderWeb.Resolvers.OwnerTest do
 
         assert error["message"] == "owner not found"
     end
+
+    @tag :authenticated
+    test "create_budget when an owner exists", %{conn: conn, current_user: user} do
+      insert(:owner, user: user)
+
+      variables = %{
+        "input" => %{
+          "name" => "Food Lovers"
+        }
+      }
+
+      query = """
+      mutation($input: BudgetInput!) {
+        createBudget(input: $input) {
+          name
+        }
+      }
+      """
+
+      conn = post conn, "/graphiql", query: query, variables: variables
+      assert json_response(conn, 200) == %{
+        "data" => %{
+          "createBudget" => %{
+            "name" => variables["input"]["name"]
+          }
+        }
+      }
+    end
   end
 end
