@@ -1,8 +1,8 @@
-defmodule SpendeWeb.Schema.Midddleware.ChangesetErrors do
+defmodule SpenderWeb.Schema.Middleware.ChangesetErrors do
   @behaviour Absinthe.Middleware
 
   def call(res, _) do
-    %{
+    %{res |
       errors: Enum.flat_map(res.errors, &transform_error/1)
     }
   end
