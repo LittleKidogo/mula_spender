@@ -9,7 +9,6 @@ defmodule SpenderWeb.AuthControllerTest do
   @error %{credentials: %{token: "" }, info: %{first_name: "Zacck", last_name: "Osiemo", email: "zacck@moneylog.com"}, provider: "google"}
 
 
-
   describe "AuthController" do
     test "redirects user to Google for Authentication", %{conn: conn} do
       conn = get conn, "/auth/google"
@@ -18,6 +17,14 @@ defmodule SpenderWeb.AuthControllerTest do
 
     test "requires Authentication when user isnt logged in", %{conn: conn} do
       conn = get conn, "/api/another"
+      assert json_response(conn, 401)
+    end
+
+    test "shows error if failure from ueberauth_auth", %{conn: conn} do
+      conn = conn
+      |> assign(:ueberauth_failure, %{})
+      |> get("/auth/google/callback")
+
       assert json_response(conn, 401)
     end
 

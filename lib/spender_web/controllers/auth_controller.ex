@@ -20,6 +20,7 @@ defmodule SpenderWeb.AuthController do
 
   def login(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
     conn
+    |> put_status(401)
     |> render("show.json-api", data: %{"error" => "Failed to Authenticate"})
   end
 
