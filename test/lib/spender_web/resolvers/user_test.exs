@@ -29,7 +29,6 @@ defmodule SpenderWeb.Resolvers.UserTest do
 
     @tag :authenticated
     test "update_user/3 should edit a saved user", %{conn: conn} do
-      insert(:user)
       first_name = "Zacck"
       query = """
       mutation($input: UserInput!) {
