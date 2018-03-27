@@ -20,4 +20,12 @@ defmodule SpenderWeb.Schema.MoneyLogTypes do
     field :refined, :boolean
     field :start_date, :date
   end
+
+  @desc "Inputs for a MoneyLog"
+  input_object :budget_input do
+    field :name, non_null(:string)
+    field :id, :integer
+    field :start_date, :date
+    field :end_date, :date 
+  end
 end
