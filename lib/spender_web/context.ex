@@ -2,7 +2,6 @@ defmodule SpenderWeb.Context do
   @behaviour Plug
 
   import Plug.Conn
-  alias Spender.Accounts.User
 
   def init(opts), do: opts
 
@@ -12,8 +11,8 @@ defmodule SpenderWeb.Context do
   end
 
   defp build_context(conn) do
-    with ["Bearer " <> token ] <- get_req_header(conn, "authorization")  do
-      {:ok, user, _claims} = Spender.Auth.Guardian.resource_from_token(token)
+    with ["Bearer " <> token ] <- get_req_header(conn, "authorization"),
+      {:ok, user, _claims} = Spender.Auth.Guardian.resource_from_token(token) do
 
        %{current_user: user}
     else
