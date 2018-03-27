@@ -28,6 +28,14 @@ defmodule SpenderWeb.AuthControllerTest do
       assert json_response(conn, 401)
     end
 
+    test "logs user out on logut action", %{conn: conn} do
+      conn = conn
+      |> assign(:ueberauth_auth, @ueberauth_auth)
+      |> get("/auth/google/logout")
+
+      assert html_response(conn, 302)
+    end
+
     test "creates and returns user from google information",%{conn: conn} do
       #mock a response from google
       conn = conn
