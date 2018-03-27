@@ -14,7 +14,8 @@ defmodule Spender.MoneyLogsTest do
 
       budgets = Repo.all(MoneyLogs.Budget)
 
-      assert MoneyLogs.list_budgets(owner).budgets |> Enum.sort == budgets |> Enum.sort
+      {:ok, saved_budgets} = MoneyLogs.list_budgets(owner)
+      assert saved_budgets |> Enum.sort == budgets |> Enum.sort
     end
 
     test "create_budget/2 creates and returns a budget when attributes are valid" do
