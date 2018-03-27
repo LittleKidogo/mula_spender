@@ -7,13 +7,13 @@ defmodule Spender.MoneyLogs do
   alias Spender.Repo
   alias Spender.{ Accounts.User, MoneyLogs.Owner, MoneyLogs.Budget}
 
-  @spec list_budgets(Owner.t) :: {:ok, list(Budget.t)} | {:error, nil}
+  @spec list_budgets(Owner.t) :: {:ok, list(Budget.t)} | {:error, String.t}
   def list_budgets(%{id: id} = _owner) do
     with [_|_] = budgets <- Repo.all(Budget, [owner_id: id]) do
       {:ok, budgets}
     else
       [] ->
-        {:error, nil}
+        {:error, "user doesn't have any moneylogs"}
       end
   end
 
@@ -43,7 +43,7 @@ defmodule Spender.MoneyLogs do
       {:ok, owner}
     else
       nil ->
-        {:error, nil}
+        {:error, "owner not found"}
     end
   end
 end

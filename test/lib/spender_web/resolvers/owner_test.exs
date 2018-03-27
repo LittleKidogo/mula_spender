@@ -30,6 +30,28 @@ defmodule SpenderWeb.Resolvers.OwnerTest do
     end
 
     @tag :authenticated
+    test "returns error when budgets is nil", %{conn: conn, current_user: user} do
+      # insert an onwer
+      insert(:owner, user: user)
+      query = """
+      {
+        budgets {
+          name
+        }
+      }
+      """
+
+      res = conn  |> get("/graphiql", AbsintheHelpers.query_skeleton(query,"budgets"))
+
+      %{
+        "errors" => [error]
+        } = json_response(res, 200)
+
+        assert error["message"] == "user doesn't have any moneylogs"
+
+    end
+
+    @tag :authenticated
     test "fetches an existing owner", %{conn: conn, current_user: user} do
       # insert an onwer
       owner = insert(:owner, user: user)
@@ -53,6 +75,27 @@ defmodule SpenderWeb.Resolvers.OwnerTest do
           }
         }
       }
+    end
+
+    @tag :authenticated
+    test "returns no existing owner error", %{conn: conn} do
+      #build the query
+      query = """
+      {
+        owner {
+          name
+        }
+      }
+      """
+
+      # run the query
+      res = conn |> get("/graphiql", AbsintheHelpers.query_skeleton(query, "owner"))
+
+      %{
+        "errors" => [error]
+        } = json_response(res, 200)
+
+        assert error["message"] == "owner not found"
     end
   end
 end
