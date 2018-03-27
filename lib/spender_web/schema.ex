@@ -3,12 +3,7 @@ defmodule SpenderWeb.Schema do
 
   alias SpenderWeb.Resolvers
   alias SpenderWeb.Schema.Middleware
-
-  #import schema types
-  import_types Absinthe.Type.Custom
-  import_types __MODULE__.UserTypes
-  import_types __MODULE__.MoneyLogTypes
-
+  
   #middleware
   def middleware(middleware, _field, %{identifier: :mutation}) do
     middleware ++ [Middleware.ChangesetErrors]
@@ -17,6 +12,13 @@ defmodule SpenderWeb.Schema do
   def middleware(middleware, _field, _object) do
     middleware
   end
+
+  #import schema types
+  import_types Absinthe.Type.Custom
+  import_types __MODULE__.UserTypes
+  import_types __MODULE__.MoneyLogTypes
+
+
 
   # build our queries
   query do
