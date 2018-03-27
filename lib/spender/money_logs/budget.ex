@@ -6,7 +6,7 @@ defmodule Spender.MoneyLogs.Budget do
 
 
   @type t :: %__MODULE__{}
-  
+
   schema "budgets" do
     field :amnt_in, :float
     field :amnt_out, :float
@@ -27,7 +27,7 @@ defmodule Spender.MoneyLogs.Budget do
   def changeset(%Budget{} = budget, attrs) do
     budget
     |> cast(attrs, [:name, :refined, :amnt_in, :amnt_out, :is_active, :start_date, :end_date, :status])
-    |> validate_required([:name, :start_date, :end_date])
+    |> validate_required([:name])
   end
 
   def update_status(budget, attrs) do
