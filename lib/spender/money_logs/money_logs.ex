@@ -7,6 +7,7 @@ defmodule Spender.MoneyLogs do
   alias Spender.Repo
   alias Spender.{ Accounts.User, MoneyLogs.Owner, MoneyLogs.Budget}
 
+  @spec list_budgets(Owner.t) :: list(Budget.t)
   def list_budgets(owner) do
     Owner
     |> Repo.get(owner.id)
@@ -20,17 +21,26 @@ defmodule Spender.MoneyLogs do
     |> Repo.insert()
   end
 
-
- def update_budget(%Budget{} = budget, attrs \\ %{}) do
+  def update_budget(%Budget{} = budget, attrs \\ %{}) do
    budget
    |> Budget.changeset(attrs)
    |> Repo.update()
- end
+  end
 
- @spec create_owner(User.t, map) :: {:ok, Owner.t} | {:error, Ecto.Changeset.t()}
- def create_owner(%User{} = user, attrs) do
+  @spec create_owner(User.t, map) :: {:ok, Owner.t} | {:error, Ecto.Changeset.t()}
+  def create_owner(%User{} = user, attrs) do
    user
    |> Owner.create_changeset(attrs)
    |> Repo.insert()
- end
+  end
+
+  @spec get_owner(User.t) :: {:ok, Owner.t} |  {:error, nil}
+  def get_owner(%{id: id} = _user) do
+    with %Owner{} = owner <- Owner |> Repo.get_by([user_id: id]) do
+      {:ok, owner}
+    else
+      nil ->
+        {:error, nil}
+    end
+  end
 end
