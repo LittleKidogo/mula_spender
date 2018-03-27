@@ -9,6 +9,15 @@ defmodule SpenderWeb.Schema do
   import_types __MODULE__.UserTypes
   import_types __MODULE__.MoneyLogTypes
 
+  #middleware
+  def middleware(middleware, _field, %{identifier: :mutation}) do
+    middleware ++ [Middleware.ChangesetErrors]
+  end
+
+  def middleware(middleware, _field, _object) do
+    middleware
+  end
+
   # build our queries
   query do
     field :budgets, list_of(:budget) do
