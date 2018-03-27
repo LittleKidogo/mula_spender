@@ -15,5 +15,12 @@ defmodule Spender.WishList.ItemTest do
       changeset = Item.changeset(%Item{}, @invalid_attrs)
       refute changeset.valid?
     end
+
+    test "should associate an item with a budget" do
+      budget = insert(:budget)
+      changeset = Item.create_changeset(budget, @valid_attrs)
+      assert changeset.valid?
+      assert changeset.changes.budget
+    end
   end
 end
