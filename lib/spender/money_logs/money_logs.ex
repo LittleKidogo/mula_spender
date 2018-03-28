@@ -7,6 +7,7 @@ defmodule Spender.MoneyLogs do
   alias Spender.Repo
   alias Spender.{ Accounts.User, MoneyLogs.Owner, MoneyLogs.Budget}
 
+
   @spec list_budgets(Owner.t) :: {:ok, list(Budget.t)} | {:error, String.t}
   def list_budgets(%{id: id} = _owner) do
     with [_|_] = budgets <- Repo.all(Budget, [owner_id: id]) do
@@ -28,6 +29,16 @@ defmodule Spender.MoneyLogs do
    budget
    |> Budget.changeset(attrs)
    |> Repo.update()
+  end
+
+  @spec get_budget(integer()) :: Budget.t | {:error, String.t}
+  def get_budget(id) do
+    with %Budget{} = budget <- Budget |> Repo.get(id) do
+      {:ok, budget}
+    else
+      nil ->
+        {:error, "budget not found"}
+    end
   end
 
   @spec create_owner(User.t, map) :: {:ok, Owner.t} | {:error, Ecto.Changeset.t()}
