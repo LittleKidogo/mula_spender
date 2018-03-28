@@ -16,10 +16,14 @@ defmodule Spender.WishList do
   Lists all wishlist items in a budget
   """
   @spec list_items(Budget.t)::list(Item.t)
-  def list_items(%{id: id} = _budget) do
+  def list_items(%{id: id, name: name} = _budget) do
     query = from i in Item, where: i.budget_id == ^id
 
-    Repo.all(query)
+    with [_|_] = items <- Repo.all(query) do
+      {:ok, items}
+    else
+      [] -> {:error, "#{name} doesn't have any items"}
+    end
   end
 
   @doc """
