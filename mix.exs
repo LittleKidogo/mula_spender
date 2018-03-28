@@ -1,7 +1,7 @@
 defmodule Spender.Mixfile do
   use Mix.Project
 
-  @version "0.0.2-rclogs"
+  @version "0.0.3-rcwishlist"
 
   def project do
     [
