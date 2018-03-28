@@ -39,6 +39,35 @@ defmodule Spender.WishListTest do
        {:ok, next_item} = WishList.add_item(saved_budget, second_attrs)
        assert next_item.name == second_attrs.name
      end
+
+     test "get_item gets an exising item" do
+       item = insert(:wishlist_item)
+
+       {:ok, saved_item} = WishList.get_item(item.id )
+
+       assert saved_item.name == item.name
+     end
+
+     test "get_item returns error if item doesnt exist" do
+       assert {:error, "wishlist item not found"} = WishList.get_item(50)
+     end
+
+     test "update item should edit a saved item" do
+       budget = insert(:budget)
+       item =  insert(:wishlist_item, budget: budget)
+
+       update_attrs = %{name: "Oats", price: 25.34}
+
+       assert Repo.aggregate(Item, :count, :id) == 1
+
+
+       {:ok, edited_item} = WishList.update_item(item, update_attrs)
+
+       assert Repo.aggregate(Item, :count, :id) == 1
+
+       assert edited_item.id == item.id
+       assert edited_item.name ==  update_attrs.name
+     end
   end
 
 end

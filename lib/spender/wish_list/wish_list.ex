@@ -39,6 +39,28 @@ defmodule Spender.WishList do
     end
   end
 
+  @doc """
+  This functions takes n existing wishlist item and some update attributes and applies
+  the updates to the item
+  """
+  @spec update_item(Item.t, map) :: {:ok, Item.t} | {:error, Changeset.t()}
+  def update_item(item, attrs) do
+    item
+    |> Item.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @spec get_item(integer()) :: {:ok, Item.t} | {:error, String.t()}
+  def get_item(id) do
+    with %Item{} = item  <- Item |> Repo.get(id) do
+      {:ok, item}
+    else
+      nil ->
+        {:error, "wishlist item not found"}
+    end
+  end
+
+
   @doc false
   defp do_add_item(budget, attrs) do
     %Item{}
