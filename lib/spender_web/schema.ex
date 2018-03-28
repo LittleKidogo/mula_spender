@@ -17,25 +17,37 @@ defmodule SpenderWeb.Schema do
   import_types Absinthe.Type.Custom
   import_types __MODULE__.UserTypes
   import_types __MODULE__.MoneyLogTypes
+  import_types __MODULE__.WishListTypes
 
 
 
   # build our queries
   query do
+    @desc "Gets all Wishlist Items in a budget"
+    field :wish_list_items, list_of(:wish_list_item) do
+      arg :input, non_null(:wish_list_items_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.WishList.get_items/3
+    end
+
+    @desc "Lists all budgets for a user"
     field :budgets, list_of(:budget) do
       middleware Middleware.Authorize, :any
       resolve &Resolvers.Owner.get_budgets/3
     end
 
+    @desc "Lists all users on the system"
     field :users, list_of(:user) do
       resolve &Resolvers.User.users/3
     end
 
+    @desc "Gets a single user who"
     field :user, :user do
       arg :id, :integer
       resolve &Resolvers.User.user/3
     end
 
+    @desc "Gets the owner profile of the logged in user"
     field :owner, :owner do
       arg :user_id, :integer
       middleware Middleware.Authorize, :any
