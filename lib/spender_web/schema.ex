@@ -57,18 +57,35 @@ defmodule SpenderWeb.Schema do
 
   # add mutations handled by our schema
   mutation do
+    @desc "Updates a WishList Item"
+    field :update_wish_list_item, :wish_list_item do
+      arg :input, non_null(:wish_list_item_update_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.WishList.update_item/3
+    end
+    
+    @desc "creates a wishlist item"
+    field :create_wish_list_item, :wish_list_item do
+      arg :input, non_null(:wish_list_item_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.WishList.create_item/3
+    end
+
+    @desc "Updates a given user"
     field :update_user, :user do
       arg :input, non_null(:user_input)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.User.update_user/3
     end
 
+    @desc "Creates a budget for an owner"
     field :create_budget, :budget  do
       arg :input, non_null(:budget_input)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.Owner.create_budget/3
     end
 
+    @desc "Updates a given budget"
     field :update_budget, :budget do
       arg :input, non_null(:budget_update)
       middleware Middleware.Authorize, :any
