@@ -56,5 +56,11 @@ defmodule SpenderWeb.Schema do
       middleware Middleware.Authorize, :any
       resolve &Resolvers.Owner.create_budget/3
     end
+
+    field :update_budget, :budget do
+      arg :input, non_null(:budget_update)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Owner.update_budget/3
+    end
   end
 end

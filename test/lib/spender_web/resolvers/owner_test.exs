@@ -161,5 +161,74 @@ defmodule SpenderWeb.Resolvers.OwnerTest do
       }
 
     end
+
+    @tag :authenticated
+    test "update_budget errors out when budget doesn't exist", %{conn: conn} do
+      variables = %{
+        "input" => %{
+          "id" => 50,
+          "name" => "Food Lovers",
+          "startDate" => "2018-07-12",
+          "endDate" => "2018-07-20"
+        }
+      }
+
+      query = """
+      mutation($input: BudgetUpdate!) {
+        updateBudget(input: $input) {
+          name
+          id
+        }
+      }
+      """
+
+      assert Repo.aggregate(Budget, :count, :id) == 0
+
+      conn = post conn, "/graphiql", query: query, variables: variables
+      assert Repo.aggregate(Budget, :count, :id) == 0
+
+      %{
+        "errors" => [error]
+      } = json_response(conn, 200)
+
+      assert error["message"] == "budget not found"
+    end
+
+    @tag :authenticated
+    test "update_budget with new details", %{conn: conn, current_user: user} do
+      owner = insert(:owner, user: user)
+      budget = insert(:budget, owner: owner)
+      variables = %{
+        "input" => %{
+          "id" => budget.id,
+          "name" => "Food Lovers",
+          "startDate" => "2018-07-12",
+          "endDate" => "2018-07-20"
+        }
+      }
+
+      query = """
+      mutation($input: BudgetUpdate!) {
+        updateBudget(input: $input) {
+          name
+          id
+        }
+      }
+      """
+
+      assert Repo.aggregate(Budget, :count, :id) == 1
+
+      conn = post conn, "/graphiql", query: query, variables: variables
+      assert Repo.aggregate(Budget, :count, :id) == 1
+
+      %{
+        "data" => %{
+          "updateBudget" => updatedBudget
+        }
+      } = json_response(conn, 200)
+
+      assert updatedBudget["name"] == variables["input"]["name"]
+      assert updatedBudget["id"] == budget.id
+    end
   end
 end

@@ -20,4 +20,11 @@ defmodule SpenderWeb.Resolvers.Owner do
         {:ok, budget}
       end
   end
+
+  def update_budget(_,%{input: args}, _) do
+    with {:ok, budget} <- MoneyLogs.get_budget(args.id),
+      {:ok, updated_budget} <- MoneyLogs.update_budget(budget, args) do
+        {:ok, updated_budget}
+    end
+  end
 end
