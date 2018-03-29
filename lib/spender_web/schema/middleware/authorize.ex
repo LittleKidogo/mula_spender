@@ -12,6 +12,6 @@ defmodule SpenderWeb.Schema.Middleware.Authorize do
       end
   end
 
-  defp correct_role?(%{}, _), do: true
+  defp correct_role?(%{}, :any), do: true
   defp correct_role?(%{}, _), do: false
 end
