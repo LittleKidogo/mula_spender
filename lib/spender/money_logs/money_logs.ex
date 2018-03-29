@@ -18,6 +18,13 @@ defmodule Spender.MoneyLogs do
       end
   end
 
+  @spec delete_budget(Budget.t):: {:ok, Budget.t} | {:error, Ecto.Changeset.t()}
+  def delete_budget(%Budget{} = budget) do
+    with {:ok, %Budget{} = budget} <- Repo.delete(budget) do
+      {:ok, budget}
+    end
+  end
+
   def create_budget(%Owner{} = owner, attrs \\ %{}) do
     %Budget{}
     |> Budget.changeset(attrs)

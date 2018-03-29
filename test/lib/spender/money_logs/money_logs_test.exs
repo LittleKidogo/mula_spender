@@ -1,7 +1,7 @@
 defmodule Spender.MoneyLogsTest do
   use Spender.DataCase
 
-  alias Spender.{MoneyLogs, MoneyLogs.Owner}
+  alias Spender.{MoneyLogs, MoneyLogs.Budget, MoneyLogs.Owner}
 
   @valid_budget %{name: "Budget", start_date: "2018-03-03", end_date: "2018-03-04"}
   @updated_budget %{name: "Budget-Update", start_date: "2018-03-03", end_date: "2018-03-04"}
@@ -27,11 +27,19 @@ defmodule Spender.MoneyLogsTest do
       assert budget.name == name
     end
 
-    test "update_moneylog/2 updates the details of a moneylog" do
+    test "update_budget/2 updates the details of a moneylog" do
       %{name: name } = @updated_budget
       budget = insert(:budget, @valid_budget)
       {:ok, budget} = MoneyLogs.update_budget(budget, @updated_budget)
       assert budget.name  == name
+    end
+
+    test "delete_budget/1 deletes a budget" do
+      budget = insert(:budget)
+      assert Repo.aggregate(Budget, :count, :id) == 1
+      {:ok, deleted_budget} = MoneyLogs.delete_budget(budget)
+      assert Repo.aggregate(Budget, :count, :id) == 0
+      assert deleted_budget.id == budget.id
     end
 
     test "create owner saves an onwer" do
