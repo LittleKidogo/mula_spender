@@ -15,4 +15,11 @@ defmodule Spender.Planning.LogSectionTest do
     changeset = LogSection.changeset(%LogSection{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  test "it should associate a LogSection to a budget" do
+    budget = insert(:budget)
+    changeset = LogSection.create_changeset(budget, @valid_attrs)
+    assert changeset.valid?
+    assert changeset.changes.budget
+  end
 end
