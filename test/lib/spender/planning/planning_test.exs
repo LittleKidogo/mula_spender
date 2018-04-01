@@ -23,6 +23,7 @@ defmodule Spender.PlanningTest do
       assert Repo.aggregate(LogSection, :count, :id) == 0
       {:ok, budget} = Planning.add_sections(budget, @num_sections)
       assert Repo.aggregate(LogSection, :count, :id) == @num_sections
+      assert Enum.count(budget.logsections) == @num_sections
     end
   end
 end
