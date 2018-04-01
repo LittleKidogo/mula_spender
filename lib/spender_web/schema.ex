@@ -57,13 +57,20 @@ defmodule SpenderWeb.Schema do
 
   # add mutations handled by our schema
   mutation do
+    @desc "Deletes a WishList Item"
+    field :delete_wish_list_item, :wish_list_item do
+      arg :input, non_null(:wish_list_item_update_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.WishList.delete_item/3
+    end
+
     @desc "Updates a WishList Item"
     field :update_wish_list_item, :wish_list_item do
       arg :input, non_null(:wish_list_item_update_input)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.WishList.update_item/3
     end
-    
+
     @desc "creates a wishlist item"
     field :create_wish_list_item, :wish_list_item do
       arg :input, non_null(:wish_list_item_input)
