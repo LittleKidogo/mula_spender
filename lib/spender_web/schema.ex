@@ -18,6 +18,7 @@ defmodule SpenderWeb.Schema do
   import_types __MODULE__.UserTypes
   import_types __MODULE__.MoneyLogTypes
   import_types __MODULE__.WishListTypes
+  import_types __MODULE__.PlanningTypes
 
 
 
@@ -57,13 +58,20 @@ defmodule SpenderWeb.Schema do
 
   # add mutations handled by our schema
   mutation do
+    @desc "Add sections to a MoneyLog"
+    field :add_log_sections, :budget do
+      arg :input, non_null(:log_section_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.add_sections/3
+    end
+
     @desc "Updates a WishList Item"
     field :update_wish_list_item, :wish_list_item do
       arg :input, non_null(:wish_list_item_update_input)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.WishList.update_item/3
     end
-    
+
     @desc "creates a wishlist item"
     field :create_wish_list_item, :wish_list_item do
       arg :input, non_null(:wish_list_item_input)
