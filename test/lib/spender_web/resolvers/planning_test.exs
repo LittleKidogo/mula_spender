@@ -17,13 +17,13 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
       variables = %{
         "input" => %{
-          "id" => budget.id
+          "budget_id" => budget.id
         }
       }
 
       query = """
-      query($input: BudgetUpdate!) {
-        logSections(input: $input){
+      query($input: GetSectionsInput!) {
+        getSections(input: $input){
           name
         }
       }
@@ -33,7 +33,7 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
       %{
         "data" => %{
-          "logSections" => sections
+          "getSections" => sections
         }
       } = json_response(res, 200)
 

@@ -24,6 +24,13 @@ defmodule SpenderWeb.Schema do
 
   # build our queries
   query do
+    @desc "Gets all LogSections in MoneyLog"
+    field :get_sections, list_of(:log_section) do
+      arg :input, non_null(:get_sections_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.get_sections/3
+    end
+
     @desc "Gets all Wishlist Items in a budget"
     field :wish_list_items, list_of(:wish_list_item) do
       arg :input, non_null(:wish_list_items_input)

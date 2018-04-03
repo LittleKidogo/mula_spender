@@ -7,6 +7,11 @@ defmodule SpenderWeb.Schema.PlanningTypes do
     field :sections, non_null(:integer)
   end
 
+  @desc "Input to fetch sections"
+  input_object :get_sections_input do
+    field :budget_id, non_null(:integer)
+  end
+
   @desc "A Section in a MoneyLog"
   object :log_section do
     field :duration, :float
