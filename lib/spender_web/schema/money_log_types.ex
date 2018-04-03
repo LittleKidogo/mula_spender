@@ -1,6 +1,7 @@
 defmodule SpenderWeb.Schema.MoneyLogTypes do
   use Absinthe.Schema.Notation
 
+
   @desc "An owner of a budget in the system"
   object :owner do
     field :name, :string
@@ -20,6 +21,7 @@ defmodule SpenderWeb.Schema.MoneyLogTypes do
     field :name, :string
     field :refined, :boolean
     field :start_date, :date
+    field :logsections, list_of(:log_section)
   end
 
   @desc "Inputs for a MoneyLog"

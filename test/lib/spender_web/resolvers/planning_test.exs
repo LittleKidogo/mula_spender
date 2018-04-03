@@ -2,8 +2,7 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
   use SpenderWeb.ApiCase
 
   alias Spender.{
-    Planning.LogSection,
-    MoneyLogs.Budget
+    Planning.LogSection
   }
 
   @num_sections 5
