@@ -2,7 +2,7 @@ defmodule SpenderWeb.Schema.PlanningTypes do
   use Absinthe.Schema.Notation
 
   @desc "Input to add log sections to a MoneyLog"
-  input_object :log_section_input do
+  input_object :log_sections_input do
     field :budget_id, non_null(:integer)
     field :sections, non_null(:integer)
   end
