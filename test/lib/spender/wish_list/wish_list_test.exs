@@ -68,6 +68,18 @@ defmodule Spender.WishListTest do
        assert edited_item.id == item.id
        assert edited_item.name ==  update_attrs.name
      end
+
+     test "delete_item should delete a saved item" do
+       item = insert(:wishlist_item)
+
+       assert Repo.aggregate(Item, :count, :id) ==  1
+
+       {:ok, deleted_item} = WishList.delete_item(item)
+
+       assert Repo.aggregate(Item, :count, :id) == 0
+
+       assert deleted_item.id == item.id
+     end
   end
 
 end

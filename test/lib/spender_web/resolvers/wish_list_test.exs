@@ -145,6 +145,42 @@ defmodule SpenderWeb.Resolvers.WishListTest do
     end
 
     @tag :authenticated
+    test "delete_item deletes a saved item", %{conn: conn, current_user: user} do
+      owner = insert(:owner, user: user)
+      budget = insert(:budget, owner: owner)
+
+      item = insert(:wishlist_item, budget: budget)
+      assert Repo.aggregate(Item, :count, :id) == 1
+
+      variables = %{
+        "input" => %{
+          "id" => item.id
+        }
+      }
+
+      query = """
+      mutation($input: WishListItemUpdateInput!) {
+        deleteWishListItem(input: $input) {
+          name
+          id
+        }
+      }
+      """
+
+      res = post conn, "/graphiql", query: query, variables: variables
+      %{
+        "data" => %{
+          "deleteWishListItem" => deleted_item
+        }
+      } = json_response(res, 200)
+
+      assert Repo.aggregate(Item, :count, :id) == 0
+
+      assert item.id  == deleted_item["id"]
+      assert item.name == deleted_item["name"]
+    end
+
+    @tag :authenticated
     test "add_wishlist_item", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
       budget = insert(:budget, owner: owner)

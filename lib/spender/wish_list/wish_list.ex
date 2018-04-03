@@ -60,6 +60,13 @@ defmodule Spender.WishList do
     end
   end
 
+  @doc """
+  This deletes a wishlist item from the database
+  """
+  @spec delete_item(Item.t) :: {:ok, Item.t} | {:error, Ecto.Changeset.t()}
+  def delete_item(%Item{} =  item) do
+    Repo.delete(item)
+  end
 
   @doc false
   defp do_add_item(budget, attrs) do
