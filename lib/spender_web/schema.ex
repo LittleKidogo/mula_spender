@@ -62,7 +62,8 @@ defmodule SpenderWeb.Schema do
       arg :input, non_null(:budget_update)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.Owner.delete_budget/3
-      
+    end 
+
     @desc "Deletes a WishList Item"
     field :delete_wish_list_item, :wish_list_item do
       arg :input, non_null(:wish_list_item_update_input)
