@@ -3,11 +3,25 @@ defmodule Spender.Planning do
   Boundary module for  the Planning section to the,  This module should
   aid in the planning actions taken when a user is refining a MoneyLog
   """
+  import Ecto.Query, warn: false
+
   alias Spender.{
     Repo,
     MoneyLogs.Budget,
     Planning.LogSection
   }
+
+  @spec get_sections(Budget.t) ::  {:ok, list(LogSection.t)} | {:error, String.t()}
+  def get_sections(%{id: id, name: name } = _budget) do
+    query = from l in LogSection, where: l.budget_id == ^id
+
+    with [_|_] = sections <- Repo.all(query) do
+      {:ok, sections}
+    else
+      [] -> {:error, "#{name} doesn't have any sections"}
+    end
+
+  end
 
   @spec add_sections(Budget.t, integer()) :: {:ok, Budget.t} | {:error, String.t()}
   def add_sections(%Budget{} =  budget, num_sections) do
