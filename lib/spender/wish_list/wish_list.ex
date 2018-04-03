@@ -15,7 +15,7 @@ defmodule Spender.WishList do
   @doc """
   Lists all wishlist items in a budget
   """
-  @spec list_items(Budget.t)::list(Item.t)
+  @spec list_items(Budget.t)::{:ok, list(Item.t)} | {:error, String.t()}
   def list_items(%{id: id, name: name} = _budget) do
     query = from i in Item, where: i.budget_id == ^id
 
