@@ -12,8 +12,17 @@ defmodule SpenderWeb.Schema.PlanningTypes do
     field :budget_id, non_null(:integer)
   end
 
+  @desc "Input to update a logsection"
+  input_object :log_section_update do
+    field :id, non_null(:integer)
+    field :duration, :float
+    field :name, :string
+    field :section_position, :integer
+  end
+
   @desc "A Section in a MoneyLog"
   object :log_section do
+    field :id, :integer
     field :duration, :float
     field :name, :string
     field :section_position, :integer

@@ -65,6 +65,12 @@ defmodule SpenderWeb.Schema do
 
   # add mutations handled by our schema
   mutation do
+    @desc "Update a LogSection"
+    field :update_log_section, :log_section do
+      arg :input, non_null(:log_section_update)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.update_section/3
+    end
     @desc "Add sections to a MoneyLog"
     field :add_log_sections, :budget do
       arg :input, non_null(:log_sections_input)
