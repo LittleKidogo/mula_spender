@@ -46,6 +46,19 @@ defmodule Spender.PlanningTest do
       assert Enum.count(sections) == @num_sections
     end
 
+    test "get_section should return an error if no section" do
+      assert Repo.aggregate(LogSection, :count, :id) == 0
+      {:error, "Section doesn't exist" } = Planning.get_section(54)
+    end
+
+    test "get_section should return a section from the database" do
+      section = insert(:log_section)
+      assert Repo.aggregate(LogSection, :count, :id) == 1
+      {:ok, saved_section} = Planning.get_section(section.id)
+      assert saved_section.id == section.id
+      assert section.name == saved_section.name
+    end
+
     test "update_section should update a saved section" do
       section = insert(:log_section, @valid_attrs)
       assert Repo.aggregate(LogSection, :count, :id) == 1

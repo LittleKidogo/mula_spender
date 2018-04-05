@@ -18,6 +18,15 @@ defmodule Spender.Planning do
     |> Repo.update()
   end
 
+  @spec get_section(integer()) :: {:ok, LogSection.t} | {:error, String.t()}
+  def get_section(id) do
+    with %LogSection{} = logsection <- Repo.get(LogSection, id) do
+      {:ok, logsection}
+    else
+      nil -> {:error, "Section doesn't exist"}
+    end
+  end
+
   @spec get_sections(Budget.t) ::  {:ok, list(LogSection.t)} | {:error, String.t()}
   def get_sections(%{id: id, name: name } = _budget) do
     query = from l in LogSection, where: l.budget_id == ^id
