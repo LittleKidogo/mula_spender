@@ -138,7 +138,6 @@ defmodule SpenderWeb.Resolvers.WishListTest do
 
       assert Repo.aggregate(Item, :count, :id) == 1
 
-
       saved_item = Repo.one(Item)
       assert saved_item.id  == updated_item["id"]
       assert updated_item["name"] == variables["input"]["name"]

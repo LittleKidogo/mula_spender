@@ -18,11 +18,19 @@ defmodule SpenderWeb.Schema do
   import_types __MODULE__.UserTypes
   import_types __MODULE__.MoneyLogTypes
   import_types __MODULE__.WishListTypes
+  import_types __MODULE__.PlanningTypes
 
 
 
   # build our queries
   query do
+    @desc "Gets all LogSections in MoneyLog"
+    field :get_sections, list_of(:log_section) do
+      arg :input, non_null(:get_sections_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.get_sections/3
+    end
+
     @desc "Gets all Wishlist Items in a budget"
     field :wish_list_items, list_of(:wish_list_item) do
       arg :input, non_null(:wish_list_items_input)
@@ -69,6 +77,20 @@ defmodule SpenderWeb.Schema do
       arg :input, non_null(:wish_list_item_update_input)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.WishList.delete_item/3
+    end
+
+    @desc "Update a LogSection"
+    field :update_log_section, :log_section do
+      arg :input, non_null(:log_section_update)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.update_section/3
+    end
+
+    @desc "Add sections to a MoneyLog"
+    field :add_log_sections, :budget do
+      arg :input, non_null(:log_sections_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.add_sections/3
     end
 
     @desc "Updates a WishList Item"

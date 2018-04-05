@@ -1,6 +1,13 @@
 defmodule Spender.MoneyLogs.Budget do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Spender.{
+    MoneyLogs,
+    MoneyLogs.Owner,
+    MoneyLogs.Budget,
+    WishList.Item,
+    Planning.LogSection
+  }
   alias Spender.MoneyLogs.{Owner, Budget}
   alias Spender.WishList.Item
 
@@ -19,6 +26,7 @@ defmodule Spender.MoneyLogs.Budget do
     field :status, :string, default: "new"
     belongs_to :owner, Owner
     has_many :items, Item
+    has_many :logsections, LogSection
 
     timestamps(inserted_at: :created_at, updated_at: :modified_at)
   end

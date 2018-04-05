@@ -24,6 +24,7 @@ def budget_factory do
   owner: build(:owner)
 }
 end
+
 # Owner Factory
 def owner_factory do
   %Spender.MoneyLogs.Owner {
@@ -38,5 +39,13 @@ def wishlist_item_factory do
     budget: build(:budget)
   }
 end
+
+def log_section_factory do
+  %Spender.Planning.LogSection {
+    name: sequence(:name, &"section-#{&1}"),
+    budget: build(:budget)
+  }
+end
+
 {:ok, _} = Application.ensure_all_started(:ex_machina)
 end
