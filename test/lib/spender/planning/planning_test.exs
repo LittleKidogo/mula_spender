@@ -8,6 +8,9 @@ defmodule Spender.PlanningTest do
   }
 
   @num_sections 5
+  @valid_attrs %{name: "Section-1", duration: 23.5, section_position: 2}
+  @update_attrs %{name: "First Week"}
+
   describe "Planning Boundary" do
 
     test "add_sections should return an error if start_date and end_date are not set for a budget" do
@@ -41,6 +44,15 @@ defmodule Spender.PlanningTest do
       assert Repo.aggregate(LogSection, :count, :id) == @num_sections
       {:ok, sections} = Planning.get_sections(budget)
       assert Enum.count(sections) == @num_sections
+    end
+
+    test "update_section should update a saved section" do
+      section = insert(:log_section, @valid_attrs)
+      assert Repo.aggregate(LogSection, :count, :id) == 1
+      {:ok, updated_section} = Planning.update_section(section, @update_attrs)
+      assert Repo.aggregate(LogSection, :count, :id) == 1
+      assert updated_section.id == section.id
+      assert updated_section.name == @update_attrs.name
     end
   end
 end

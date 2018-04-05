@@ -11,6 +11,13 @@ defmodule Spender.Planning do
     Planning.LogSection
   }
 
+  @spec update_section(LogSection.t, map) :: {:ok, LogSection.t} | {:error, Ecto.Changeset.t()}
+  def update_section(%LogSection{} = logsection, attrs) do
+    logsection
+    |> LogSection.changeset(attrs)
+    |> Repo.update()
+  end
+
   @spec get_sections(Budget.t) ::  {:ok, list(LogSection.t)} | {:error, String.t()}
   def get_sections(%{id: id, name: name } = _budget) do
     query = from l in LogSection, where: l.budget_id == ^id
