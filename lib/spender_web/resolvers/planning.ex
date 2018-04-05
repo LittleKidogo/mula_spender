@@ -18,4 +18,11 @@ defmodule SpenderWeb.Resolvers.Planning do
       {:ok, sectioned_budget}
     end
   end
+
+  def update_section(_, %{input: params}, _) do
+    with {:ok, section} <- Planning.get_section(params.id),
+    {:ok, updated_section} <- Planning.update_section(section, params) do
+      {:ok, updated_section}
+    end
+  end
 end

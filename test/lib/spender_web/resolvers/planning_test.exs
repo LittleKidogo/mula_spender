@@ -7,6 +7,9 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
   @num_sections 5
 
+  @valid_attrs %{name: "Section-1", duration: 23.5, section_position: 2}
+
+
   describe "Planning Resolver" do
     @tag :authenticated
     test "get_sections should fetch sections in a budget", %{conn: conn, current_user: user} do
@@ -75,6 +78,41 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
       assert Repo.aggregate(LogSection, :count, :id) == @num_sections
       assert sectioned_budget["name"] == budget.name
       assert Enum.count(sectioned_budget["logsections"]) == @num_sections
+    end
+
+    @tag :authenticated
+    test "update_section should update a saved section", %{conn: conn} do
+      logsection = insert(:log_section, @valid_attrs)
+
+      variables = %{
+        "input" => %{
+          "id" => logsection.id,
+          "name" => "New Updated Name"
+        }
+      }
+
+      query = """
+      mutation($input: LogSectionUpdate!) {
+        updateLogSection(input: $input) {
+          id
+          name
+        }
+      }
+      """
+
+      assert Repo.aggregate(LogSection, :count, :id) == 1
+
+      res = post conn, "/graphiql", query: query, variables: variables
+
+      %{
+        "data" => %{
+          "updateLogSection" => updated_section
+        }
+      } = json_response(res, 200)
+
+      assert Repo.aggregate(LogSection, :count, :id) == 1
+      assert updated_section["name"] == variables["input"]["name"]
+      assert updated_section["id"] == logsection.id
     end
   end
 end
