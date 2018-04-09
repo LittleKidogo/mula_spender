@@ -20,6 +20,7 @@ defmodule Spender.PlanningTest do
       assert Repo.aggregate(IncomeLog, :count, :id) == 0
       {:ok, incomelog} = Planning.add_income(budget, @log_attrs)
       assert Repo.aggregate(IncomeLog, :count, :id) == 1
+      assert incomelog.earn_date == NaiveDateTime.to_date(NaiveDateTime.utc_now)
       assert incomelog.name == @log_attrs.name
       assert incomelog.amount == @log_attrs.amount
     end
