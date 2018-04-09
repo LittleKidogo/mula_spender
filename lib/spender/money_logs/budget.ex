@@ -2,14 +2,12 @@ defmodule Spender.MoneyLogs.Budget do
   use Ecto.Schema
   import Ecto.Changeset
   alias Spender.{
-    MoneyLogs,
     MoneyLogs.Owner,
     MoneyLogs.Budget,
     WishList.Item,
-    Planning.LogSection
+    Planning.LogSection,
+    Planning.IncomeLog
   }
-  alias Spender.MoneyLogs.{Owner, Budget}
-  alias Spender.WishList.Item
 
 
   @type t :: %__MODULE__{}
@@ -27,6 +25,7 @@ defmodule Spender.MoneyLogs.Budget do
     belongs_to :owner, Owner
     has_many :items, Item
     has_many :logsections, LogSection
+    has_many :incomelogs, IncomeLog
 
     timestamps(inserted_at: :created_at, updated_at: :modified_at)
   end
