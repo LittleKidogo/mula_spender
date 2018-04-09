@@ -8,13 +8,28 @@ defmodule Spender.Planning do
   alias Spender.{
     Repo,
     MoneyLogs.Budget,
-    Planning.LogSection
+    Planning.LogSection,
+    Planning.IncomeLog
   }
 
   @spec update_section(LogSection.t, map) :: {:ok, LogSection.t} | {:error, Ecto.Changeset.t()}
   def update_section(%LogSection{} = logsection, attrs) do
     logsection
     |> LogSection.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @spec add_income(Budget.t, map) :: {:ok, IncomeLog.t} | {:error, Ecto.Changeset.t()}
+  def add_income(%Budget{} = budget, attrs) do
+    budget
+    |> IncomeLog.create_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @spec update_income(IncomeLog.t, map) :: {:ok, IncomeLog.t} | {:error, Ecto.Changeset.t()}
+  def update_income(%IncomeLog{} = incomelog, attrs) do
+    incomelog
+    |> IncomeLog.changeset(attrs)
     |> Repo.update()
   end
 

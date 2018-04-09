@@ -16,5 +16,12 @@ defmodule Spender.Planning.IncomeLogTest do
       changeset = IncomeLog.changeset(%IncomeLog{}, @invalid_attrs)
       refute changeset.valid?
     end
+
+    test "create_changeset will create an Income associated to budget" do
+      budget = insert(:budget)
+      changeset = IncomeLog.create_changeset(budget, @valid_attrs)
+      assert changeset.valid?
+      assert changeset.changes.budget
+    end
   end
 end

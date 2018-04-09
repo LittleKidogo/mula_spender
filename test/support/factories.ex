@@ -47,5 +47,13 @@ def log_section_factory do
   }
 end
 
+def income_log_factory do
+  %Spender.Planning.IncomeLog {
+    name: sequence(:name, &"income-#{&1}"),
+    amount: 5690.90,
+    budget: build(:budget)
+  }
+end
+
 {:ok, _} = Application.ensure_all_started(:ex_machina)
 end

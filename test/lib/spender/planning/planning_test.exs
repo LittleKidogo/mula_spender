@@ -4,14 +4,35 @@ defmodule Spender.PlanningTest do
   alias Spender.{
     Planning,
     Planning.LogSection,
+    Planning.IncomeLog,
     MoneyLogs.Budget
   }
 
   @num_sections 5
   @valid_attrs %{name: "Section-1", duration: 23.5, section_position: 2}
   @update_attrs %{name: "First Week"}
+  @log_attrs %{name: "Salary", amount: 67000.9}
 
   describe "Planning Boundary" do
+
+    test "add_income save an income attached to budget" do
+      budget = insert(:budget)
+      assert Repo.aggregate(IncomeLog, :count, :id) == 0
+      {:ok, incomelog} = Planning.add_income(budget, @log_attrs)
+      assert Repo.aggregate(IncomeLog, :count, :id) == 1
+      assert incomelog.name == @log_attrs.name
+      assert incomelog.amount == @log_attrs.amount
+    end
+
+    test "update_income should update a saved income" do
+      budget = insert(:budget)
+      incomelog = insert(:income_log, budget: budget)
+      refute incomelog.name == @log_attrs.name
+      {:ok, updated_income} = Planning.update_income(incomelog, @log_attrs)
+      assert updated_income.id == incomelog.id
+      assert updated_income.name == @log_attrs.name
+      assert updated_income.amount == @log_attrs.amount
+    end
 
     test "add_sections should return an error if start_date and end_date are not set for a budget" do
       no_date_attrs = %{name: "Food Lovers", start_date: nil, end_date: nil}
