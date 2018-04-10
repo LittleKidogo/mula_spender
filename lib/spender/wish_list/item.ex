@@ -2,6 +2,7 @@ defmodule Spender.WishList.Item do
   use Ecto.Schema
   import Ecto.Changeset
   alias Spender.{
+    Repo,
     MoneyLogs.Budget,
     WishList.Item,
     Planning.LogSection
@@ -28,10 +29,18 @@ defmodule Spender.WishList.Item do
     |> validate_required([:name, :price])
   end
 
-  @spec create_changeset(Budget.t, map) :: Changeset.t
+  @spec create_changeset(Budget.t, map) :: Ecto.Changeset.t()
   def create_changeset(%Budget{} = budget, attrs) do
     %Item{}
     |> changeset(attrs)
     |> put_assoc(:budget, budget)
+  end
+
+  @spec add_to_section(Item.t, map) :: Ecto.Changeset.t()
+  def add_to_section(%Item{} = item, attrs) do
+    item
+    |> cast(attrs, [:log_section_id])
+    |> validate_required([:log_section_id])
+    |> foreign_key_constraint(:log_section_id, message: "logsection must exist to take item")
   end
 end

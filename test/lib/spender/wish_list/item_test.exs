@@ -22,5 +22,13 @@ defmodule Spender.WishList.ItemTest do
       assert changeset.valid?
       assert changeset.changes.budget
     end
+
+    test "should associate an item to a log_section" do
+      log_section = insert(:log_section)
+      item = insert(:wishlist_item, @valid_attrs)
+      changeset = Item.add_to_section(item, %{log_section_id: log_section.id})
+      assert changeset.valid?
+      assert changeset.changes.log_section_id == log_section.id
+    end
   end
 end
