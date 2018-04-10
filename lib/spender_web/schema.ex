@@ -65,12 +65,33 @@ defmodule SpenderWeb.Schema do
 
   # add mutations handled by our schema
   mutation do
+    @desc "Deletes an income from a MoneyLog"
+    field :delete_income_log, :income_log do
+      arg :input, non_null(:income_log_update_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.delete_income/3
+    end
+
+    @desc "Logs an income in a MoneyLog"
+    field :add_income_log, :income_log do
+      arg :input, non_null(:income_log_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.add_income/3
+    end
+
+    @desc "Updates an income in a MoneyLog"
+    field :update_income_log, :income_log do
+      arg :input, non_null(:income_log_update_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.update_income/3
+    end
+
     @desc "Deletes an exisiting MoneyLog"
     field :delete_budget, :budget do
       arg :input, non_null(:budget_update)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.Owner.delete_budget/3
-    end 
+    end
 
     @desc "Deletes a WishList Item"
     field :delete_wish_list_item, :wish_list_item do

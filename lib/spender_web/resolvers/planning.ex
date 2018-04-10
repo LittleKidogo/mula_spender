@@ -25,4 +25,25 @@ defmodule SpenderWeb.Resolvers.Planning do
       {:ok, updated_section}
     end
   end
+
+  def add_income(_, %{input: params}, _) do
+    with {:ok, budget} <- MoneyLogs.get_budget(params.budget_id),
+      {:ok, incomelog} <- Planning.add_income(budget, params) do
+        {:ok, incomelog}
+      end
+  end
+
+  def update_income(_, %{input: params}, _) do
+    with {:ok, income} <- Planning.get_income(params.id),
+      {:ok, updated_income} <- Planning.update_income(income, params) do
+        {:ok, updated_income}
+      end
+  end
+
+  def delete_income(_, %{input: params}, _) do
+    with {:ok, income} <- Planning.get_income(params.id),
+      {:ok, deleted_income} <- Planning.delete_income(income) do
+        {:ok, deleted_income}
+      end
+  end
 end

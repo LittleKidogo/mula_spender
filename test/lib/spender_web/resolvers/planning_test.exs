@@ -2,7 +2,8 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
   use SpenderWeb.ApiCase
 
   alias Spender.{
-    Planning.LogSection
+    Planning.LogSection,
+    Planning.IncomeLog
   }
 
   @num_sections 5
@@ -11,6 +12,115 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
 
   describe "Planning Resolver" do
+    @tag :authenticated
+    test "add_income should save an income", %{conn: conn} do
+      budget = insert(:budget)
+      assert Repo.aggregate(IncomeLog, :count, :id) == 0
+      variables =  %{
+        "input" => %{
+          "budget_id" => budget.id,
+          "amount" => 3400.9,
+          "name" => "Movie Gig",
+          "type" => "Movie Work",
+          "earn_date" => Date.to_string(NaiveDateTime.to_date(NaiveDateTime.utc_now()))
+        }
+      }
+
+      query = """
+      mutation($input: IncomeLogInput!) {
+        addIncomeLog(input: $input) {
+          name
+          amount
+        }
+      }
+      """
+
+      res = post conn, "/graphiql", query: query, variables: variables
+
+      %{
+        "data" => %{
+          "addIncomeLog" => log
+        }
+      } = json_response(res, 200)
+
+      assert Repo.aggregate(IncomeLog, :count, :id) == 1
+      assert log["name"] == variables["input"]["name"]
+    end
+
+    @tag :authenticated
+    test "delete_income should delete a saved income", %{conn: conn} do
+      incomelog = insert(:income_log)
+      assert Repo.aggregate(IncomeLog, :count, :id) == 1
+
+      variables =  %{
+        "input" => %{
+          "id" => incomelog.id
+        }
+      }
+
+      query = """
+      mutation($input: IncomeLogInput!) {
+        deleteIncomeLog(input: $input) {
+          id
+          name
+        }
+      }
+      """
+
+      res = post conn, "/graphiql", query: query, variables: variables
+
+      %{
+        "data" => %{
+          "deleteIncomeLog" => deleted_log
+        }
+      } = json_response(res, 200)
+
+      assert Repo.aggregate(IncomeLog, :count, :id) == 0
+      assert deleted_log["id"] == incomelog.id
+      assert deleted_log["name"] == incomelog.name
+    end
+
+    @tag :authenticated
+    test "update_income should edit a saved income", %{conn: conn} do
+      budget = insert(:budget)
+      income_log = insert(:income_log, budget: budget)
+      assert Repo.aggregate(IncomeLog, :count, :id) == 1
+      saved_log = Repo.one(IncomeLog)
+      assert saved_log.id == income_log.id
+      variables =  %{
+        "input" => %{
+          "id" => income_log.id,
+          "amount" => 3400.9,
+          "name" => "Movie Gig",
+          "type" => "Movie Work",
+          "earn_date" => Date.to_string(NaiveDateTime.to_date(NaiveDateTime.utc_now()))
+        }
+      }
+      refute saved_log.name == variables["input"]["name"]
+      query = """
+      mutation($input: IncomeLogUpdateInput!) {
+        updateIncomeLog(input: $input) {
+          id
+          name
+          amount
+        }
+      }
+      """
+
+      res = post conn, "/graphiql", query: query, variables: variables
+
+      %{
+        "data" => %{
+          "updateIncomeLog" => updated_log
+        }
+      } = json_response(res, 200)
+
+      assert Repo.aggregate(IncomeLog, :count, :id) == 1
+      assert updated_log["id"] == income_log.id
+      assert updated_log["name"] == variables["input"]["name"]
+      assert updated_log["amount"] == variables["input"]["amount"]
+    end
+
     @tag :authenticated
     test "get_sections should fetch sections in a budget", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
