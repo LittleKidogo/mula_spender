@@ -12,6 +12,15 @@ defmodule Spender.Planning do
     Planning.IncomeLog
   }
 
+  @spec get_income(integer()) :: {:ok, IncomeLog.t} | {:error, String.t()}
+  def get_income(id) do
+    with %IncomeLog{} = log <- IncomeLog |> Repo.get(id) do
+      {:ok, log}
+    else
+      nil -> {:error, "Income doesn't exist"}
+    end
+  end
+
   @spec update_section(LogSection.t, map) :: {:ok, LogSection.t} | {:error, Ecto.Changeset.t()}
   def update_section(%LogSection{} = logsection, attrs) do
     logsection
@@ -31,6 +40,11 @@ defmodule Spender.Planning do
     incomelog
     |> IncomeLog.changeset(attrs)
     |> Repo.update()
+  end
+
+  @spec delete_income(IncomeLog.t) :: {:ok, IncomeLog.t} | {:error, Ecto.Changeset.t()}
+  def delete_income(%IncomeLog{} = income) do
+    income |> Repo.delete()
   end
 
   @spec get_section(integer()) :: {:ok, LogSection.t} | {:error, String.t()}
@@ -103,6 +117,4 @@ defmodule Spender.Planning do
         {:ok, budget}
     end
   end
-
-
 end

@@ -11,9 +11,26 @@ defmodule Spender.PlanningTest do
   @num_sections 5
   @valid_attrs %{name: "Section-1", duration: 23.5, section_position: 2}
   @update_attrs %{name: "First Week"}
-  @log_attrs %{name: "Salary", amount: 67000.9}
+  @log_attrs %{name: "Salary", amount: 67000.9, earn_date: NaiveDateTime.to_date(NaiveDateTime.utc_now)}
 
   describe "Planning Boundary" do
+
+    test "get_income should return an error if income doesnt exist" do
+      {:error, "Income doesn't exist"} = Planning.get_income(45)
+    end
+
+    test "get_income should return an income if one exists" do
+      income = insert(:income_log)
+      {:ok, %IncomeLog{} = saved_income} = Planning.get_income(income.id)
+      assert saved_income.name
+      assert saved_income.amount
+    end
+
+    test "delete_income should delete an existing income" do
+      income = insert(:income_log)
+      {:ok, deleted_income} = Planning.delete_income(income)
+      assert income.id == deleted_income.id
+    end
 
     test "add_income save an income attached to budget" do
       budget = insert(:budget)
