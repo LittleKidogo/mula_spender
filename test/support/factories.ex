@@ -36,6 +36,7 @@ end
 def wishlist_item_factory do
   %Spender.WishList.Item {
     name: sequence(:name, &"item-#{&1}"),
+    price: 24.78,
     budget: build(:budget)
   }
 end
