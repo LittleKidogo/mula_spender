@@ -3,7 +3,8 @@ defmodule Spender.Planning.LogSection do
   import Ecto.Changeset
   alias Spender.{
     Planning.LogSection,
-    MoneyLogs.Budget
+    MoneyLogs.Budget,
+    WishList.Item
   }
 
   @type t :: %__MODULE__{}
@@ -15,6 +16,7 @@ defmodule Spender.Planning.LogSection do
     field :name, :string
     field :section_position, :integer
     belongs_to :budget, Budget
+    has_many :items, Item
 
 
     timestamps()
