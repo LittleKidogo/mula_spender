@@ -22,4 +22,11 @@ defmodule Spender.Planning.LogSectionTest do
     assert changeset.valid?
     assert changeset.changes.budget
   end
+
+  test "it should associate an Item to a Logsection" do
+    logsection = insert(:log_section)
+    item = insert(:wishlist_item)
+    changeset = LogSection.associate_item(logsection, item)
+    assert changeset.log_section_id == logsection.id
+  end
 end
