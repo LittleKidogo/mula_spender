@@ -12,7 +12,7 @@ defmodule Spender.Planning.IncomeLog do
   schema "incomelogs" do
     field :amount, :float
     field :comments, :string
-    field :earn_date, :date, default: NaiveDateTime.to_date(NaiveDateTime.utc_now)
+    field :earn_date, :date
     field :name, :string
     field :type, :string
     belongs_to :budget, Budget
