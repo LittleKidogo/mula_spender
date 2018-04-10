@@ -3,9 +3,11 @@ defmodule Spender.PlanningTest do
 
   alias Spender.{
     Planning,
+    WishList,
     Planning.LogSection,
     Planning.IncomeLog,
-    MoneyLogs.Budget
+    MoneyLogs.Budget,
+    WishList.Item
   }
 
   @num_sections 5
@@ -14,6 +16,26 @@ defmodule Spender.PlanningTest do
   @log_attrs %{name: "Salary", amount: 67000.9, earn_date: NaiveDateTime.to_date(NaiveDateTime.utc_now)}
 
   describe "Planning Boundary" do
+
+    test "add_item_to_section should associate an item with a section" do
+      budget = insert(:budget)
+      section = insert(:log_section, budget: budget)
+      item_build = build(:wishlist_item, budget: budget)
+      {:ok, _} = WishList.add_item(budget, Map.from_struct(item_build))
+      assert Repo.aggregate(Budget, :count, :id) == 1
+      assert Repo.aggregate(LogSection, :count, :id) == 1
+      assert Repo.aggregate(Item, :count, :id) == 1
+      item = Repo.one(Item)
+      {:ok, updated_section} = Planning.add_item_to_section(item, section)
+      assert Repo.aggregate(Budget, :count, :id) == 1
+      assert Repo.aggregate(LogSection, :count, :id) == 1
+      assert Repo.aggregate(Item, :count, :id) == 1
+      updated_budget = Repo.one(Budget)
+      assert updated_budget.id == budget.id
+      refute budget.status == updated_budget.status
+      assert updated_budget.status == "refined"
+      assert Enum.count(updated_section.items) == 1
+    end
 
     test "get_income should return an error if income doesnt exist" do
       {:error, "Income doesn't exist"} = Planning.get_income(45)

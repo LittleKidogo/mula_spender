@@ -7,10 +7,22 @@ defmodule Spender.Planning do
 
   alias Spender.{
     Repo,
+    MoneyLogs,
     MoneyLogs.Budget,
     Planning.LogSection,
-    Planning.IncomeLog
+    Planning.IncomeLog,
+    WishList.Item
   }
+
+  @spec add_item_to_section(Item.t, LogSection.t) :: {:ok, LogSection.t} | {:error, Ecto.Changeset.t()}
+  def add_item_to_section(%Item{} = item, %LogSection{} = logsection) do
+    with {:ok, %Item{} = updated_item} <- Item.add_to_section(item, %{log_section_id: logsection.id}) |> Repo.update(),
+        %Item{} = loaded_item <- Repo.preload(updated_item, :budget),
+        {:ok, _budget} <- update_budget_status(loaded_item.budget),
+      %LogSection{} = loaded_section <- logsection |> Repo.preload(:items)  do
+        {:ok, loaded_section}
+      end
+  end
 
   @spec get_income(integer()) :: {:ok, IncomeLog.t} | {:error, String.t()}
   def get_income(id) do
@@ -114,6 +126,16 @@ defmodule Spender.Planning do
       budget.end_date == nil ->
         {:error, "#{budget.name} needs a start date and an end date"}
       true ->
+        {:ok, budget}
+    end
+  end
+
+  @spec update_budget_status(Budget.t) :: {:ok, Budget.t}
+  defp update_budget_status(%Budget{status: status} = budget) do
+    case status do
+      "planning" ->
+        {:ok, updated_budget} = budget |> MoneyLogs.update_budget(%{status: "refined"})
+        _ ->
         {:ok, budget}
     end
   end
