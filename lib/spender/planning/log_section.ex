@@ -34,9 +34,4 @@ defmodule Spender.Planning.LogSection do
     |> changeset(attrs)
     |> put_assoc(:budget, budget)
   end
-
-  def associate_item(%LogSection{} = logsection, %Item{} = item) do
-    logsection
-    |> Ecto.build_assoc(:items, Map.from_struct(item))
-  end
 end
