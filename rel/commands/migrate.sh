@@ -1,3 +1,3 @@
 #! /bin/sh
 
-$RELEASE_ROOT_DIR/bin/myapp command Elixir.Spender.ReleaseTasks seed
+$RELEASE_ROOT_DIR/bin/spender command Elixir.Spender.ReleaseTasks seed
