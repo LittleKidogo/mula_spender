@@ -15,14 +15,29 @@ use Mix.Config
 # which you typically run after static files are built.
 config :spender, SpenderWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "example.com", port: 80],
+  url: [host: "${HOST}", port: "${PORT}"],
   cache_static_manifest: "priv/static/cache_manifest.json",
-  server: true,
-  root: ".",
+  server: true, # automatically serve the application when it staterts
+  root: ".", # use this as the server root
   version: Application.spec(:spender, :vsn)
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+config :spender, SpenderWeb.Endpoint,
+  secret_key_base: "${SECRET_KEY_BASE}"
+  #secret_key_base: "XIxsb3FOfWk9rqzs5IO0c6ZEupQjAnMj0Hf83TmQMgP0UW6nO6d2czPLqpAAZGH8"
+
+# Configure your database
+config :spender, Spender.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "${DB_HOSTNAME}",
+  password: "${DB_PASSWORD}",
+  database: "${DB_NAME}",
+  pool_size: 15
+  # username: "postgres",
+  # password: "postgres",
+  # database: "spender_prod",
 
 # ## SSL Support
 #
@@ -48,20 +63,3 @@ config :logger, level: :info
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
-
-# ## Using releases
-#
-# If you are doing OTP releases, you need to instruct Phoenix
-# to start the server for all endpoints:
-#
-#     config :phoenix, :serve_endpoints, true
-#
-# Alternatively, you can configure exactly which server to
-# start per endpoint:
-#
-#     config :spender, SpenderWeb.Endpoint, server: true
-#
-
-# Finally import the config/prod.secret.exs
-# which should be versioned separately.
-import_config "prod.secret.exs"
