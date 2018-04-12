@@ -26,7 +26,7 @@ config :logger, level: :info
 
 config :spender, SpenderWeb.Endpoint,
   secret_key_base: "${SECRET_KEY_BASE}"
-  #secret_key_base: "XIxsb3FOfWk9rqzs5IO0c6ZEupQjAnMj0Hf83TmQMgP0UW6nO6d2czPLqpAAZGH8"
+
 
 # Configure your database
 config :spender, Spender.Repo,
@@ -35,9 +35,7 @@ config :spender, Spender.Repo,
   password: "${DB_PASSWORD}",
   database: "${DB_NAME}",
   pool_size: 15
-  # username: "postgres",
-  # password: "postgres",
-  # database: "spender_prod",
+
 
 # ## SSL Support
 #
