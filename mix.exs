@@ -44,7 +44,7 @@ defmodule Spender.Mixfile do
     [
       {:absinthe_ecto, "~> 0.1.0"},
       {:absinthe_plug, "~> 1.4.0"},
-      {:distillery, "~> 1.5.2"},
+      {:distillery, "~> 1.5.2", runtime: false},
       {:excoveralls, "~> 0.7", only: :test}, #test reporting on the ci
       {:ex_machina,"~>2.0", only: :test},
       {:hackney, "~> 1.8.0", override: true}, #coveralls uses this version of hackney
