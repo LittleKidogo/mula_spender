@@ -1,0 +1,15 @@
+# set docker compose version
+version: "3"
+# build services
+services:
+  web:
+    env_file: env.list
+    image: "superbikezacc/spender:latest"
+    command: foreground
+    depends_on:
+      - db
+    ports:
+      - "5002:5002"
+  db:
+    env_file: db.list
+    image: postgres:10.3
