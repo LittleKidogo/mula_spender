@@ -31,7 +31,7 @@ config :spender, SpenderWeb.Endpoint,
 # Configure your database
 config :spender, Spender.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "${DB_HOSTNAME}",
+  username: "${DB_USERNAME}",
   password: "${DB_PASSWORD}",
   database: "${DB_NAME}",
   pool_size: 15
