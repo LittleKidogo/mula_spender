@@ -39,6 +39,9 @@ ENV PORT=5002 \
     REPLACE_OS_VARS=true \
     SHELL=/bin/bash
 
+ARG VERSION
+
+
 WORKDIR /app
 
 #copy release artefact from last stage
