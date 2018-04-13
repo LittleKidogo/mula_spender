@@ -1,5 +1,6 @@
 {
   "skip_files": [
-    "test"
+    "test",
+    "lib/release_tasks.ex"
   ]
 }
