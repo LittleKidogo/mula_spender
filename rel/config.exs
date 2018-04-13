@@ -34,6 +34,7 @@ environment :dev do
 end
 
 environment :prod do
+  set pre_start_hook: "rel/hooks/pre_start"
   set include_erts: true
   set include_src: false
   set cookie: "${PROD_COOKIE}"
@@ -48,8 +49,5 @@ release :spender do
   set version: current_version(:spender)
   set applications: [
     :runtime_tools
-  ]
-  set commands: [
-    "migrate": "rel/commands/migrate.sh"
   ]
 end
