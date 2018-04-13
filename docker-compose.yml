@@ -3,10 +3,10 @@ version: "3"
 # build services
 services:
   web:
+    image: "superbikezacc/spender:latest"
     env_file: env.list
     environment:
       - DATABASE_URL=ecto://postgres:postgres@db/spender_prod
-    image: "superbikezacc/spender:latest"
     depends_on:
       - db
     ports:
