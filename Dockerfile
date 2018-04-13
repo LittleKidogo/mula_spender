@@ -5,7 +5,7 @@ FROM bitwalker/alpine-elixir-phoenix as builder
 WORKDIR /app
 
 # set env to prod
-ENV MIX_ENV prod
+ENV MIX_ENV=prod
 
 # copy results from last stage
 ADD . .
@@ -40,7 +40,6 @@ ENV PORT=5002 \
     SHELL=/bin/bash
 
 ARG VERSION
-
 
 WORKDIR /app
 
