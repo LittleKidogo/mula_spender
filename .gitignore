@@ -29,3 +29,4 @@ npm-debug.log
 /cover
 .DS_*
 env.list
+db.list
