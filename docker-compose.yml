@@ -4,8 +4,9 @@ version: "3"
 services:
   web:
     env_file: env.list
+    environment:
+      - DATABASE_URL=ecto://postgres:postgres@db/spender_prod
     image: "superbikezacc/spender:latest"
-    command: foreground
     depends_on:
       - db
     ports:
