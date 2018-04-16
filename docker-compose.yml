@@ -1,0 +1,24 @@
+# set docker compose version
+version: "3"
+# build services
+services:
+  web:
+    image: "superbikezacc/spender:latest"
+    env_file: env.list
+    environment:
+      - DATABASE_URL=ecto://postgres:postgres@db/spender_prod
+    depends_on:
+      - db
+    ports:
+      - "5002:5002"
+  db:
+    env_file: db.list
+    image: postgres:latest
+    volumes:
+      - mula-data:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+
+volumes:
+  mula-data:
+    external: true # use a preexisting external data volume

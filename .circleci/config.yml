@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: superbikezacc/spender:latest
+        environment:
+          MIX_ENV: test
+      steps:
+        - checkout
+        - run:
+          name: Get Dependecies
+          command: mix deps.get
+        - run:
+          name: Compile
+          command: mix compile
+        - persist_to_workspace:
+          root: /
+          paths:
+            - spender
+
+  test:
+    docker:
+      - image: superbikezacc/spender:latest
+        environment: test
+    steps:
+      - attach_workspace:
+          at: /
+      - run:
+        name: Run Tests
+        comand: mix test
+
+worksflows:
+  version: 2
+  build-test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
