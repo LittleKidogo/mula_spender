@@ -8,6 +8,15 @@ jobs:
           MIX_ENV: test
     steps:
       - checkout
+      - restore_cache:  # restores saved mix cache
+          keys:  # list of cache keys, in decreasing specificity
+            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - v1-mix-cache-{{ .Branch }}
+            - v1-mix-cache
+      - restore_cache:  # restores saved build cache
+          keys:
+            - v1-build-cache-{{ .Branch }}
+            - v1-build-cache
       - run:
           name: Get Dependecies
           command: mix deps.get
@@ -16,7 +25,22 @@ jobs:
           command: mix compile
       - persist_to_workspace:
           root: /
-          paths: .
+          paths: spender
+       - save_cache:  # generate and store cache so `restore_cache` works
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths: "deps"
+      - save_cache:  # make another less specific cache
+          key: v1-mix-cache-{{ .Branch }}
+          paths: "deps"
+      - save_cache:  # you should really save one more cache just in case
+          key: v1-mix-cache
+          paths: "deps"
+      - save_cache: # don't forget to save a *build* cache, too
+          key: v1-build-cache-{{ .Branch }}
+          paths: "_build"
+      - save_cache: # and one more build cache for good measure
+          key: v1-build-cache
+          paths: "_build"
   test:
     docker:
       - image: bitwalker/alpine-elixir-phoenix
