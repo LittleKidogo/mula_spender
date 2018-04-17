@@ -1,22 +1,24 @@
 version: 2
 jobs:
   build:
-    working_directory: /spender
     docker:
       - image: bitwalker/alpine-elixir-phoenix
         environment:
           MIX_ENV: test
+    working_directory: /spender
+
     steps:
       - checkout
+
       - restore_cache:  # restores saved mix cache
           keys:  # list of cache keys, in decreasing specificity
-            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-            - v1-mix-cache-{{ .Branch }}
-            - v1-mix-cache
+          - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          - v1-mix-cache-{{ .Branch }}
+          - v1-mix-cache
       - restore_cache:  # restores saved build cache
           keys:
-            - v1-build-cache-{{ .Branch }}
-            - v1-build-cache
+          - v1-build-cache-{{ .Branch }}
+          - v1-build-cache
       - run:
           name: Get Dependecies
           command: mix deps.get
