@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+    working_directory: /spender
     docker:
       - image: bitwalker/alpine-elixir-phoenix
         environment:
@@ -15,7 +16,7 @@ jobs:
           command: mix compile
       - persist_to_workspace:
           root: /
-          paths: spender
+          paths: .
   test:
     docker:
       - image: bitwalker/alpine-elixir-phoenix
