@@ -39,7 +39,7 @@ jobs:
           paths: "_build"
       - persist_to_workspace:
           root: .
-          paths: spender
+          paths: root/project
   test:
     docker:
       - image: bitwalker/alpine-elixir-phoenix
