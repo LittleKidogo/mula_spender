@@ -2,6 +2,7 @@ version: 2
 jobs:
   build:
     docker:
+      - working_directory: ~/spender
       - image: bitwalker/alpine-elixir-phoenix
         environment:
           MIX_ENV: test
@@ -15,17 +16,15 @@ jobs:
           command: mix compile
       - persist_to_workspace:
           root: /
-          paths:
-            - spender
-
+          paths: spender
   test:
     docker:
-      - image: superbikezacc/spender:latest
+      - image: bitwalker/alpine-elixir-phoenix
         environment:
           MIX_ENV: test
     steps:
       - attach_workspace:
-          at: /
+          at: /spender
       - run:
         name: Run Tests
         comand: mix test
