@@ -48,13 +48,10 @@ jobs:
           MIX_ENV: test
       - image: postgres:latest
         environment:
-          POSTGRES_DB: spender_test
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
     steps:
       - attach_workspace:
           at: /opt/app
-      - run: pwd && ls -l
       - run:
           name: Run Tests
           command: |
