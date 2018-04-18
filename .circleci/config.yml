@@ -40,7 +40,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - root/project
+            - project
   test:
     docker:
       - image: bitwalker/alpine-elixir-phoenix
