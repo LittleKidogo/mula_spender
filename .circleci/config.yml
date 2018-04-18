@@ -87,6 +87,9 @@ jobs:
      - attach_workspace:
         at: /opt/app
      - run:
+        name: "Install ssh"
+        command: apk add --no-cache openssh
+     - run:
         name: Log into linode
         command: |
           ssh root@151.236.217.179  \
