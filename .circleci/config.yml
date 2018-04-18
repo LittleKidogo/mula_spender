@@ -7,7 +7,6 @@ jobs:
           MIX_ENV: test
     steps:
       - checkout
-      - run: pwd && ls -l
       - restore_cache:  # restores saved mix cache
           keys:  # list of cache keys, in decreasing specificity
             - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
@@ -38,10 +37,9 @@ jobs:
       - save_cache: # and one more build cache for good measure
           key: v1-build-cache
           paths: "_build"
-      - run: pwd && ls -l
       - persist_to_workspace:
-          root: .
-          paths: root/project
+          root: /opt/app
+          paths: project
   test:
     docker:
       - image: bitwalker/alpine-elixir-phoenix
