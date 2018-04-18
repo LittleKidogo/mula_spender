@@ -53,6 +53,13 @@ jobs:
       - attach_workspace:
           at: /opt/app
 
+      - run:
+          name: Install dockerize
+          command: |
+           wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-alpine-linux-amd64-v0.6.1.tar.gz \
+           && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-v0.6.1.tar.gz \
+           && rm dockerize-alpine-linux-amd64-v0.6.1.tar.gz
+
       - run:  # special utility that stalls main process until DB is ready
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
