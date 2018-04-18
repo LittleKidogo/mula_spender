@@ -50,7 +50,7 @@ jobs:
           at: /
       - run:
           name: Run Tests
-          comand: |
+          command: |
             if [ ${CIRCLE_PR_USERNAME} ]; then
               MIX_ENV=test mix test;
             else
