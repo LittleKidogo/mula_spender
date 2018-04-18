@@ -38,7 +38,7 @@ jobs:
           key: v1-build-cache
           paths: "_build"
       - persist_to_workspace:
-          root: .
+          root: /opt/app
           paths:
             - project
   test:
@@ -48,7 +48,7 @@ jobs:
           MIX_ENV: test
     steps:
       - attach_workspace:
-          at: /
+          at: /opt/app
       - run: pwd && ls -l
       - run:
           name: Run Tests
