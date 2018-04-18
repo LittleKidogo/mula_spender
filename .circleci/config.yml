@@ -92,8 +92,8 @@ jobs:
      - run:
         name: Log into linode
         command: |
-          ssh root@151.236.217.179  \
-          && pwd
+          ssh root@linode  \
+          && pwd \
           && ls -l
 
 workflows:
