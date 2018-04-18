@@ -1,30 +1,3 @@
-# use bitwalkers elixir release version
-FROM bitwalker/alpine-elixir-phoenix as builder
-
-# change active dir
-WORKDIR /app
-
-# set env to prod
-ENV MIX_ENV=prod
-
-# copy results from last stage
-ADD . .
-
-# get prod deps
-RUN mix do deps.get, deps.compile
-
-# Build assets in production mode:
-WORKDIR /app/assets
-RUN npm install && ./node_modules/brunch/bin/brunch build --production
-
-WORKDIR /app
-RUN MIX_ENV=prod mix phx.digest
-
-WORKDIR /app
-COPY rel rel
-RUN mix release --env=prod --verbose
-
-# deployment stage
 FROM alpine:3.6
 
 # we need bash and openssl for Phoenix
