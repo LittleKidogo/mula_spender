@@ -52,6 +52,11 @@ jobs:
     steps:
       - attach_workspace:
           at: /opt/app
+
+      - run:  # special utility that stalls main process until DB is ready
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
       - run:
           name: Run Tests
           command: |
