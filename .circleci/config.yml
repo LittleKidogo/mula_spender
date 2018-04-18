@@ -72,12 +72,32 @@ jobs:
             else
               MIX_ENV=test mix coveralls.circle;
             fi
+      - persist_to_workspace:
+          root: /opt/app
+          paths:
+            - project
+
+ deploy-staging:
+   docker:
+     - image: bitwalker/alpine-elixir-phoenix
+       environment:
+         MIX_ENV: prod
+   steps:
+     - run:
+        name: Log into linode
+        command: |
+          ssh root@151.236.217.179  \
+          && pwd
+          && ls -l
+
+
 
 workflows:
   version: 2
-  build-test:
+  build-deploy:
     jobs:
       - build
       - test:
           requires:
             - build
+      - deploy-staging
