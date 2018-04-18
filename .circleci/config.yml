@@ -47,10 +47,15 @@ jobs:
           MIX_ENV: test
     steps:
       - attach_workspace:
-          at: /spender
+          at: /
       - run:
-        name: Run Tests
-        comand: mix test
+          name: Run Tests
+          comand: |
+            if [ ${CIRCLE_PR_USERNAME} ]; then
+              MIX_ENV=test mix test;
+            else
+              MIX_ENV=test mix coveralls.circle;
+            fi
 
 workflows:
   version: 2
