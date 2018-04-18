@@ -38,8 +38,9 @@ jobs:
           key: v1-build-cache
           paths: "_build"
       - persist_to_workspace:
-          root: /opt/app
-          paths: project
+          root: .
+          paths:
+            - root/project
   test:
     docker:
       - image: bitwalker/alpine-elixir-phoenix
@@ -48,7 +49,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /
-      - run: pwd && ls -l  
+      - run: pwd && ls -l
       - run:
           name: Run Tests
           command: |
