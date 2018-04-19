@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: superbikezacc/spender-base
+      - image: bitwalker/alpine-elixir-phoenix
         environment:
           MIX_ENV: test
     steps:
