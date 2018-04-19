@@ -92,9 +92,7 @@ jobs:
      - run:
         name: Log into linode
         command: |
-          ssh root@linode  \
-          && pwd \
-          && ls -l
+          ssh -o "StrictHostKeyChecking no" root@151.236.217.179 "pwd; ls-l;"
 
 workflows:
   version: 2
