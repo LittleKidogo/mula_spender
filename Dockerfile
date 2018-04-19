@@ -14,10 +14,12 @@ ENV PORT=5002 \
 
 ARG VERSION
 
+ARG SEMVERSION=0.0.3-rcwishlist
+
 WORKDIR /app
 
 #copy release artefact from last stage
-COPY --from=builder /app/_build/prod/rel/spender/releases/${VERSION}/spender.tar.gz .
+ADD _build/prod/rel/spender/releases/${SEMVERSION}/spender.tar.gz .
 
 RUN tar zxf spender.tar.gz && rm spender.tar.gz
 
