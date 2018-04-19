@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: bitwalker/alpine-elixir-phoenix
+      - image: superbikezacc/spender-base
         environment:
           MIX_ENV: test
     steps:
@@ -43,7 +43,7 @@ jobs:
             - project
   test:
     docker:
-      - image: bitwalker/alpine-elixir-phoenix
+      - image: superbikezacc/spender-base
         environment:
           MIX_ENV: test
       - image: postgres:latest
@@ -52,18 +52,9 @@ jobs:
     steps:
       - attach_workspace:
           at: /opt/app
-
-      - run:
-          name: Install dockerize
-          command: |
-           wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-alpine-linux-amd64-v0.6.1.tar.gz \
-           && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-v0.6.1.tar.gz \
-           && rm dockerize-alpine-linux-amd64-v0.6.1.tar.gz
-
       - run:  # special utility that stalls main process until DB is ready
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-
       - run:
           name: Run Tests
           command: |
@@ -72,34 +63,61 @@ jobs:
             else
               MIX_ENV=test mix coveralls.circle;
             fi
-
       - persist_to_workspace:
           root: /opt/app
           paths:
             - project
-
   deploy-staging:
    docker:
-     - image: bitwalker/alpine-elixir-phoenix
+     - image: superbikezacc/spender-base
        environment:
          MIX_ENV: prod
    steps:
      - attach_workspace:
         at: /opt/app
+     - setup_remote_docker
      - run:
-        name: "Install ssh"
-        command: apk add --no-cache openssh
+        name: "Get Dependecies"
+        command: mix deps.get
      - run:
-        name: Log into linode
-        command: |
-          ssh -o "StrictHostKeyChecking no" root@151.236.217.179 "pwd; ls-l;"
+        name: Deploying to staging
+        command: script/ci/staging/deploy.sh
+  deploy-production:
+   docker:
+     - image: superbikezacc/spender-base
+       environment:
+         MIX_ENV: prod
+   steps:
+     - attach_workspace:
+        at: /opt/app
+     - setup_remote_docker
+     - run:
+        name: "Get Dependecies"
+        command: mix deps.get
+     - run:
+        name: Compute Semver
+        command: semantic-release vf -slug suberbikezacc/spender -noci || true
+     - run:
+        name: Deploying to production
+        command: script/ci/production/deploy.sh
 
 workflows:
   version: 2
-  build-deploy:
+  build-test-deploy:
     jobs:
       - build
       - test:
           requires:
             - build
-      - deploy-staging
+      - deploy-staging:
+          requires:
+            - test
+          filters:
+            branches:
+              only: develop
+      - deploy-production:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
