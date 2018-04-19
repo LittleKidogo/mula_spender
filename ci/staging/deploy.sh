@@ -12,4 +12,7 @@ echo "Building run container"
 ${base_dir}/steps/build_container.sh
 
 echo "Pushing to Docker"
-${base_dir}/steps/push_staging.sh 
+${base_dir}/steps/push_staging.sh ${DOCKER_USER} ${DOCKER_PASSWORD}
+
+echo "Running the staging build"
+${base_dir}/steps/run_staging.sh ${DEPLOY_USER} ${DEPLOY_SERVER}

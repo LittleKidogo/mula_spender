@@ -20,9 +20,8 @@ else
   ${base_dir}/steps/build_container.sh
 
   echo "Pushing to Docker"
-  ${base_dir}/steps/push_prodction.sh
+  ${base_dir}/steps/push_production.sh
 
   echo "Running in Production"
   ${base_dir}/steps/run_production.sh
 fi
- 

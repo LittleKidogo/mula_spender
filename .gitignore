@@ -30,3 +30,5 @@ npm-debug.log
 .DS_*
 env.list
 db.list
+docker-compose.prod.yml
+docker-compose.staging.yml

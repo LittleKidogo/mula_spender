@@ -77,11 +77,14 @@ jobs:
         at: /opt/app
      - setup_remote_docker
      - run:
-        name: "Get Dependecies"
+        name: Get Dependecies
         command: mix deps.get
      - run:
+        name: Make deploy scripts executable
+        command: find ci/staging/ -type f -iname "*.sh" -exec chmod +x {} \;
+     - run:
         name: Deploying to staging
-        command: script/ci/staging/deploy.sh
+        command: ci/staging/deploy.sh
   deploy-production:
    docker:
      - image: superbikezacc/spender-base
@@ -99,7 +102,7 @@ jobs:
         command: semantic-release vf -slug suberbikezacc/spender -noci || true
      - run:
         name: Deploying to production
-        command: script/ci/production/deploy.sh
+        command: ci/production/deploy.sh
 
 workflows:
   version: 2

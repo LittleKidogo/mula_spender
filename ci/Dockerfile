@@ -11,20 +11,10 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize
     && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-v0.6.1.tar.gz \
     && rm dockerize-alpine-linux-amd64-v0.6.1.tar.gz
 
-# Install Docker in Docker
 
-ENV DOCKER_VERSION="17.05.0-ce"
+# Add docker
 
-RUN wget https://get.docker.com/builds/Linux/x86_64/docker-$DOCKER_VERSION.tgz \
-    && tar -C /usr/local/bin -xzvf docker-$DOCKER_VERSION.tgz \
-    && rm docker-$DOCKER_VERSION.tgz
-
-# Docker Cloud
-
-RUN apk -Uuv --no-cache add python py-pip
-
-ENV DOCKER_CLOUD_VERSION="1.0.9"
-RUN pip install docker-cloud==${DOCKER_CLOUD_VERSION}
+RUN apk add docker
 
 # Install Semantic Release
 

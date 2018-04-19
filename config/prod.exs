@@ -31,7 +31,7 @@ config :spender, SpenderWeb.Endpoint,
 # Configure your database
 config :spender, Spender.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: {:system, "DATABASE_URL"}
+  url: {:system, "DATABASE_URL"},
   username: "${DB_USERNAME}",
   password: "${DB_PASSWORD}",
   database: "${DB_NAME}",

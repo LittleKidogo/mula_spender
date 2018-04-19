@@ -1,4 +1,4 @@
 #!/bin/sh
-docker login -u $DOCKER_USER -p $DOCKER_PASS
-docker tag superbikezacc/spender:staging
+docker login -u ${1} -p ${2}
+docker tag spender:staging superbikezacc/spender:staging
 docker push superbikezacc/spender:staging
