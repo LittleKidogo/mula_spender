@@ -2,6 +2,3 @@ web:
   image: "superbikezacc/spender:production"
   ports:
     - "5005:5005"
-db:
-  volumes:
-    - mula-data:/var/lib/postgresql

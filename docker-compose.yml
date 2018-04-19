@@ -4,15 +4,20 @@ version: "3"
 services:
   web:
     env_file: env.list
+    image: "superbikezacc/spender:production"
+    ports:
+      - "5005:5005"
     environment:
       - DATABASE_URL=ecto://postgres:postgres@db/spender_prod
     depends_on:
       - db
   db:
-    env_file: db.list
     image: postgres:latest
+    env_file: db.list
     ports:
       - "5432:5432"
+    volumes:
+      - mula-staging:/var/lib/postgresql
 
 volumes:
   mula-data:
