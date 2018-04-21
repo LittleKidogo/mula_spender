@@ -20,11 +20,13 @@ WORKDIR /app
 
 ADD Dockerfile /app
 #copy release artefact from last stage
-ADD _build/prod/rel/spender/releases/${SEMVERSION}/vm.args /app
 ADD _build/prod/rel/spender/releases/${SEMVERSION}/spender.tar.gz /app
 
 RUN chown -R root ./releases
 
 USER root
+
+CMD ["echo" "$DB_USERNAME"]
+CMD ["echo" "$PROD_COOKIE"]
 
 CMD ["/app/bin/spender", "foreground"]
