@@ -3,5 +3,6 @@ web:
   ports:
     - "5001:5001"
 db:
+  image: postgres:latest
   volumes:
     - mula-data:/var/lib/postgresql
