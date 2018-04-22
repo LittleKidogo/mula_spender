@@ -3,6 +3,17 @@ version: "3"
 # build services
 services:
   web:
+    environment:
+      - MIX_SECRET
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - FACEBOOK_CLIENT_ID
+      - FACEBOOK_CLIENT_SECRET
+      - TWITTER_CONSUMER_KEY
+      - TWITTER_CONSUMER_SECRET
+      - SECRET_KEY_BASE
+      - PROD_COOKIE
+      - HOST
     env_file:
       - env.list
     image: "superbikezacc/spender:production"
