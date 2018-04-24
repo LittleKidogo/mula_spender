@@ -2,25 +2,20 @@ version: '3'
 services:
   web:
     image: superbikezacc/spender:staging
-    environment:
-      - DATABASE_URL=ecto://postgres:postgres@db/spender_prod
     env_file:
       - web.env
-    command: env
     ports:
       - "5002:5002"
-    networks:
-      - spender
+    links:
+      - db
   db:
     image: postgres:latest
+    env_file:
+      - db.env
     ports:
       - "5432:5432"
     volumes:
       - mula-staging:/var/lib/postgresql
-    networks:
-      - spender
-networks:
-  spender: null
 volumes:
   mula-staging:
     external: true

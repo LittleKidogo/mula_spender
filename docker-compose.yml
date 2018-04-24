@@ -6,16 +6,16 @@ services:
     image: superbikezacc/spender:production
     ports:
       - "5005:5005"
-    environment:
-      - DATABASE_URL=ecto://postgres:postgres@db/spender_prod
     depends_on:
       - db
+    networks:
+      - spender
   db:
     image: postgres:latest
     ports:
       - "5432:5432"
     volumes:
-      - mula-staging:/var/lib/postgresql
+      - mula-data:/var/lib/postgresql
 
 volumes:
   mula-data:
