@@ -26,4 +26,6 @@ RUN chown -R root ./releases
 
 USER root
 
-CMD ["/app/bin/spender", "foreground"]
+ENTRYPOINT ["/app/bin/spender"]
+
+CMD ["foreground"]
