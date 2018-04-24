@@ -26,7 +26,4 @@ RUN chown -R root ./releases
 
 USER root
 
-CMD ["echo" "$DB_USERNAME"]
-CMD ["echo" "$PROD_COOKIE"]
-
 CMD ["/app/bin/spender", "foreground"]

@@ -28,5 +28,5 @@ npm-debug.log
 .env
 /cover
 .DS_*
-env.list
-db.list
+web.env
+db.env
