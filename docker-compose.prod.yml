@@ -1,8 +1,18 @@
+version: '3'
 web:
-  image: "superbikezacc/spender:production"
+  image: superbikezacc/spender:production
+  env_file:
+    - web.env
   ports:
     - "5005:5005"
+  environment:
+    - DATABASE_URL=ecto://postgres:postgres@db/spender_prod
+  depends_on:
+    - db
 db:
   image: postgres:latest
   volumes:
-    - mula-staging:/var/lib/postgresql
+    - mula-data:/var/lib/postgresql
+volumes:
+  mula-data:
+    external: true
