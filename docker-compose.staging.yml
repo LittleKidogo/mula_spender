@@ -8,14 +8,19 @@ services:
       - web.env
     command: env
     ports:
-      - "5001:5001"
+      - "5002:5002"
+    networks:
+      - spender
   db:
     image: postgres:latest
     ports:
       - "5432:5432"
     volumes:
       - mula-staging:/var/lib/postgresql
-
+    networks:
+      - spender
+networks:
+  spender: null
 volumes:
   mula-staging:
     external: true
