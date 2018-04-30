@@ -16,7 +16,7 @@ defmodule Spender.Planning.LogSection do
     field :name, :string
     field :section_position, :integer
     belongs_to :budget, Budget
-    has_many :items, Item
+    many_to_many :items, Item, join_through: "logsections_items"
 
 
     timestamps()

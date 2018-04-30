@@ -6,6 +6,6 @@ defmodule Spender.Repo.Migrations.UpdateItemLogRelationship do
       remove :log_section_id
     end
 
-    drop index(:wishlist_items, [:log_section_id])
+    drop_if_exists index(:wishlist_items, [:log_section_id])
   end
 end

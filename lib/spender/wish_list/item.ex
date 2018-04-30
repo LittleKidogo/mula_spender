@@ -17,8 +17,7 @@ defmodule Spender.WishList.Item do
     field :qpm, :integer, default: 1
     field :type, :string
     belongs_to :budget, Budget
-    belongs_to :log_section, LogSection
-
+    many_to_many :log_section, LogSection, join_through: "logsections_items"
     timestamps()
   end
 
