@@ -1,0 +1,22 @@
+# set docker compose version
+version: "3"
+# build services
+services:
+  web:
+    image: superbikezacc/spender:production
+    ports:
+      - "5005:5005"
+    depends_on:
+      - db
+    networks:
+      - spender
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - mula-data:/var/lib/postgresql
+
+volumes:
+  mula-data:
+    external: true # use a preexisting external data volume

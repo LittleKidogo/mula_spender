@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/LittleKidogo/MoneyLog.svg?branch=develop)](https://travis-ci.org/LittleKidogo/MoneyLog)
+[![Build Status](https://circleci.com/gh/LittleKidogo/MoneyLog/tree/develop.svg?style=shield)](https://circleci.com/gh/LittleKidogo/MoneyLog/tree/develop)
 [![Coverage Status](https://coveralls.io/repos/github/LittleKidogo/MoneyLog/badge.svg?branch=develop)](https://coveralls.io/github/LittleKidogo/MoneyLog?branch=develop)
 
 

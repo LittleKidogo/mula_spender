@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    image: superbikezacc/spender:staging
+    env_file:
+      - web.env
+    ports:
+      - "5002:5002"
+    links:
+      - db
+  db:
+    image: postgres:latest
+    env_file:
+      - db.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - mula-staging:/var/lib/postgresql
+volumes:
+  mula-staging:
+    external: true

@@ -1,0 +1,126 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: bitwalker/alpine-elixir-phoenix
+        environment:
+          MIX_ENV: test
+    steps:
+      - checkout
+      - restore_cache:  # restores saved mix cache
+          keys:  # list of cache keys, in decreasing specificity
+            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - v1-mix-cache-{{ .Branch }}
+            - v1-mix-cache
+      - restore_cache:  # restores saved build cache
+          keys:
+            - v1-build-cache-{{ .Branch }}
+            - v1-build-cache
+      - run:
+          name: Get Dependecies
+          command: mix deps.get
+      - run:
+          name: Compile
+          command: mix compile
+      - save_cache:  # generate and store cache so `restore_cache` works
+          key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths: "deps"
+      - save_cache:  # make another less specific cache
+          key: v1-mix-cache-{{ .Branch }}
+          paths: "deps"
+      - save_cache:  # you should really save one more cache just in case
+          key: v1-mix-cache
+          paths: "deps"
+      - save_cache: # don't forget to save a *build* cache, too
+          key: v1-build-cache-{{ .Branch }}
+          paths: "_build"
+      - save_cache: # and one more build cache for good measure
+          key: v1-build-cache
+          paths: "_build"
+      - persist_to_workspace:
+          root: /opt/app
+          paths:
+            - project
+  test:
+    docker:
+      - image: superbikezacc/spender-base
+        environment:
+          MIX_ENV: test
+      - image: postgres:latest
+        environment:
+          POSTGRES_USER: postgres
+    steps:
+      - attach_workspace:
+          at: /opt/app
+      - run:  # special utility that stalls main process until DB is ready
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Run Tests
+          command: |
+            if [ ${CIRCLE_PR_USERNAME} ]; then
+              MIX_ENV=test mix test;
+            else
+              MIX_ENV=test mix coveralls.circle;
+            fi
+      - persist_to_workspace:
+          root: /opt/app
+          paths:
+            - project
+  deploy-staging:
+   docker:
+     - image: superbikezacc/spender-base
+       environment:
+         MIX_ENV: prod
+   steps:
+     - attach_workspace:
+        at: /opt/app
+     - setup_remote_docker
+     - run:
+        name: Get Dependecies
+        command: mix deps.get
+     - run:
+        name: Make deploy scripts executable
+        command: find ci/staging/ -type f -iname "*.sh" -exec chmod +x {} \;
+     - run:
+        name: Deploying to staging
+        command: ci/staging/deploy.sh
+  deploy-production:
+   docker:
+     - image: superbikezacc/spender-base
+       environment:
+         MIX_ENV: prod
+   steps:
+     - attach_workspace:
+        at: /opt/app
+     - setup_remote_docker
+     - run:
+        name: "Get Dependecies"
+        command: mix deps.get
+     - run:
+        name: Compute Semver
+        command: semantic-release vf -slug suberbikezacc/spender -noci || true
+     - run:
+        name: Deploying to production
+        command: ci/production/deploy.sh
+
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy-staging:
+          requires:
+            - test
+          filters:
+            branches:
+              only: develop
+      - deploy-production:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
