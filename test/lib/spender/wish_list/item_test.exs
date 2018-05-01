@@ -26,9 +26,10 @@ defmodule Spender.WishList.ItemTest do
     test "should associate an item to a log_section" do
       log_section = insert(:log_section)
       item = insert(:wishlist_item, @valid_attrs)
-      changeset = Item.add_to_section(item, %{log_section_id: log_section.id})
+      item = item |> Repo.preload(:log_section)
+      changeset = Item.add_to_section(item,log_section)
       assert changeset.valid?
-      assert changeset.changes.log_section_id == log_section.id
+      assert changeset.changes.log_section
     end
   end
 end

@@ -36,10 +36,9 @@ defmodule Spender.WishList.Item do
   end
 
   @spec add_to_section(Item.t, map) :: Ecto.Changeset.t()
-  def add_to_section(%Item{} = item, attrs) do
+  def add_to_section(%Item{} = item, %LogSection{} = section) do
     item
-    |> cast(attrs, [:log_section_id])
-    |> validate_required([:log_section_id])
-    |> foreign_key_constraint(:log_section_id, message: "logsection must exist to take item")
+    |> changeset(%{})
+    |> put_assoc(:log_section, section)
   end
 end
