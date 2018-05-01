@@ -16,10 +16,12 @@ defmodule Spender.Planning do
 
   @spec add_item_to_section(Item.t, LogSection.t) :: {:ok, LogSection.t} | {:error, Ecto.Changeset.t()}
   def add_item_to_section(%Item{} = item, %LogSection{} = logsection) do
-    with {:ok, %Item{} = updated_item} <- Item.add_to_section(item, %{log_section_id: logsection.id}) |> Repo.update(),
+    item = item |> Repo.preload(:log_section)
+
+    with {:ok, %Item{} = updated_item} <- Item.add_to_section(item, logsection) |> Repo.update(),
         %Item{} = loaded_item <- Repo.preload(updated_item, :budget),
         {:ok, _budget} <- update_budget_status(loaded_item.budget),
-      %LogSection{} = loaded_section <- logsection |> Repo.preload(:items)  do
+      %LogSection{} = loaded_section <- logsection |> Repo.preload(:wishlist_items)  do
         {:ok, loaded_section}
       end
   end
@@ -135,6 +137,7 @@ defmodule Spender.Planning do
     case status do
       "planning" ->
         {:ok, updated_budget} = budget |> MoneyLogs.update_budget(%{status: "refined"})
+        {:ok, updated_budget}
         _ ->
         {:ok, budget}
     end

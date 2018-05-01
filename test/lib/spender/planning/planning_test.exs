@@ -18,22 +18,15 @@ defmodule Spender.PlanningTest do
   describe "Planning Boundary" do
 
     test "add_item_to_section should associate an item with a section" do
-      budget = insert(:budget)
-      section = insert(:log_section, budget: budget)
-      item_build = build(:wishlist_item, budget: budget)
-      {:ok, _} = WishList.add_item(budget, Map.from_struct(item_build))
-      assert Repo.aggregate(Budget, :count, :id) == 1
+      section = insert(:log_section)
+      item = insert(:wishlist_item)
       assert Repo.aggregate(LogSection, :count, :id) == 1
       assert Repo.aggregate(Item, :count, :id) == 1
-      item = Repo.one(Item)
+      Repo.all(Item) |> IO.inspect
+      Repo.all(LogSection) |> IO.inspect
       {:ok, updated_section} = Planning.add_item_to_section(item, section)
-      assert Repo.aggregate(Budget, :count, :id) == 1
       assert Repo.aggregate(LogSection, :count, :id) == 1
       assert Repo.aggregate(Item, :count, :id) == 1
-      updated_budget = Repo.one(Budget)
-      assert updated_budget.id == budget.id
-      refute budget.status == updated_budget.status
-      assert updated_budget.status == "refined"
       assert Enum.count(updated_section.items) == 1
     end
 
