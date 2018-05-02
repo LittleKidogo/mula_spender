@@ -16,7 +16,7 @@ defmodule Spender.Planning do
 
   @spec add_item_to_section(Item.t, LogSection.t) :: {:ok, LogSection.t} | {:error, Ecto.Changeset.t()}
   def add_item_to_section(%Item{} = item, %LogSection{} = logsection) do
-    item = item |> Repo.preload(:log_section)
+    item = item |> Repo.preload(:log_sections)
 
     with {:ok, %Item{} = updated_item} <- Item.add_to_section(item, logsection) |> Repo.update(),
         %Item{} = loaded_item <- Repo.preload(updated_item, :budget),

@@ -3,7 +3,6 @@ defmodule Spender.PlanningTest do
 
   alias Spender.{
     Planning,
-    WishList,
     Planning.LogSection,
     Planning.IncomeLog,
     MoneyLogs.Budget,
@@ -22,12 +21,12 @@ defmodule Spender.PlanningTest do
       item = insert(:wishlist_item)
       assert Repo.aggregate(LogSection, :count, :id) == 1
       assert Repo.aggregate(Item, :count, :id) == 1
-      Repo.all(Item) |> IO.inspect
-      Repo.all(LogSection) |> IO.inspect
+      Repo.all(Item)
+      Repo.all(LogSection)
       {:ok, updated_section} = Planning.add_item_to_section(item, section)
       assert Repo.aggregate(LogSection, :count, :id) == 1
       assert Repo.aggregate(Item, :count, :id) == 1
-      assert Enum.count(updated_section.items) == 1
+      assert Enum.count(updated_section.wishlist_items) == 1
     end
 
     test "get_income should return an error if income doesnt exist" do
