@@ -26,10 +26,10 @@ defmodule Spender.WishList.ItemTest do
     test "should associate an item to a log_section" do
       log_section = insert(:log_section)
       item = insert(:wishlist_item, @valid_attrs)
-      item = item |> Repo.preload(:log_section)
+      item = item |> Repo.preload(:log_sections)
       changeset = Item.add_to_section(item,log_section)
       assert changeset.valid?
-      assert changeset.changes.log_section
+      assert changeset.changes.log_sections
     end
   end
 end
