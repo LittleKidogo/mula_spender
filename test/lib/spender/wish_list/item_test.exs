@@ -1,6 +1,9 @@
 defmodule Spender.WishList.ItemTest do
   use Spender.DataCase
-  alias Spender.WishList.Item
+  alias Spender.{
+    Planning,
+    WishList.Item
+  }
 
   @valid_attrs %{name: "Soap", price: 10.3}
   @invalid_attrs %{name: "Soap", }
@@ -30,6 +33,17 @@ defmodule Spender.WishList.ItemTest do
       changeset = Item.add_to_section(item,log_section)
       assert changeset.valid?
       assert changeset.changes.log_sections
+    end
+
+    test "should associate not item more log_sections than qpm" do
+      log_section = insert(:log_section)
+      item = insert(:wishlist_item, @valid_attrs)
+      item = item |> Repo.preload(:log_sections)
+      Planning.add_item_to_section(item, log_section)
+      saved_item = Repo.one(Item) |> Repo.preload(:log_sections)
+      log_section1 = insert(:log_section)
+      changeset = Item.add_to_section(saved_item, log_section1)
+      refute changeset.valid?
     end
   end
 end

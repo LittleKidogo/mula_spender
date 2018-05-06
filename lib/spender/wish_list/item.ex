@@ -2,7 +2,6 @@ defmodule Spender.WishList.Item do
   use Ecto.Schema
   import Ecto.Changeset
   alias Spender.{
-    Repo,
     MoneyLogs.Budget,
     WishList.Item,
     Planning.LogSection
@@ -35,10 +34,11 @@ defmodule Spender.WishList.Item do
     |> put_assoc(:budget, budget)
   end
 
-  @spec add_to_section(Item.t, map) :: Ecto.Changeset.t()
-  def add_to_section(%Item{} = item, %LogSection{} = section) do
+  @spec add_to_section(Item.t, LogSection.t) :: Ecto.Changeset.t()
+  def add_to_section(%Item{qpm: qpm, log_sections: sections} = item, %LogSection{} = section) do
     item
-    |> changeset(%{})
-    |> put_assoc(:log_sections, [section])
+    |> change(%{})
+    |> put_assoc(:log_sections, sections ++ [section])
+    |> validate_length(:log_sections, max: qpm)
   end
 end
