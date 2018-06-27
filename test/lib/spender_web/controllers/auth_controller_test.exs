@@ -80,12 +80,12 @@ defmodule SpenderWeb.AuthControllerTest do
       assert json_response(conn, 422)
     end
 
-    test "redirects user to Twitter for Authentication", %{conn: conn} do
-      conn = conn
-        |> init_test_session(foo: "bar")
-        |> get("/auth/twitter")
-      assert redirected_to(conn, 302)
-    end
+    # test "redirects user to Twitter for Authentication", %{conn: conn} do
+    #   conn = conn
+    #     |> init_test_session(foo: "bar")
+    #     |> get("/auth/twitter")
+    #   assert redirected_to(conn, 302)
+    # end
 
     test "creates and returns user from twitter information",%{conn: conn} do
       #mock a response from google
