@@ -2,12 +2,12 @@
 [![Coverage Status](https://coveralls.io/repos/github/LittleKidogo/MoneyLog/badge.svg?branch=develop)](https://coveralls.io/github/LittleKidogo/MoneyLog?branch=develop)
 
 
-# MoneyLog Backend
+# Spender
 
-This is the Elixir backend API for `MoneyLog`
-MoneyLog is an application that helps us spend our money on stuff we want!
-Through some research after trying to use various 'budget' applications, We found that most of them did not provide us
-with the information we needed to spend our money confidently. After some time of using spreadsheets to record and plan our finances we have come to develop a group of spreadsheets and procedures that have aided us so greatly with confidence in our spending we hope to share this experience with as many people as possible through `MoneyLog`
+This is the Elixir backend API for `Mula` called `Spender` Mula is an application that helps us spend our money on stuff we want!
+
+Through research after trying to use various 'budget' applications, We found that most of them did not provide us
+with the information we needed to spend our money confidently. After some time of using spreadsheets to record and plan our finances we have come to develop a group of spreadsheets and procedures that have aided us so greatly with confidence in our spending we hope to share this experience with as many people as possible through `Mula`
 
 ## Getting Started
 
