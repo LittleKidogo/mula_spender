@@ -4,7 +4,7 @@
 
 # Spender
 
-This is the Elixir backend API for `Mula` called `Spender` Mula is an application that helps us spend our money on stuff we want!
+This is the Elixir backend API for `Mula` called `Spender`. Mula is an application that helps us spend our money on stuff we want!
 
 Through research after trying to use various 'budget' applications, We found that most of them did not provide us
 with the information we needed to spend our money confidently. After some time of using spreadsheets to record and plan our finances we have come to develop a group of spreadsheets and procedures that have aided us so greatly with confidence in our spending we hope to share this experience with as many people as possible through `Mula`
@@ -27,6 +27,3 @@ See also the list of [contributors](https://github.com/LittleKidogo/MoneyLog/gra
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## TODO
-- [ ] Add project roadmap
