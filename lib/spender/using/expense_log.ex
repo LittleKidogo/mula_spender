@@ -24,6 +24,7 @@ defmodule Spender.Using.ExpenseLog do
   This changeset function takes in a struct and map containing parameters
   It proceeds to match the parameters in the the map the schema above
   """
+  @spec changeset(ExpenseLog.t(), map) :: Changeset.t()
   def changeset(expenselog, attrs \\ %{}) do
    expenselog
    |> cast(attrs, [:name, :desc, :amount])
