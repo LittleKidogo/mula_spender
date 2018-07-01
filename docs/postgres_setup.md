@@ -1,4 +1,4 @@
-#Install postgresql with homebrew
+#Install postgresql on Mac OS
 
 Run `brew` on the terminal to confirm that you have brew installed.
 
@@ -25,8 +25,3 @@ This creates a new role and password, if the role already exists run the followi
 * `Alter role user postgres with new_role_name`
 
 Run `mix test` should return the number of tests and 0 failures if there is no error in your test.
-
-
-
-
-
