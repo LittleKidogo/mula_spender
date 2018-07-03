@@ -65,6 +65,12 @@ defmodule SpenderWeb.Schema do
 
   # add mutations handled by our schema
   mutation do
+    @desc "Links an item to a LogSection"
+    field :link_item, :log_section do
+      arg :input, non_null(:link_item_input)
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Planning.link_item/3
+    end
     @desc "Deletes an income from a MoneyLog"
     field :delete_income_log, :income_log do
       arg :input, non_null(:income_log_update_input)
