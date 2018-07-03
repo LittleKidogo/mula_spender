@@ -1,5 +1,15 @@
 defmodule SpenderWeb.Schema.PlanningTypes do
+  @moduledoc """
+  This module holds type definitions that are used to
+  interact with the planning context.
+  """
   use Absinthe.Schema.Notation
+
+  @desc "Input to link a WishListItem to a LogSection"
+  input_object :link_item_input do
+    field :item_id, non_null(:integer)
+    field :section_id, non_null(:integer)
+  end
 
   @desc "Input to add log sections to a MoneyLog"
   input_object :log_sections_input do
