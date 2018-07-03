@@ -13,6 +13,44 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
   describe "Planning Resolver" do
     @tag :authenticated
+    @tag :new
+    test "link_item should associate an item to a section", %{conn: conn} do
+      budget = insert(:budget)
+      item = insert(:wishlist_item, budget: budget)
+      section = insert(:log_section, budget: budget)
+
+      loaded_item = item |> Repo.preload(:log_sections)
+      assert Enum.count(loaded_item.log_sections) == 0
+      variables = %{
+        "input" => %{
+          "item_id" => item.id,
+          "section_id" => section.id
+        }
+      }
+
+      query = """
+      mutation($input: LinkItemInput!) {
+        linkItem(input: $input) {
+          id
+          name
+        }
+      }
+      """
+
+      res = post conn, "/graphiql", query: query, variables: variables
+
+      %{
+        "data" => %{
+          "linkItem" => loaded_section
+        }
+      } = json_response(res, 200)
+
+    refute item |> Repo.preload(:log_sections) == nil
+    assert loaded_section["id"] == section.id
+    IO.inpsect loaded_section
+    end
+
+    @tag :authenticated
     test "add_income should save an income", %{conn: conn} do
       budget = insert(:budget)
       assert Repo.aggregate(IncomeLog, :count, :id) == 0
