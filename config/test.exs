@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :spender, Spender.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "",
+  password: "postgres",
   database: "spender_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
