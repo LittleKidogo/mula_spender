@@ -13,7 +13,6 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
   describe "Planning Resolver" do
     @tag :authenticated
-    @tag :new
     test "link_item should associate an item to a section", %{conn: conn} do
       budget = insert(:budget)
       item = insert(:wishlist_item, budget: budget)
@@ -45,9 +44,9 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
         }
       } = json_response(res, 200)
 
+
     refute item |> Repo.preload(:log_sections) == nil
     assert loaded_section["id"] == section.id
-    IO.inpsect loaded_section
     end
 
     @tag :authenticated
