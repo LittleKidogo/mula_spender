@@ -16,11 +16,25 @@ defmodule Spender.PlanningTest do
 
   describe "Planning Boundary" do
 
+    @tag :simple
+    test "remote_item_from_section should remove the association between an item and section" do
+      logsection = insert(:log_section)
+      item = insert(:wishlist_item)
+      loaded_section = logsection |> Repo.preload(:wishlist_items)
+      assert Enum.count(loaded_section.wishlist_items) == 0
+      {:ok, updated_section} = Planning.add_item_to_section(item, logsection)
+      assert Enum.count(updated_section.wishlist_items) == 1
+      {:ok, cleared_section} = Planning.remove_item_from_section(item, updated_section)
+      assert Enum.count(cleared_section.wishlist_items) == 0
+    end
+
     test "add_item_to_section should associate an item with a section" do
       section = insert(:log_section)
       item = insert(:wishlist_item)
       assert Repo.aggregate(LogSection, :count, :id) == 1
       assert Repo.aggregate(Item, :count, :id) == 1
+      loaded_section = section |> Repo.preload(:wishlist_items)
+      assert Enum.count(loaded_section.wishlist_items) == 0
       Repo.all(Item)
       Repo.all(LogSection)
       {:ok, updated_section} = Planning.add_item_to_section(item, section)
