@@ -14,6 +14,12 @@ defmodule Spender.Planning do
     WishList.Item
   }
 
+  @doc """
+  This function allows us to link add an Item into a LogSection in the MoneyLog
+  It accepts an Item and a LogSection
+  It creates an association between them and returns the LogSection Preloaded with
+  Items
+  """
   @spec add_item_to_section(Item.t, LogSection.t) :: {:ok, LogSection.t} | {:error, Ecto.Changeset.t()}
   def add_item_to_section(%Item{} = item, %LogSection{} = logsection) do
     item = item |> Repo.preload(:log_sections)
