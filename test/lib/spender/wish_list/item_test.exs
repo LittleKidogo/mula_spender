@@ -35,6 +35,19 @@ defmodule Spender.WishList.ItemTest do
       assert changeset.changes.log_sections
     end
 
+    test "should remove association between an item and a log_section" do
+      log_section = insert(:log_section)
+      item = insert(:wishlist_item, @valid_attrs)
+      item = item |> Repo.preload(:log_sections)
+      assert Enum.count(item.log_sections) == 0
+      changeset = Item.add_to_section(item,log_section)
+      {:ok, updated_item} = changeset |> Repo.update()
+      assert Enum.count(updated_item.log_sections) == 1
+      new_changeset = Item.remove_from_section(updated_item, log_section)
+      assert new_changeset.valid?
+      assert changeset.changes.log_sections
+    end
+
     test "should associate not item more log_sections than qpm" do
       log_section = insert(:log_section)
       item = insert(:wishlist_item, @valid_attrs)
