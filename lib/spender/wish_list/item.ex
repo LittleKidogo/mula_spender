@@ -16,7 +16,7 @@ defmodule Spender.WishList.Item do
     field :qpm, :integer, default: 1
     field :type, :string
     belongs_to :budget, Budget
-    many_to_many :log_sections, LogSection, join_through: "logsections_items", join_keys: [wishlist_item_id: :id, log_section_id: :id]
+    many_to_many :log_sections, LogSection, join_through: "logsections_items", join_keys: [wishlist_item_id: :id, log_section_id: :id], on_replace: :delete
     timestamps()
   end
 
@@ -34,11 +34,24 @@ defmodule Spender.WishList.Item do
     |> put_assoc(:budget, budget)
   end
 
+  @doc """
+  This function adds a LogSection to an items list of logsections
+  """
   @spec add_to_section(Item.t, LogSection.t) :: Ecto.Changeset.t()
   def add_to_section(%Item{qpm: qpm, log_sections: sections} = item, %LogSection{} = section) do
     item
     |> change(%{})
     |> put_assoc(:log_sections, sections ++ [section])
     |> validate_length(:log_sections, max: qpm)
+  end
+
+  @doc """
+  This function removes a logsection from an items list of log_sections
+  """
+  @spec remove_from_section(Item.t, LogSection.t) :: Ecto.Changeset.t()
+  def remove_from_section(%Item{log_sections: sections} = item, %LogSection{} = section) do
+    item
+    |> change(%{})
+    |> put_assoc(:log_sections, sections -- [section])
   end
 end
