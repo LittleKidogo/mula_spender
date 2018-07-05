@@ -16,7 +16,7 @@ defmodule Spender.Planning.LogSection do
     field :name, :string
     field :section_position, :integer
     belongs_to :budget, Budget
-    many_to_many :wishlist_items, Item, join_through: "logsections_items", join_keys: [log_section_id: :id, wishlist_item_id: :id]
+    many_to_many :wishlist_items, Item, join_through: "logsections_items", join_keys: [log_section_id: :id, wishlist_item_id: :id], on_replace: :delete
 
 
     timestamps()
@@ -29,6 +29,11 @@ defmodule Spender.Planning.LogSection do
     |> validate_required([:name, :duration, :section_position])
   end
 
+  @doc """
+  This function takes a MoneyLog and a map of attributes the proceeds to use these
+  attributes to create a LogSection Struct
+  """
+  @spec create_changeset(Budget.t(), map()) :: Ecto.Changeset.t()
   def create_changeset(%Budget{} = budget, attrs) do
     %LogSection{}
     |> changeset(attrs)
