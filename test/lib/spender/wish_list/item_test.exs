@@ -45,7 +45,7 @@ defmodule Spender.WishList.ItemTest do
       assert Enum.count(updated_item.log_sections) == 1
       new_changeset = Item.remove_from_section(updated_item, log_section)
       assert new_changeset.valid?
-      assert changeset.changes.log_sections
+      assert new_changeset.changes.log_sections
     end
 
     test "should associate not item more log_sections than qpm" do
