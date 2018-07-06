@@ -39,4 +39,16 @@ defmodule Spender.Planning.LogSection do
     |> changeset(attrs)
     |> put_assoc(:budget, budget)
   end
+
+  @doc """
+  This function takes a WishListItem and a LogSection assumes  are Associated
+  and proceeds to remove the item from the list of associated WishListItems
+  """
+  @spec remove_item(LogSection.t(), Item.t()) :: Ecto.Changeset.t()
+  def remove_item(%LogSection{wishlist_items: items} = logsection, %Item{} = item) do
+
+    logsection
+    |> change(%{})
+    |> put_assoc(:wishlist_items, items -- [item])
+  end
 end
