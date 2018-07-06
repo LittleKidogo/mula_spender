@@ -1,5 +1,5 @@
 defmodule Spender.Planning do
-  @doc """
+  @moduledoc """
   Boundary module for  the Planning section to the,  This module should
   aid in the planning actions taken when a user is refining a MoneyLog
   """
@@ -29,6 +29,22 @@ defmodule Spender.Planning do
         {:ok, _budget} <- update_budget_status(loaded_item.budget),
       %LogSection{} = loaded_section <- logsection |> Repo.preload(:wishlist_items)  do
         {:ok, loaded_section}
+      end
+  end
+
+  @doc """
+  This function allows us to delete the link between an Item and a LogSection
+  It accespts an Item and LogSection, deletes the association and returns a section
+  with the item removed
+  """
+  def remove_item_from_section(%Item{} = item, %LogSection{} = logsection) do
+    plain_item = Repo.get_by(Item, id: item.id)
+    loaded_item = item |> Repo.preload(:log_sections)
+
+    with {:ok, %Item{} = updated_item} <- Item.remove_from_section(loaded_item, logsection) |> Repo.update(),
+        {:ok, cleared_section}  <- LogSection.remove_item(logsection, plain_item) |> Repo.update(),
+        %LogSection{} = updated_section <- cleared_section |> Repo.preload(:wishlist_items)  do
+          {:ok, updated_section}
       end
   end
 
