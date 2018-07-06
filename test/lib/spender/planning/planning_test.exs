@@ -15,9 +15,7 @@ defmodule Spender.PlanningTest do
   @log_attrs %{name: "Salary", amount: 67000.9, earn_date: NaiveDateTime.to_date(NaiveDateTime.utc_now)}
 
   describe "Planning Boundary" do
-
-    @tag :simple
-    test "remote_item_from_section should remove the association between an item and section" do
+    test "remove_item_from_section should remove the association between an item and section" do
       logsection = insert(:log_section)
       item = insert(:wishlist_item)
       loaded_section = logsection |> Repo.preload(:wishlist_items)
