@@ -1,10 +1,19 @@
 defmodule SpenderWeb.Resolvers.Planning do
+  @moduledoc """
+  This module holds functions we use to resolve objects that we get from the
+  Planning context.
+  """
   alias Spender.{
     MoneyLogs,
     MoneyLogs.Budget,
-    Planning
+    Planning,
+    Planning.LogSection
   }
 
+  @doc """
+  This function resolves all LogSections in a MoneyLog as a list
+  """
+  @spec get_sections(any(), map(), any()) :: {:ok, list(LogSection.t())} | {:error, String.t()}
   def get_sections(_,%{input: params}, _) do
     with {:ok, budget} <- MoneyLogs.get_budget(params.budget_id),
       {:ok, sections} <- Planning.get_sections(budget) do

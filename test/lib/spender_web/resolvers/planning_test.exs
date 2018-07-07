@@ -122,7 +122,7 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
     end
 
     @tag :authenticated
-    test "get_sections should fetch sections in a budget", %{conn: conn, current_user: user} do
+    test "sections should fetch sections in a budget", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
       budget = insert(:budget, owner: owner)
       insert_list(@num_sections, :log_section, budget: budget)
@@ -135,7 +135,7 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
       query = """
       query($input: GetSectionsInput!) {
-        getSections(input: $input){
+        sections(input: $input){
           name
         }
       }
@@ -145,7 +145,7 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
       %{
         "data" => %{
-          "getSections" => sections
+          "sections" => sections
         }
       } = json_response(res, 200)
 
