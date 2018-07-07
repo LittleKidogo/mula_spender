@@ -4,6 +4,7 @@
 /deps
 /*.ez
 /.idea
+/.vs
 
 
 # Generated on crash by the VM
