@@ -6,7 +6,6 @@ defmodule Spender.Using.ExpenseLogTest do
   use Spender.DataCase
   alias Spender.Using.ExpenseLog
 
-  @invalid_expense %{}
   @no_name_attrs %{amount: 45.67}
   @no_amount_attrs %{name: "Zucchini"}
   @valid_expense %{name: "Zucchini", amount: 20.89}
