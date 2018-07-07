@@ -39,7 +39,10 @@ defmodule SpenderWeb.Router do
   end
 
   scope "/", SpenderWeb do
+    pipe_through [:browser]
+
     get "/", PageController, :index
+
   end
 
   scope "/" do

@@ -5,6 +5,6 @@ defmodule SpenderWeb.PageController do
   use SpenderWeb, :controller
 
   def index(conn, _) do
-    text conn, "Hello"
+    render conn, "page.html"
   end
 end
