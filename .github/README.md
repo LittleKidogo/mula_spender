@@ -1,4 +1,4 @@
-[![Build Status](https://circleci.com/gh/LittleKidogo/MoneyLog/tree/develop.svg?style=shield)](https://circleci.com/gh/LittleKidogo/MoneyLog/tree/develop)
+[![CircleCI](https://circleci.com/gh/LittleKidogo/spender.svg?style=shield)](https://circleci.com/gh/LittleKidogo/spender)
 [![Coverage Status](https://coveralls.io/repos/github/LittleKidogo/MoneyLog/badge.svg?branch=develop)](https://coveralls.io/github/LittleKidogo/MoneyLog?branch=develop)
 
 
