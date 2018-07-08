@@ -1,11 +1,11 @@
-<div class="welcome">
+<div class="red">
     <h2> Welcome to Mula API.</h2>
 </div>
-<div class="text">
+<div>
     <h3>Introduction</h3>
     <p>The Mula API consist of a <code>GraphQl</code> endpoint that provides a <code>Schema</code> on the route 
     <code>/graphql</code> in order to interact with the Schema, the clients need to authenticate using 
-    a federated identy provider.<br>
+    a federated identy provider.<br><br>
     Currently the Mula API supports the following providers:<br>
     <ol>
     <li>Google</li>
@@ -16,17 +16,22 @@
     <p>Clients start authentication process by visiting the <code>/auth/:provider</code> route where the
     <code>:provider</code> happens to be a supported federated identity provider. On visiting this route,
     the client is redirected to the desired provider where they have to login to their 
-    account and are issued with a <code>token</code>.
+    account and are issued with a <code>token</code>.<br>
     Clients are then redirected back to the Mula API where the client has to provide details
     using the token issued.This needs to be placed in the Authorization header in any request that needs 
-    authorization.<br>
+    authorization.<br><br>
     Example header <br/>
-    <code>Authorization: Bearer YWxhZGRpbjpvcGVuc2VzYW1l</code></p>
+    <pre>
+        <code>
+            Authorization: Bearer YWxhZGRpbjpvcGVuc2VzYW1l
+        </code>
+    </pre>
+    </p>
     <h4>Requests</h4>
     <p>Requests to the Mula API will be sent as <code>GraphQl</code> documents
     and replies will be formarted as <code>JSON</code> object containing some 
     <code>data</code> or/and <code>errors</code> depending on how the request
-     went.<br>
+     went.<br><br>
      Example request<br>
     <pre>
         <code>
@@ -43,8 +48,12 @@
         <code>
         {
             "data":{
-                "addIncomeLog" => log
+                "addIncomeLog":{
+                    "name":"Salary",
+                    "amount":"350.00"
+                }
             }       
         }
+        </code>
     </pre>
 </div>
