@@ -5,7 +5,7 @@ defmodule SpenderWeb.PageControllerTest do
   describe "Page Controller" do
      test "renders the homepage on the root url", %{conn: conn} do
       conn = get conn, "/"
-      assert text_response(conn, 200)
+      assert html_response(conn, 200)
     end
   end
 end
