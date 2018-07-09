@@ -1,7 +1,7 @@
-defmodule Spender.Planning.LogCategoryTest do
-  @moduledoc """
+@moduledoc """
   This module performs tests for the log-category changeset
 """
+defmodule Spender.Planning.LogCategoryTest do
   use Spender.DataCase
   alias Spender.Planning.LogCategory
 
@@ -26,7 +26,4 @@ defmodule Spender.Planning.LogCategoryTest do
       assert changeset.changes.budget
     end
   end
-
-
-
 end
