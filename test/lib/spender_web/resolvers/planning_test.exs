@@ -2,6 +2,7 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
   use SpenderWeb.ApiCase
 
   alias Spender.{
+    Planning,
     Planning.LogSection,
     Planning.IncomeLog
   }
@@ -12,6 +13,47 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
 
   describe "Planning Resolver" do
+    @tag :unlink
+    @tag :authenticated
+    test "unlink_item should remove an item from a section", %{conn: conn} do
+      item = insert(:wishlist_item)
+      section = insert(:log_section)
+      loaded_section = section |> Repo.preload(:wishlist_items)
+      assert Enum.count(loaded_section.wishlist_items) == 0
+      {:ok, updated_section} = Planning.add_item_to_section(item, section)
+      assert Enum.count(updated_section.wishlist_items) == 1
+
+      variables = %{
+        "input" => %{
+          "item_id" => item.id,
+          "section_id" => section.id
+        }
+      }
+
+      query = """
+      mutation($input: LinkItemInput!) {
+        unlinkItem(input: $input) {
+          id
+          name
+        }
+      }
+      """
+
+      res = post conn, "/graphiql", query: query, variables: variables
+
+      %{
+        "data" => %{
+          "unlinkItem" => unloaded_section
+        }
+      } = json_response(res, 200)
+
+      unlinked_item =  item |> Repo.preload(:log_sections)
+      assert Enum.count(unlinked_item.log_sections) == 0
+      assert unloaded_section["id"] == section.id
+      saved_section = Repo.one(LogSection) |> Repo.preload(:wishlist_items)
+      assert Enum.count(saved_section.wishlist_items) == 0
+    end
+
     @tag :authenticated
     test "link_item should associate an item to a section", %{conn: conn} do
       budget = insert(:budget)

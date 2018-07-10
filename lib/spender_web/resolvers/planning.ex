@@ -35,6 +35,18 @@ defmodule SpenderWeb.Resolvers.Planning do
       end
   end
 
+  @doc """
+  This function takes  the same input as the link_item input only it does an inverse of
+  what link_item does i.e it removes the provided item from the provided section
+  """
+  @spec unlink_item(any(), map(), any()) :: {:ok, LogSection.t()} | {:error, String.t()}
+  def unlink_item(_, %{input: params}, _) do
+    with {:ok, %Item{} = item} <- WishList.get_item(params.item_id),
+      {:ok, %LogSection{} = section} <- Planning.get_section(params.section_id),
+      {:ok, %LogSection{} = cleared_section} <- Planning.remove_item_from_section(item, section) do
+        {:ok, cleared_section}
+      end
+  end
 
 >>>>>>> add resolver function to link a WishListItem to a LogSection
   def get_sections(_,%{input: params}, _) do
