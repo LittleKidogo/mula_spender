@@ -1,9 +1,10 @@
+@moduledoc """
+This module holds the database schema for the logCategory table.
+We use this table to records the logExpense when we log in an expense
+"""
 defmodule Spender.Repo.Migrations.AddLogCategory do
   use Ecto.Migration
-  @moduledoc """
-  This module holds the database schema for the logCategory table
-  we use this table to records the logExpense when we log in an expense
-  """
+
   @doc """
     This function creates a table with the logCategory details
   """
