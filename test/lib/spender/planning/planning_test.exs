@@ -15,6 +15,7 @@ defmodule Spender.PlanningTest do
   @log_attrs %{name: "Salary", amount: 67000.9, earn_date: NaiveDateTime.to_date(NaiveDateTime.utc_now)}
 
   describe "Planning Boundary" do
+    @tag :unlink
     test "remove_item_from_section should remove the association between an item and section" do
       logsection = insert(:log_section)
       item = insert(:wishlist_item)
@@ -22,7 +23,7 @@ defmodule Spender.PlanningTest do
       assert Enum.count(loaded_section.wishlist_items) == 0
       {:ok, updated_section} = Planning.add_item_to_section(item, logsection)
       assert Enum.count(updated_section.wishlist_items) == 1
-      {:ok, cleared_section} = Planning.remove_item_from_section(item, updated_section)
+      {:ok, cleared_section} = Planning.remove_item_from_section(item, logsection)
       assert Enum.count(cleared_section.wishlist_items) == 0
     end
 

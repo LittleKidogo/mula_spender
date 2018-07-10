@@ -40,9 +40,10 @@ defmodule Spender.Planning do
   def remove_item_from_section(%Item{} = item, %LogSection{} = logsection) do
     plain_item = Repo.get_by(Item, id: item.id)
     loaded_item = item |> Repo.preload(:log_sections)
+    loaded_section = logsection |> Repo.preload(:wishlist_items)
 
     with {:ok, %Item{} = updated_item} <- Item.remove_from_section(loaded_item, logsection) |> Repo.update(),
-        {:ok, cleared_section}  <- LogSection.remove_item(logsection, plain_item) |> Repo.update(),
+        {:ok, cleared_section}  <- LogSection.remove_item(loaded_section, plain_item) |> Repo.update(),
         %LogSection{} = updated_section <- cleared_section |> Repo.preload(:wishlist_items)  do
           {:ok, updated_section}
       end
