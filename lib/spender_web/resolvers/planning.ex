@@ -2,20 +2,12 @@ defmodule SpenderWeb.Resolvers.Planning do
   @moduledoc """
   This module holds functions we use to resolve objects that we get from the
   Planning context.
+  add resolver function to link a WishListItem to a LogSection
   """
   alias Spender.{
     MoneyLogs,
     MoneyLogs.Budget,
     Planning,
-<<<<<<< HEAD
-    Planning.LogSection
-  }
-
-  @doc """
-  This function resolves all LogSections in a MoneyLog as a list
-  """
-  @spec get_sections(any(), map(), any()) :: {:ok, list(LogSection.t())} | {:error, String.t()}
-=======
     Planning.LogSection,
     WishList,
     WishList.Item
@@ -48,7 +40,11 @@ defmodule SpenderWeb.Resolvers.Planning do
       end
   end
 
->>>>>>> add resolver function to link a WishListItem to a LogSection
+  @doc """
+  This function resolves all LogSections in a MoneyLog as a list
+  add resolver function to link a WishListItem to a LogSection
+  """
+  @spec get_sections(any(), map(), any()) :: {:ok, list(LogSection.t())} | {:error, String.t()}
   def get_sections(_,%{input: params}, _) do
     with {:ok, budget} <- MoneyLogs.get_budget(params.budget_id),
       {:ok, sections} <- Planning.get_sections(budget) do
