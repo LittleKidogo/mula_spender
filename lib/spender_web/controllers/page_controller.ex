@@ -5,9 +5,8 @@ defmodule SpenderWeb.PageController do
   use SpenderWeb, :controller
 
   @doc """
-  This function takes a Connection Struct and any other parameter which may be optional
-  it then convertes this to content that can be displayed on a web page and stores it in
-  a Connection struct and returns the struct.
+  This function takes a Connection Struct and an optional parameter
+  it then converts it and then renders the landing page for the root route of the Mula API
   """
   @spec index(Plug.Conn.t(), any()) :: Plug.Conn.t()
   def index(conn, _) do
