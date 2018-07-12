@@ -8,7 +8,7 @@ defmodule SpenderWeb.PageController do
   it then convertes this to content that can be displayed on a web page and stores it in
   a Connection struct and returns the struct.
   """
-  @spec index(Plug.Conn.t(), any())::Plug.Conn,t()
+  @spec index(Plug.Conn.t(), any())::Plug.Conn.t()
   def index(conn, _) do
     render conn, "page.html"
   end
