@@ -26,21 +26,22 @@ config :ueberauth, Ueberauth,
 # configure Guardian for Session Handling
 config :spender, Spender.Auth.Guardian,
   issuer: "LittleKidogo",
-  secret_key: System.get_env("MIX_SECRET")
+  secret_key: "${MIX_SECRET}"
 
 # configure Google Sign In Strategy for Ueberauth
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+  client_id: "${GOOGLE_CLIENT_ID}",
+  client_secret: "${GOOGLE_CLIENT_SECRET}"
 
 # configure Facebook Sign In Strategy for Ueberauth
 config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
-  client_id: System.get_env("FACEBOOK_CLIENT_ID"),
-  client_secret: System.get_env("FACEBOOK_CLIENT_SECRET")
+  client_id: "${FACEBOOK_CLIENT_ID}",
+  client_secret: "${FACEBOOK_CLIENT_SECRET}"
 
+# configure Twitter Sign In Strategy for Ueberauth
 config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
-  consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
-  consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
+  consumer_key: "${TWITTER_CONSUMER_KEY}",
+  consumer_secret: "${TWITTER_CONSUMER_SECRET}"
 
 
 
