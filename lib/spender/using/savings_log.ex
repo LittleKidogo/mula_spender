@@ -1,4 +1,4 @@
-defmodule Spender.Using.SavingsLog do
+defmodule Spender.Using.CreateSavingsLog do
   @moduledoc """
   This module defines the layout and functions of the SavingsLog
   """
@@ -13,7 +13,7 @@ defmodule Spender.Using.SavingsLog do
   schema "savings_log" do
     field(:name, :string)
     field(:amount, :float)
-    belongs_to(:logcategory, LogCategory)
+    belongs_to(:logcategories, LogCategory)
     belongs_to(:budget, Budget)
   end
 
