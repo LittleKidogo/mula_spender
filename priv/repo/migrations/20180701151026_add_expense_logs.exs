@@ -1,7 +1,7 @@
 defmodule Spender.Repo.Migrations.AddExpenseLogs do
   @moduledoc """
   This module holds the database schema for the expenselogs table
-  we use this table to records events when an expentiture occurs
+  we use this table to records events when an expenditure occurs
   """
   use Ecto.Migration
 
@@ -14,7 +14,7 @@ defmodule Spender.Repo.Migrations.AddExpenseLogs do
       add :budget_id, references(:budgets)
       add :desc, :string
       add :amount, :float
-      add :expense_date, :date 
+      add :expense_date, :date
     end
   end
 end
