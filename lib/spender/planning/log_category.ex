@@ -19,7 +19,7 @@ defmodule Spender.Planning.LogCategory do
 
   @doc """
   This changeset function takes in a struct and map containing parameters
-  It proceeds to match the parameters in the the map the schema above
+  It proceeds to match the parameters in the the map to the schema above
   """
   @spec changeset(LogCategory.t(), map()) :: Ecto.Changeset.t()
   def changeset(logcategory, attrs \\ %{}) do
