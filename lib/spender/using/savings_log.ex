@@ -1,4 +1,4 @@
-defmodule Spender.Using.CreateSavingsLog do
+defmodule Spender.Using.SavingsLog do
   @moduledoc """
   This module defines the layout and functions of the SavingsLog
   """
