@@ -51,7 +51,6 @@ config :spender,
 
 # Configures the endpoint
 config :spender, SpenderWeb.Endpoint,
-  url: [host: "localhost"],
   secret_key_base: "2hzBoOeLgWfnFQ0kiEMPz3yLS0+f2GUx1HmCp/zJd9p7dyU1gdAGVWsJjyGTGTon",
   render_errors: [view: SpenderWeb.ErrorView, accepts: ~w(html json json-api)], #add json-api
   pubsub: [name: Spender.PubSub,
