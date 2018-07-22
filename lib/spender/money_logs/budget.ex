@@ -7,7 +7,10 @@ defmodule Spender.MoneyLogs.Budget do
     WishList.Item,
     Planning.LogSection,
     Planning.IncomeLog,
-    Planning.MoneyGoal
+    Planning.MoneyGoal,
+    Planning.LogCategory,
+    Using.ExpenseLog,
+    Using.PaymentMethod
   }
 
 
@@ -28,6 +31,9 @@ defmodule Spender.MoneyLogs.Budget do
     has_many :logsections, LogSection
     has_many :incomelogs, IncomeLog
     has_many :moneygoals, MoneyGoal
+    has_many :log_categories, LogCategory
+    has_many :expenselogs, ExpenseLog
+    has_many :payment_methods, PaymentMethod
 
     timestamps(inserted_at: :created_at, updated_at: :modified_at)
   end
