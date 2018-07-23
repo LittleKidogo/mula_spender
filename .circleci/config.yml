@@ -73,6 +73,9 @@ jobs:
        environment:
          MIX_ENV: prod
    steps:
+     - add_ssh_keys:
+         fingerprints:
+           - "23:82:90:ef:e9:5b:9b:45:e5:c3:f2:74:27:14:44:26"
      - attach_workspace:
         at: /opt/app
      - setup_remote_docker
