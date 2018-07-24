@@ -10,7 +10,8 @@ defmodule Spender.MoneyLogs.Budget do
     Planning.MoneyGoal,
     Planning.LogCategory,
     Using.ExpenseLog,
-    Using.PaymentMethod
+    Using.PaymentMethod,
+    Using.SavingsLog
   }
 
 
@@ -34,6 +35,7 @@ defmodule Spender.MoneyLogs.Budget do
     has_many :log_categories, LogCategory
     has_many :expenselogs, ExpenseLog
     has_many :payment_methods, PaymentMethod
+    has_many :savings_log, SavingsLog
 
     timestamps(inserted_at: :created_at, updated_at: :modified_at)
   end
