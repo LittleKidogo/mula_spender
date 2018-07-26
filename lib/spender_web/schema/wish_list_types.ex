@@ -8,17 +8,17 @@ defmodule SpenderWeb.Schema.WishListTypes do
     field :price, :float
     field :qpm, :integer
     field :type, :string
-    field :id, :integer
+    field :id, :id
   end
 
   @desc "input object for wishlist items"
   input_object :wish_list_items_input do
-    field :budget_id, non_null(:integer)
+    field :budget_id, non_null(:id)
   end
 
   @desc "inputs object to create a wishlist item"
   input_object :wish_list_item_input do
-    field :budget_id, non_null(:integer)
+    field :budget_id, non_null(:id)
     field :location, :string
     field :name, non_null(:string)
     field :price, non_null(:float)
@@ -33,6 +33,6 @@ defmodule SpenderWeb.Schema.WishListTypes do
     field :price, :float
     field :qpm, :integer
     field :type, :string
-    field :id, non_null(:integer)
+    field :id, non_null(:id)
   end
 end

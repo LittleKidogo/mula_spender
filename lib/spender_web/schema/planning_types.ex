@@ -7,24 +7,24 @@ defmodule SpenderWeb.Schema.PlanningTypes do
 
   @desc "Input to link a WishListItem to a LogSection"
   input_object :link_item_input do
-    field :item_id, non_null(:integer)
-    field :section_id, non_null(:integer)
+    field :item_id, non_null(:id)
+    field :section_id, non_null(:id)
   end
 
   @desc "Input to add log sections to a MoneyLog"
   input_object :log_sections_input do
-    field :budget_id, non_null(:integer)
-    field :sections, non_null(:integer)
+    field :budget_id, non_null(:id)
+    field :sections, non_null(:id)
   end
 
   @desc "Input to fetch sections"
   input_object :get_sections_input do
-    field :budget_id, non_null(:integer)
+    field :budget_id, non_null(:id)
   end
 
   @desc "Input to update a logsection"
   input_object :log_section_update do
-    field :id, non_null(:integer)
+    field :id, non_null(:id)
     field :duration, :float
     field :name, :string
     field :section_position, :integer
@@ -32,11 +32,11 @@ defmodule SpenderWeb.Schema.PlanningTypes do
 
   @desc "A Section in a MoneyLog"
   object :log_section do
-    field :id, :integer
+    field :id, :id
     field :duration, :float
     field :name, :string
     field :section_position, :integer
-    field :budget_id, :integer
+    field :budget_id, :id
   end
 
   @desc "An income in a MoneyLog"
@@ -46,8 +46,8 @@ defmodule SpenderWeb.Schema.PlanningTypes do
     field :earn_date, :date
     field :name, :string
     field :type, :string
-    field :id, :integer
-    field :budget_id, :integer
+    field :id, :id
+    field :budget_id, :id
   end
 
   @desc "Input for an income log"
@@ -57,7 +57,7 @@ defmodule SpenderWeb.Schema.PlanningTypes do
     field :earn_date, :date
     field :name, non_null(:string)
     field :type, :string
-    field :budget_id, non_null(:integer)
+    field :budget_id, non_null(:id)
   end
 
   @desc "Update input for an income log"
@@ -67,6 +67,6 @@ defmodule SpenderWeb.Schema.PlanningTypes do
     field :earn_date, :date
     field :name, :string
     field :type, :string
-    field :id, non_null(:integer)
+    field :id, non_null(:id)
   end
 end

@@ -51,13 +51,13 @@ defmodule SpenderWeb.Schema do
 
     @desc "Gets a single user who"
     field :user, :user do
-      arg :id, :integer
+      arg :id, :id
       resolve &Resolvers.User.user/3
     end
 
     @desc "Gets the owner profile of the logged in user"
     field :owner, :owner do
-      arg :user_id, :integer
+      arg :user_id, :id
       middleware Middleware.Authorize, :any
       resolve &Resolvers.Owner.get_owner/3
     end

@@ -8,7 +8,7 @@ defmodule SpenderWeb.Schema.UserTypes do
       field :email, :string
       field :provider, :string
       field :token, :string
-      field :id, :integer
+      field :id, :id
     end
 
     @desc "input for a user object"
@@ -16,7 +16,7 @@ defmodule SpenderWeb.Schema.UserTypes do
       field :email, :string
       field :provider, :string
       field :token, :string
-      field :id, :integer
+      field :id, :id
       field :avatar, :string
       field :first_name, :string
       field :last_name, :string

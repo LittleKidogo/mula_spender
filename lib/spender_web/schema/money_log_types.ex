@@ -5,14 +5,14 @@ defmodule SpenderWeb.Schema.MoneyLogTypes do
   @desc "An owner of a budget in the system"
   object :owner do
     field :name, :string
-    field :id, :integer
+    field :id, :id
     field :type, :string
     field :user_id, :integer
   end
 
   @desc "A Moneylog that belongs to a user"
   object :budget do
-    field :id, non_null(:integer)
+    field :id, non_null(:id)
     field :owner_id, :integer
     field :amnt_in, :float
     field :amnt_out, :float
@@ -33,8 +33,8 @@ defmodule SpenderWeb.Schema.MoneyLogTypes do
 
   @desc "Update object for a moneylog"
   input_object :budget_update do
-    field :id, non_null(:integer)
-    field :owner_id, :integer
+    field :id, non_null(:id)
+    field :owner_id, :id
     field :amnt_in, :float
     field :amnt_out, :float
     field :end_date, :date
