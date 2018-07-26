@@ -9,12 +9,15 @@ defmodule Spender.Using.SavingsLog do
     MoneyLogs.Budget,
     Planning.LogCategory
   }
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
 
   schema "savings_log" do
     field(:name, :string)
     field(:amount, :float)
-    belongs_to(:logcategories, LogCategory)
-    belongs_to(:budget, Budget)
+    belongs_to(:logcategory, LogCategory, foreign_key: :log_category_id, type: :binary_id)
+    belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
   end
 
   @doc """

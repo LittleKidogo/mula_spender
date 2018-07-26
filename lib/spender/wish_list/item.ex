@@ -9,13 +9,17 @@ defmodule Spender.WishList.Item do
 
   @type t :: %__MODULE__{}
 
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
+
   schema "wishlist_items" do
     field :location, :string
     field :name, :string
     field :price, :float
     field :qpm, :integer, default: 1
     field :type, :string
-    belongs_to :budget, Budget
+    belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
     many_to_many :log_sections, LogSection, join_through: "logsections_items", join_keys: [wishlist_item_id: :id, log_section_id: :id], on_replace: :delete
     timestamps()
   end

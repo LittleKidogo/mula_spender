@@ -12,9 +12,13 @@ defmodule Spender.Planning.LogCategory do
 
   @type t :: %__MODULE__{}
 
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
+
   schema "logcategories" do
     field(:name, :string)
-    belongs_to(:budget, Budget)
+    belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
   end
 
   @doc """

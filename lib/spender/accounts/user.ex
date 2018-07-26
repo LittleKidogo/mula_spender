@@ -4,6 +4,9 @@ defmodule Spender.Accounts.User do
   alias Spender.Accounts.User
   alias Spender.MoneyLogs.Owner
 
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
 
   schema "users" do
     field :avatar, :string
@@ -12,7 +15,7 @@ defmodule Spender.Accounts.User do
     field :email, :string
     field :provider, :string
     field :token, :string
-    has_one :owner, Owner
+    has_one :owner, Owner, on_delete: :nothing
 
     timestamps(inserted_at: :created_at, updated_at: false)
   end

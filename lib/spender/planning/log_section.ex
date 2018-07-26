@@ -9,13 +9,16 @@ defmodule Spender.Planning.LogSection do
 
   @type t :: %__MODULE__{}
 
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
 
 
   schema "logsections" do
     field :duration, :float
     field :name, :string
     field :section_position, :integer
-    belongs_to :budget, Budget
+    belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
     many_to_many :wishlist_items, Item, join_through: "logsections_items", join_keys: [log_section_id: :id, wishlist_item_id: :id], on_replace: :delete
 
 

@@ -5,13 +5,16 @@ defmodule Spender.MoneyLogs.Owner do
 
   @type t :: %__MODULE__{}
 
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
 
 
   schema "owners" do
     field :name, :string
     field :type, :string
-    has_many :budgets, Budget
-    belongs_to :user, User
+    has_many :budgets, Budget, on_delete: :delete_all
+    belongs_to :user, User, foreign_key: :user_id, type: :binary_id # this needs a type
 
     timestamps(inserted_at: :created_at, updated_at: :modified_at)
   end

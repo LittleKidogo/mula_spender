@@ -12,12 +12,16 @@ defmodule Spender.Using.ExpenseLog do
 
   @type t :: %__MODULE__{}
 
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
+
   schema "expenselogs" do
     field :name, :string
     field :desc, :string
     field :amount, :float
     field :expense_date, :date
-    belongs_to :budget, Budget
+    belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
   end
 
   @doc """

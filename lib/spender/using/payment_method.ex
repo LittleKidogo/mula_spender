@@ -12,10 +12,14 @@ defmodule Spender.Using.PaymentMethod do
 
   @type t :: %__MODULE__{}
 
-  schema "paymentmethod" do
+    #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
+
+  schema "payment_methods" do
     field(:name, :string)
     field(:balance, :float)
-    belongs_to(:budget, Budget)
+    belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
   end
 
   @doc """

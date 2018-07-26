@@ -10,11 +10,15 @@ defmodule Spender.Planning.MoneyGoal do
 
   @type t :: %__MODULE__{}
 
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
+
   schema "moneygoals" do
     field :name, :string
     field :location, :string
     field :price, :float
-    belongs_to :budget, Budget
+    belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
 
     timestamps()
   end

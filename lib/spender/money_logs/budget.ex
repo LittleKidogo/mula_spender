@@ -17,6 +17,10 @@ defmodule Spender.MoneyLogs.Budget do
 
   @type t :: %__MODULE__{}
 
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
+
   schema "budgets" do
     field :amnt_in, :float
     field :amnt_out, :float
@@ -27,7 +31,6 @@ defmodule Spender.MoneyLogs.Budget do
     field :start_date, :date
     # "new" "planning" "refined" "active" "expired"
     field :status, :string, default: "new"
-    belongs_to :owner, Owner
     has_many :items, Item
     has_many :logsections, LogSection
     has_many :incomelogs, IncomeLog
@@ -36,6 +39,7 @@ defmodule Spender.MoneyLogs.Budget do
     has_many :expenselogs, ExpenseLog
     has_many :payment_methods, PaymentMethod
     has_many :savings_log, SavingsLog
+    belongs_to :owner, Owner, foreign_key: :owner_id, type: :binary_id
 
     timestamps(inserted_at: :created_at, updated_at: :modified_at)
   end

@@ -12,10 +12,14 @@ defmodule Spender.Planning.IncomeType do
 
   @type t :: %__MODULE__{}
 
+  #binary key setup
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Phoenix.Param, key: :id}
+
   schema "incometypes" do
     field(:name, :string)
     field(:balance, :float)
-    belongs_to(:budget, Budget)
+    belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
   end
 
   @doc """
