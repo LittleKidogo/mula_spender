@@ -166,7 +166,7 @@ defmodule SpenderWeb.Resolvers.OwnerTest do
     test "update_budget errors out when budget doesn't exist", %{conn: conn} do
       variables = %{
         "input" => %{
-          "id" => 50,
+          "id" => "5fc4f19c-43be-4e6f-88b3-42676e79fd6c",
           "name" => "Food Lovers",
           "startDate" => "2018-07-12",
           "endDate" => "2018-07-20"
@@ -271,7 +271,7 @@ defmodule SpenderWeb.Resolvers.OwnerTest do
     test "delete_budget errors out when budget doesn't exist", %{conn: conn} do
       variables = %{
         "input" => %{
-          "id" => 50,
+          "id" => "5fc4f19c-43be-4e6f-88b3-42676e79fd6c",
           "name" => "Food Lovers",
           "startDate" => "2018-07-12",
           "endDate" => "2018-07-20"

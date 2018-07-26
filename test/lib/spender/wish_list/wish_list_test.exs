@@ -49,7 +49,7 @@ defmodule Spender.WishListTest do
      end
 
      test "get_item returns error if item doesnt exist" do
-       assert {:error, "wishlist item not found"} = WishList.get_item(50)
+       assert {:error, "wishlist item not found"} = WishList.get_item("6477f136-4df0-4bfe-b9cd-5d6c55399849")
      end
 
      test "update item should edit a saved item" do

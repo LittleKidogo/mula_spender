@@ -43,7 +43,7 @@ defmodule Spender.PlanningTest do
     end
 
     test "get_income should return an error if income doesnt exist" do
-      {:error, "Income doesn't exist"} = Planning.get_income(45)
+      {:error, "Income doesn't exist"} = Planning.get_income("6477f136-4df0-4bfe-b9cd-5d6c55399849")
     end
 
     test "get_income should return an income if one exists" do
@@ -114,7 +114,7 @@ defmodule Spender.PlanningTest do
 
     test "get_section should return an error if no section" do
       assert Repo.aggregate(LogSection, :count, :id) == 0
-      {:error, "Section doesn't exist" } = Planning.get_section(54)
+      {:error, "Section doesn't exist" } = Planning.get_section("6477f136-4df0-4bfe-b9cd-5d6c55399849")
     end
 
     test "get_section should return a section from the database" do

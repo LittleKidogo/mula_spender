@@ -77,7 +77,7 @@ defmodule SpenderWeb.Resolvers.WishListTest do
 
       variables = %{
         "input" => %{
-          "id" => 40,
+          "id" => "5fc4f19c-43be-4e6f-88b3-42676e79fd6c",
           "name" => "Tomatoes",
           "price" => 24.0
         }
@@ -220,11 +220,11 @@ defmodule SpenderWeb.Resolvers.WishListTest do
     end
 
     @tag :authenticated
-    test "add returns error if budget doesnt exist", %{conn: conn} do
+    test "add_wishlist_item returns error if budget doesnt exist", %{conn: conn} do
 
       variables = %{
         "input" => %{
-          "budget_id" => 50,
+          "budget_id" => "5fc4f19c-43be-4e6f-88b3-42676e79fd6c",
           "name" => "Tomatoes",
           "price" => 24.0
         }
