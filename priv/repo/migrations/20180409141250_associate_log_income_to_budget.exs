@@ -3,7 +3,7 @@ defmodule Spender.Repo.Migrations.AssociateLogIncomeToBudget do
 
   def change do
     alter table(:incomelogs) do
-      add :budget_id, references(:budgets, on_delete: :delete_all),
+      add :budget_id, references(:budgets, on_delete: :delete_all, type: :binary_id),
                         null: false
     end
 

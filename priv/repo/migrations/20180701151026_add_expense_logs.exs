@@ -9,9 +9,10 @@ defmodule Spender.Repo.Migrations.AddExpenseLogs do
   This function creates a table with fields for a expense logs
   """
   def change do
-    create table(:expenselogs) do
+    create table(:expenselogs, primary_key: false) do
+      add :id, :binary_id, primary_key: true
       add :name, :string
-      add :budget_id, references(:budgets)
+      add :budget_id, references(:budgets, on_delete: :nothing, type: :binary_id)
       add :desc, :string
       add :amount, :float
       add :expense_date, :date

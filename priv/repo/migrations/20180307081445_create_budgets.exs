@@ -2,7 +2,8 @@ defmodule Spender.Repo.Migrations.CreateBudgets do
   use Ecto.Migration
 
   def change do
-    create table(:budgets) do
+    create table(:budgets, primary_key: false) do
+      add :id, :binary_id, primary_key: true
       add :name, :string
       add :refined, :boolean, default: false, null: false
       add :amnt_in, :float

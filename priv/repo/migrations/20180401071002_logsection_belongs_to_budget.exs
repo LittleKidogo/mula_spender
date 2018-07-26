@@ -3,7 +3,7 @@ defmodule Spender.Repo.Migrations.LogsectionBelongsToBudget do
 
   def change do
     alter table(:logsections) do
-      add :budget_id, references(:budgets)
+      add :budget_id, references(:budgets, on_delete: :nothing, type: :binary_id)
     end
   end
 end

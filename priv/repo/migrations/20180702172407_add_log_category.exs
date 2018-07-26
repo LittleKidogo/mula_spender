@@ -9,9 +9,10 @@ defmodule Spender.Repo.Migrations.AddLogCategory do
     This function creates a table with the logCategory details
   """
   def change do
-    create table (:log_categories) do
+    create table(:logcategories, primary_key: false) do
+      add :id, :binary_id, primary_key: true
       add :name, :string
-      add :budget_id, references(:budgets)
+      add :budget_id, references(:budgets, on_delete: :nothing, type: :binary_id)
     end
   end
 end

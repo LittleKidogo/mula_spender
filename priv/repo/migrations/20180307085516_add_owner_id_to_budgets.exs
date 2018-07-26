@@ -3,7 +3,7 @@ defmodule Spender.Repo.Migrations.AddOwnerIdToBudgets do
 
   def change do
     alter table(:budgets) do
-      add :owner_id, references(:owners, on_delete: :nothing),
+      add :owner_id, references(:owners, on_delete: :nothing, type: :binary_id),
                     null: false
     end
 
