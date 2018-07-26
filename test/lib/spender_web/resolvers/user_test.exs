@@ -49,7 +49,10 @@ defmodule SpenderWeb.Resolvers.UserTest do
     end
 
     end
-    test "user/3 shows the relevant user detals", %{conn: conn} do
+
+    @tag :simple
+    @tag :authenticated
+    test "user/3 shows the relevant user details", %{conn: conn} do
       load_user = insert(:user)
 
       query = """
@@ -60,7 +63,10 @@ defmodule SpenderWeb.Resolvers.UserTest do
       }
       """
 
-      res = conn |> get("/graphiql", AbsintheHelpers.query_skeleton(query, "user"))
+      # res = conn |> get("/graphiql", AbsintheHelpers.query_skeleton(query, "user"))
+      res = get conn, "/graphiql", query: query
+
+      IO.inspect(res)
 
       %{
         "data" => %{
