@@ -16,9 +16,9 @@ defmodule Spender.AccountsTest do
       assert Accounts.list_users() == [user]
     end
 
-    test "get_user!/1 returns the user with given id" do
+    test "get_user/1 returns the user with given id" do
       user = insert(:user)
-      assert Accounts.get_user!(user.id) == user
+      assert Accounts.get_user(user.id) == {:ok, %User{} = user}
     end
 
     test "get_by_email/1 returns the user with given email" do
@@ -49,13 +49,13 @@ defmodule Spender.AccountsTest do
     test "update_user/2 with invalid data returns error changeset" do
       user = insert(:user)
       assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
-      assert user == Accounts.get_user!(user.id)
+      assert {:ok, %User{} = user} == Accounts.get_user(user.id)
     end
 
     test "delete_user/1 deletes the user" do
       user = insert(:user)
       assert {:ok, %User{}} = Accounts.delete_user(user)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user!(user.id) end
+      assert Repo.aggregate(User, :count, :id)
     end
 
     test "change_user/1 returns a user changeset" do

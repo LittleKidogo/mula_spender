@@ -6,7 +6,9 @@ defmodule SpenderWeb.Resolvers.User do
   end
 
   def user(_, %{id: id}, _) do
-    {:ok, Accounts.get_user!(id)}
+    with {:ok, %User{} = user} <- Accounts.get_user(id) do
+      {:ok, user}
+    end
   end
 
   def update_user(_, %{input: params}, %{context: context}) do

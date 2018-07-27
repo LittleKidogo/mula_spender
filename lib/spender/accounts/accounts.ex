@@ -22,20 +22,18 @@ defmodule Spender.Accounts do
   end
 
   @doc """
-  Gets a single user.
-
-  Raises `Ecto.NoResultsError` if the User does not exist.
-
-  ## Examples
-
-      iex> get_user!(123)
-      %User{}
-
-      iex> get_user!(456)
-      ** (Ecto.NoResultsError)
-
+  Gets a single user when given an Id will return an error
+  tuple if the given user does not exist
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  @spec get_user(String.t()) :: {:ok, User.t()} | {:error, String.t()}
+  def get_user(id) do
+    with %User{} = user <- User |> Repo.get(id) do
+      {:ok, user}
+    else
+      nil ->
+        {:error, "No user with id: #{id} exists"}
+    end
+  end
 
   @doc """
   Gets a single user by their email

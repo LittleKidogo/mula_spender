@@ -19,6 +19,6 @@ defmodule Spender.Auth.Guardian do
   def resource_from_claims(_), do: {:error, :missing_subject}
 
   # pic a resource from the provided subject
-  defp resource_from_subject("User:" <> id), do: {:ok, Accounts.get_user!(id)}
+  defp resource_from_subject("User:" <> id), do: Accounts.get_user(id)
   defp resource_from_subject(_), do: {:error, :unknown_resource_type}
 end
