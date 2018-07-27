@@ -14,7 +14,7 @@ defmodule SpenderWeb.Schema.PlanningTypes do
   @desc "Input to add log sections to a MoneyLog"
   input_object :log_sections_input do
     field :budget_id, non_null(:id)
-    field :sections, non_null(:id)
+    field :sections, non_null(:integer)
   end
 
   @desc "Input to fetch sections"
