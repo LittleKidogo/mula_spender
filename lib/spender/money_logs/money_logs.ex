@@ -44,7 +44,7 @@ defmodule Spender.MoneyLogs do
       {:ok, budget}
     else
       nil ->
-        {:error, "budget not found"}
+        {:error, "budget with id: #{id} not found"}
     end
   end
 

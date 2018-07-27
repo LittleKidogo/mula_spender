@@ -248,7 +248,7 @@ defmodule SpenderWeb.Resolvers.WishListTest do
         "errors" => [error]
       } = json_response(res, 200)
 
-      assert error["message"] == "budget not found"
+      assert error["message"] == "budget with id: 5fc4f19c-43be-4e6f-88b3-42676e79fd6c not found"
     end
   end
 

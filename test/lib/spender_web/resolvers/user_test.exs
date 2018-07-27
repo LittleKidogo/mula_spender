@@ -57,16 +57,14 @@ defmodule SpenderWeb.Resolvers.UserTest do
 
       query = """
       {
-        user(id: #{load_user.id}) {
+        user(id: "#{load_user.id}") {
           email
         }
       }
       """
 
-      # res = conn |> get("/graphiql", AbsintheHelpers.query_skeleton(query, "user"))
       res = get conn, "/graphiql", query: query
 
-      IO.inspect(res)
 
       %{
         "data" => %{
