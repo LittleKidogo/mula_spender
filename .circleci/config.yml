@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: bitwalker/alpine-elixir-phoenix
+      - image: littlekidogo/alpine-elixir-phoenix
         environment:
           MIX_ENV: test
     steps:
@@ -43,7 +43,7 @@ jobs:
             - project
   test:
     docker:
-      - image: superbikezacc/spender-base
+      - image: littlekidogo/phoenix-deploy
         environment:
           MIX_ENV: test
       - image: postgres:latest
@@ -69,7 +69,7 @@ jobs:
             - project
   deploy-staging:
    docker:
-     - image: superbikezacc/spender-base
+     - image: littlekidogo/phoenix-deploy
        environment:
          MIX_ENV: prod
    steps:
@@ -87,7 +87,7 @@ jobs:
         command: ci/staging/deploy.sh
   deploy-production:
    docker:
-     - image: superbikezacc/spender-base
+     - image: littlekidogo/alpine-elixir-phoenix
        environment:
          MIX_ENV: prod
    steps:
