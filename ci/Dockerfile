@@ -1,6 +1,6 @@
-FROM bitwalker/alpine-elixir-phoenix
+FROM littlekidogo/alpine-elixir-phoenix
 
-LABEL maintainer="Zacck Osiemo"
+MAINTAINER Little Kidogo <greetings@littlekidogo.co.za>
 
 RUN apk add --no-cache openssh
 
