@@ -73,6 +73,9 @@ jobs:
        environment:
          MIX_ENV: prod
    steps:
+     - add_ssh_keys:
+        fingerprints:
+         - "6b:a0:a8:bc:7b:5b:59:d9:6e:2b:c1:f9:71:f1:cd:d5"
      - attach_workspace:
         at: /opt/app
      - setup_remote_docker
@@ -114,10 +117,6 @@ workflows:
           requires:
             - build
       - deploy-staging:
-          steps:
-            - add_ssh_keys:
-              fingerprints:
-                - "6b:a0:a8:bc:7b:5b:59:d9:6e:2b:c1:f9:71:f1:cd:d5"
           requires:
             - test
           filters:
