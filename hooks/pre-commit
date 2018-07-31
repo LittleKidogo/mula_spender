@@ -26,19 +26,7 @@ then
   echo ""
   exit $TEST_RES
 fi
-# valid circleci :: check if circleci config is valid (silently)
-circleci config validate -c .circleci/config.yml 2>&1 >/dev/null
-CIRCLE_RES=$?
-if [ $CIRCLE_RES -ne 0 ]
-then
-  echo ""
-  echo "☆ ==================================== ☆"
-	echo "☆  Your circleci  config is not valid.              ☆" >&2
-	echo "☆  Please fix them before committing.  ☆" >&2
-  echo "☆ ==================================== ☆"
-  echo ""
-  exit $CIRCLE_RES
-fi
+
 echo ""
 echo "★ ============================== ★"
 echo "★   Tests passed successfully.   ★"
