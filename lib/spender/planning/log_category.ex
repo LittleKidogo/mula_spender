@@ -7,7 +7,8 @@ defmodule Spender.Planning.LogCategory do
   """
   alias Spender.{
     MoneyLogs.Budget,
-    Planning.LogCategory
+    Planning.LogCategory,
+    Using.ExpenseLog
   }
 
   @type t :: %__MODULE__{}
@@ -19,6 +20,7 @@ defmodule Spender.Planning.LogCategory do
   schema "logcategories" do
     field(:name, :string)
     belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
+    has_many :expenselogs, ExpenseLog
   end
 
   @doc """
