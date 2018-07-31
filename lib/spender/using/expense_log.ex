@@ -7,7 +7,9 @@ defmodule Spender.Using.ExpenseLog do
   import Ecto.Changeset
 
   alias Spender.{
-    MoneyLogs.Budget
+    MoneyLogs.Budget,
+    Planning.LogCategory,
+    Using.ExpenseLog
   }
 
   @type t :: %__MODULE__{}
@@ -22,6 +24,7 @@ defmodule Spender.Using.ExpenseLog do
     field :amount, :float
     field :expense_date, :date
     belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
+    belongs_to :logcategory, LogCategory, foreign_key: :logcategory_id, type: :binary_id
   end
 
   @doc """
@@ -34,4 +37,16 @@ defmodule Spender.Using.ExpenseLog do
    |> cast(attrs, [:name, :desc, :amount])
    |> validate_required([:name, :amount])
  end
+ @spec create_changeset(Budget.t(), map) :: Changeset.t()
+ def create_changeset(%Budget{} = budget, attrs) do
+   %ExpenseLog{}
+   |> ExpenseLog.changeset(attrs)
+   |> put_assoc(:budget, budget)
+  end
+  @spec log_changeset(LogCategory.t(), map) :: Changeset.t()
+  def log_changeset(%LogCategory{} = logcategory, attrs \\ %{}) do
+    %ExpenseLog{}
+    |> ExpenseLog.changeset(attrs)
+   |> put_assoc(:logcategory, logcategory)
+  end
 end
