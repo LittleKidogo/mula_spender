@@ -44,6 +44,7 @@ defmodule Spender.Mixfile do
     [
       {:absinthe_ecto, "~> 0.1.0"},
       {:absinthe_plug, "~> 1.4.0"},
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:distillery, "~> 1.5.2", runtime: false},
       {:excoveralls, "~> 0.7", only: :test}, #test reporting on the ci
       {:ex_machina,"~>2.0", only: :test},
