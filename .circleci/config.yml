@@ -72,6 +72,7 @@ jobs:
      - image: littlekidogo/phoenix-deploy
        environment:
          MIX_ENV: prod
+         user: lk_circle
    steps:
      - add_ssh_keys:
         fingerprints:
