@@ -5,7 +5,6 @@ jobs:
       - image: littlekidogo/alpine-elixir-phoenix
         environment:
           MIX_ENV: test
-          
     steps:
       - checkout
       - restore_cache:  # restores saved mix cache
