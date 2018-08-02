@@ -1,4 +1,8 @@
 defmodule Spender.Repo.Migrations.AssociateExpenselogToLogcategory do
+  @moduledoc """
+  This module alters the database schema for the expenselog table to include the
+  logcategory_id
+  """
   use Ecto.Migration
 
   def change do
