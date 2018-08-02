@@ -24,5 +24,26 @@ defmodule Spender.Using.ExpenseLogTest do
       changeset = ExpenseLog.changeset(%ExpenseLog{}, @no_amount_attrs)
       refute changeset.valid?
     end
+
+    test "create_changeset will associate expenselog to budget id" do
+      budget = insert(:budget)
+      changeset = ExpenseLog.create_changeset(budget, @valid_expense)
+      assert changeset.valid?
+      assert changeset.changes.budget
+    end
+
+    test "log_changeset will associate expenselog to logcategory_id" do
+      logcategories = insert(:logcategory)
+      changeset = ExpenseLog.log_changeset(logcategories, @valid_expense)
+      assert changeset.valid?
+      assert changeset.changes.logcategory
+    end
+
+    test "paymentmethod_changeset will associate expenselog to the paymentmethod id" do
+      paymentmethod = insert(:paymentmethod)
+      changeset = ExpenseLog.payment_changeset(paymentmethod, @valid_expense)
+      assert changeset.valid?
+      assert changeset.changes.paymentmethod
+    end
   end
 end
