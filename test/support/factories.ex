@@ -57,4 +57,13 @@ def income_log_factory do
 end
 
 {:ok, _} = Application.ensure_all_started(:ex_machina)
+=======
+  def paymentmethod_factory do
+    %Spender.Using.PaymentMethod{
+      name: sequence(:name, &"payment-#{&1}"),
+      budget: build(:budget)
+    }
+  end
+
+  {:ok, _} = Application.ensure_all_started(:ex_machina)
 end
