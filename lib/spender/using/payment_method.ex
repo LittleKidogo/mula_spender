@@ -7,12 +7,13 @@ defmodule Spender.Using.PaymentMethod do
 
   alias Spender.{
     MoneyLogs.Budget,
-    Using.PaymentMethod
+    Using.PaymentMethod,
+    Using.ExpenseLog
   }
 
   @type t :: %__MODULE__{}
 
-    #binary key setup
+  # binary key setup
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Phoenix.Param, key: :id}
 
@@ -20,6 +21,7 @@ defmodule Spender.Using.PaymentMethod do
     field(:name, :string)
     field(:balance, :float)
     belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
+    has_many(:expenselogs, ExpenseLog)
   end
 
   @doc """
