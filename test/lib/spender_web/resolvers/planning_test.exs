@@ -56,9 +56,9 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
     @tag :authenticated
     test "link_item should associate an item to a section", %{conn: conn} do
-      budget = insert(:budget)
-      item = insert(:wishlist_item, budget: budget)
-      section = insert(:log_section, budget: budget)
+      moneylog = insert(:moneylog)
+      item = insert(:wishlist_item, moneylog: moneylog)
+      section = insert(:log_section, moneylog: moneylog)
 
       loaded_item = item |> Repo.preload(:log_sections)
       assert Enum.count(loaded_item.log_sections) == 0
@@ -93,11 +93,11 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
     @tag :authenticated
     test "add_income should save an income", %{conn: conn} do
-      budget = insert(:budget)
+      moneylog = insert(:moneylog)
       assert Repo.aggregate(IncomeLog, :count, :id) == 0
       variables =  %{
         "input" => %{
-          "budget_id" => budget.id,
+          "moneylog_id" => moneylog.id,
           "amount" => 3400.9,
           "name" => "Movie Gig",
           "type" => "Movie Work",
@@ -161,8 +161,8 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
     @tag :authenticated
     test "update_income should edit a saved income", %{conn: conn} do
-      budget = insert(:budget)
-      income_log = insert(:income_log, budget: budget)
+      moneylog = insert(:moneylog)
+      income_log = insert(:income_log, moneylog: moneylog)
       assert Repo.aggregate(IncomeLog, :count, :id) == 1
       saved_log = Repo.one(IncomeLog)
       assert saved_log.id == income_log.id
@@ -201,14 +201,14 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
     end
 
     @tag :authenticated
-    test "sections should fetch sections in a budget", %{conn: conn, current_user: user} do
+    test "sections should fetch sections in a moneylog", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
-      budget = insert(:budget, owner: owner)
-      insert_list(@num_sections, :log_section, budget: budget)
+      moneylog = insert(:moneylog, owner: owner)
+      insert_list(@num_sections, :log_section, moneylog: moneylog)
 
       variables = %{
         "input" => %{
-          "budget_id" => budget.id
+          "moneylog_id" => moneylog.id
         }
       }
 
@@ -232,13 +232,13 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
     end
 
     @tag :authenticated
-    test "add_sections should add sections for a budget", %{conn: conn, current_user: user} do
+    test "add_sections should add sections for a moneylog", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
-      budget = insert(:budget, owner: owner)
+      moneylog = insert(:moneylog, owner: owner)
 
       variables = %{
         "input" => %{
-          "budget_id" => budget.id,
+          "moneylog_id" => moneylog.id,
           "sections" => @num_sections
         }
       }
@@ -260,13 +260,13 @@ defmodule SpenderWeb.Resolvers.PlanningTest do
 
       %{
         "data" => %{
-          "addLogSections" => sectioned_budget
+          "addLogSections" => sectioned_moneylog
         }
       } = json_response(res, 200)
 
       assert Repo.aggregate(LogSection, :count, :id) == @num_sections
-      assert sectioned_budget["name"] == budget.name
-      assert Enum.count(sectioned_budget["logsections"]) == @num_sections
+      assert sectioned_moneylog["name"] == moneylog.name
+      assert Enum.count(sectioned_moneylog["logsections"]) == @num_sections
     end
 
     @tag :authenticated

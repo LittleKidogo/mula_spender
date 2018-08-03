@@ -8,13 +8,13 @@ defmodule SpenderWeb.Resolvers.WishListTest do
 
   describe "WishList Resolver" do
     @tag :authenticated
-    test "list_items returns error if no items for budget", %{conn: conn, current_user: user} do
+    test "list_items returns error if no items for moneylog", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
-      budget = insert(:budget, owner: owner)
+      moneylog = insert(:moneylog, owner: owner)
 
       variables = %{
         "input" => %{
-          "budget_id" => budget.id,
+          "moneylog_id" => moneylog.id,
         }
       }
 
@@ -34,18 +34,18 @@ defmodule SpenderWeb.Resolvers.WishListTest do
         "errors" => [error]
       } = json_response(res, 200)
 
-      assert error["message"] == "#{budget.name} doesn't have any items"
+      assert error["message"] == "#{moneylog.name} doesn't have any items"
     end
 
     @tag :authenticated
-    test "list_items returns items for budget", %{conn: conn, current_user: user} do
+    test "list_items returns items for moneylog", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
-      budget = insert(:budget, owner: owner)
-      insert_list(10, :wishlist_item, budget: budget)
+      moneylog = insert(:moneylog, owner: owner)
+      insert_list(10, :wishlist_item, moneylog: moneylog)
 
       variables = %{
         "input" => %{
-          "budget_id" => budget.id,
+          "moneylog_id" => moneylog.id,
         }
       }
 
@@ -106,9 +106,9 @@ defmodule SpenderWeb.Resolvers.WishListTest do
     @tag :authenticated
     test "update_item edits a saved item", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
-      budget = insert(:budget, owner: owner)
+      moneylog = insert(:moneylog, owner: owner)
 
-      item = insert(:wishlist_item, budget: budget)
+      item = insert(:wishlist_item, moneylog: moneylog)
       assert Repo.aggregate(Item, :count, :id) == 1
 
       variables = %{
@@ -146,9 +146,9 @@ defmodule SpenderWeb.Resolvers.WishListTest do
     @tag :authenticated
     test "delete_item deletes a saved item", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
-      budget = insert(:budget, owner: owner)
+      moneylog = insert(:moneylog, owner: owner)
 
-      item = insert(:wishlist_item, budget: budget)
+      item = insert(:wishlist_item, moneylog: moneylog)
       assert Repo.aggregate(Item, :count, :id) == 1
 
       variables = %{
@@ -182,13 +182,13 @@ defmodule SpenderWeb.Resolvers.WishListTest do
     @tag :authenticated
     test "add_wishlist_item", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
-      budget = insert(:budget, owner: owner)
+      moneylog = insert(:moneylog, owner: owner)
 
       assert Repo.aggregate(Item, :count, :id) == 0
 
       variables = %{
         "input" => %{
-          "budget_id" => budget.id,
+          "moneylog_id" => moneylog.id,
           "name" => "Tomatoes",
           "price" => 24.0
         }
@@ -220,11 +220,11 @@ defmodule SpenderWeb.Resolvers.WishListTest do
     end
 
     @tag :authenticated
-    test "add_wishlist_item returns error if budget doesnt exist", %{conn: conn} do
+    test "add_wishlist_item returns error if moneylog doesnt exist", %{conn: conn} do
 
       variables = %{
         "input" => %{
-          "budget_id" => "5fc4f19c-43be-4e6f-88b3-42676e79fd6c",
+          "moneylog_id" => "5fc4f19c-43be-4e6f-88b3-42676e79fd6c",
           "name" => "Tomatoes",
           "price" => 24.0
         }
@@ -248,7 +248,7 @@ defmodule SpenderWeb.Resolvers.WishListTest do
         "errors" => [error]
       } = json_response(res, 200)
 
-      assert error["message"] == "budget with id: 5fc4f19c-43be-4e6f-88b3-42676e79fd6c not found"
+      assert error["message"] == "moneylog with id: 5fc4f19c-43be-4e6f-88b3-42676e79fd6c not found"
     end
   end
 
