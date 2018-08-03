@@ -13,7 +13,7 @@ defmodule Spender.MoneyLogs.Owner do
   schema "owners" do
     field :name, :string
     field :type, :string
-    has_many :moneylog, Moneylog, on_delete: :delete_all
+    has_many :moneylogs, Moneylog, on_delete: :delete_all
     belongs_to :user, User, foreign_key: :user_id, type: :binary_id # this needs a type
 
     timestamps(inserted_at: :created_at, updated_at: :modified_at)

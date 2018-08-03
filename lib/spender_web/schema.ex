@@ -39,7 +39,7 @@ defmodule SpenderWeb.Schema do
     end
 
     @desc "Lists all moneylogs for a user"
-    field :moneylog, list_of(:moneylog) do
+    field :moneylogs, list_of(:moneylog) do
       middleware Middleware.Authorize, :any
       resolve &Resolvers.Owner.get_moneylog/3
     end

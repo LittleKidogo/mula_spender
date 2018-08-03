@@ -8,42 +8,44 @@ defmodule SpenderWeb.Resolvers.OwnerTest do
 
   describe "Owner Resolver" do
     @tag :authenticated
-    test "lists owners moneylog", %{conn: conn, current_user: user} do
+    test "lists owners moneylogs", %{conn: conn, current_user: user} do
       owner = insert(:owner, user: user)
-      moneylog = insert_list(10, :moneylog, owner: owner)
+      moneylogs = insert_list(10, :moneylog, owner: owner)
 
       query = """
       {
-        moneylog {
+        moneylogs {
           name
         }
       }
       """
 
-      res = conn  |> get("/graphiql", AbsintheHelpers.query_skeleton(query,"moneylog"))
+      res = conn  |> get("/graphiql", AbsintheHelpers.query_skeleton(query,"moneylogs"))
+
 
       %{
         "data" => %{
-          "moneylog" => fetched_moneylog
+          "moneylogs" => fetched_moneylogs
         }
       } = json_response(res, 200)
 
-      assert Enum.count(fetched_moneylog) == Enum.count(moneylog)
+      assert Enum.count(fetched_moneylogs) == Enum.count(moneylogs)
     end
 
     @tag :authenticated
-    test "returns error when moneylog is nil", %{conn: conn, current_user: user} do
+    test "returns error when moneylogs is nil", %{conn: conn, current_user: user} do
       # insert an onwer
       insert(:owner, user: user)
+
       query = """
       {
-        moneylog {
+         moneylogs {
           name
         }
       }
       """
 
-      res = conn  |> get("/graphiql", AbsintheHelpers.query_skeleton(query,"moneylog"))
+      res = get conn, "/graphiql", query: query
 
       %{
         "errors" => [error]

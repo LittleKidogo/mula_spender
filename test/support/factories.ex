@@ -6,22 +6,22 @@ defmodule Spender.Factories do
   # with Ecto
   use ExMachina.Ecto, repo: Spender.Repo
 
+  # Moneylog Factory
+  def moneylog_factory do
+    %Spender.MoneyLogs.Moneylog {
+      name: sequence(:name, &"moneylog-#{&1}"),
+      start_date: Date.utc_today,
+      end_date: Date.add(Date.utc_today, 5),
+      owner: build(:owner)
+  }
+  end
+
   # User Factory
   def user_factory do
     %Spender.Accounts.User{
       email: sequence(:email, &"user-#{&1}-email.com"),
       token: sequence(:token, &"user-#{&1}-token"),
       provider: sequence(:provider, &"user-#{&1}-provider")
-    }
-  end
-
-  # Budget Factory
-  def budget_factory do
-    %Spender.MoneyLogs.Budget{
-      name: sequence(:name, &"budget-#{&1}"),
-      start_date: Date.utc_today(),
-      end_date: Date.add(Date.utc_today(), 5),
-      owner: build(:owner)
     }
   end
 
