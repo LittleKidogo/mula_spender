@@ -19,11 +19,11 @@ defmodule Spender.Planning.IncomeTypetest do
       refute changeset.valid?
     end
 
-    test " create a changeset that will create an incometype associated to the budget " do
-      budget = insert(:budget)
-      changeset = IncomeType.create_changeset(budget, @valid_income_type)
+    test " create a changeset that will create an incometype associated to the moneylog " do
+      moneylog = insert(:moneylog)
+      changeset = IncomeType.create_changeset(moneylog, @valid_income_type)
       assert changeset.valid?
-      assert changeset.changes.budget
+      assert changeset.changes.moneylog
     end
   end
 end

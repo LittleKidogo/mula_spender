@@ -17,11 +17,11 @@ defmodule Spender.Planning.IncomeLogTest do
       refute changeset.valid?
     end
 
-    test "create_changeset will create an Income associated to budget" do
-      budget = insert(:budget)
-      changeset = IncomeLog.create_changeset(budget, @valid_attrs)
+    test "create_changeset will create an Income associated to moneylog" do
+      moneylog = insert(:moneylog)
+      changeset = IncomeLog.create_changeset(moneylog, @valid_attrs)
       assert changeset.valid?
-      assert changeset.changes.budget
+      assert changeset.changes.moneylog
     end
   end
 end

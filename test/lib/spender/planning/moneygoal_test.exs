@@ -16,10 +16,10 @@ defmodule Spender.Planning.MoneyGoalTest do
     refute changeset.valid?
   end
 
-  test "should associate a MoneyGoal to a budget" do
-    budget = insert(:budget)
-    changeset = MoneyGoal.create_changeset(budget, @valid_attrs)
+  test "should associate a MoneyGoal to a moneylog" do
+    moneylog = insert(:moneylog)
+    changeset = MoneyGoal.create_changeset(moneylog, @valid_attrs)
     assert changeset.valid?
-    assert changeset.changes.budget
+    assert changeset.changes.moneylog
   end
 end

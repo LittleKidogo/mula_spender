@@ -5,7 +5,7 @@ defmodule Spender.PlanningTest do
     Planning,
     Planning.LogSection,
     Planning.IncomeLog,
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     WishList.Item
   }
 
@@ -59,10 +59,10 @@ defmodule Spender.PlanningTest do
       assert income.id == deleted_income.id
     end
 
-    test "add_income save an income attached to budget" do
-      budget = insert(:budget)
+    test "add_income save an income attached to moneylog" do
+      moneylog = insert(:moneylog)
       assert Repo.aggregate(IncomeLog, :count, :id) == 0
-      {:ok, incomelog} = Planning.add_income(budget, @log_attrs)
+      {:ok, incomelog} = Planning.add_income(moneylog, @log_attrs)
       assert Repo.aggregate(IncomeLog, :count, :id) == 1
       assert incomelog.earn_date == NaiveDateTime.to_date(NaiveDateTime.utc_now)
       assert incomelog.name == @log_attrs.name
@@ -70,8 +70,8 @@ defmodule Spender.PlanningTest do
     end
 
     test "update_income should update a saved income" do
-      budget = insert(:budget)
-      incomelog = insert(:income_log, budget: budget)
+      moneylog = insert(:moneylog)
+      incomelog = insert(:income_log, moneylog: moneylog)
       refute incomelog.name == @log_attrs.name
       {:ok, updated_income} = Planning.update_income(incomelog, @log_attrs)
       assert updated_income.id == incomelog.id
@@ -79,36 +79,36 @@ defmodule Spender.PlanningTest do
       assert updated_income.amount == @log_attrs.amount
     end
 
-    test "add_sections should return an error if start_date and end_date are not set for a budget" do
+    test "add_sections should return an error if start_date and end_date are not set for a moneylog" do
       no_date_attrs = %{name: "Food Lovers", start_date: nil, end_date: nil}
-      budget = insert(:budget, no_date_attrs)
+      moneylog = insert(:moneylog, no_date_attrs)
 
-     {:error, message} = Planning.add_sections(budget, @num_sections)
+     {:error, message} = Planning.add_sections(moneylog, @num_sections)
 
-     assert message == "#{budget.name} needs a start date and an end date"
+     assert message == "#{moneylog.name} needs a start date and an end date"
     end
 
-    test "add_sections should return a budget preloaded with sections" do
-      budget = insert(:budget)
+    test "add_sections should return a moneylog preloaded with sections" do
+      moneylog = insert(:moneylog)
       assert Repo.aggregate(LogSection, :count, :id) == 0
-      {:ok, budget} = Planning.add_sections(budget, @num_sections)
+      {:ok, moneylog} = Planning.add_sections(moneylog, @num_sections)
       assert Repo.aggregate(LogSection, :count, :id) == @num_sections
-      assert Enum.count(budget.logsections) == @num_sections
+      assert Enum.count(moneylog.logsections) == @num_sections
     end
 
-    test "get_sections should return an error if the budget has no sections" do
-      budget = insert(:budget)
-      assert Repo.aggregate(Budget, :count, :id) == 1
+    test "get_sections should return an error if the moneylog has no sections" do
+      moneylog = insert(:moneylog)
+      assert Repo.aggregate(Moneylog, :count, :id) == 1
       assert Repo.aggregate(LogSection, :count, :id) == 0
-      assert {:error, "#{budget.name} doesn't have any sections"} == Planning.get_sections(budget)
+      assert {:error, "#{moneylog.name} doesn't have any sections"} == Planning.get_sections(moneylog)
     end
 
     test "get_sections should return sections from a MoneyLog" do
-      budget = insert(:budget)
-      insert_list(@num_sections, :log_section, budget: budget)
-      assert Repo.aggregate(Budget, :count, :id) == 1
+      moneylog = insert(:moneylog)
+      insert_list(@num_sections, :log_section, moneylog: moneylog)
+      assert Repo.aggregate(Moneylog, :count, :id) == 1
       assert Repo.aggregate(LogSection, :count, :id) == @num_sections
-      {:ok, sections} = Planning.get_sections(budget)
+      {:ok, sections} = Planning.get_sections(moneylog)
       assert Enum.count(sections) == @num_sections
     end
 

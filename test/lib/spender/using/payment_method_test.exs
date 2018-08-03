@@ -19,11 +19,11 @@ defmodule Spender.Using.PaymentMethodTest do
       refute changeset.valid?
     end
 
-    test "Create_changeset will associate the Payment method to the Budget id" do
-      budget = insert(:budget)
-      changeset = PaymentMethod.create_changeset(budget, @valid_method)
+    test "Create_changeset will associate the Payment method to the moneylog id" do
+      moneylog = insert(:moneylog)
+      changeset = PaymentMethod.create_changeset(moneylog, @valid_method)
       assert changeset.valid?
-      assert changeset.changes.budget
+      assert changeset.changes.moneylog
     end
   end
 end

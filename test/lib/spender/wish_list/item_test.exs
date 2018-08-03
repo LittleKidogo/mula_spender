@@ -19,11 +19,11 @@ defmodule Spender.WishList.ItemTest do
       refute changeset.valid?
     end
 
-    test "should associate an item with a budget" do
-      budget = insert(:budget)
-      changeset = Item.create_changeset(budget, @valid_attrs)
+    test "should associate an item with a moneylog" do
+      moneylog = insert(:moneylog)
+      changeset = Item.create_changeset(moneylog, @valid_attrs)
       assert changeset.valid?
-      assert changeset.changes.budget
+      assert changeset.changes.moneylog
     end
 
     test "should associate an item to a log_section" do

@@ -19,11 +19,11 @@ defmodule Spender.Planning.LogSectionTest do
     refute changeset.valid?
   end
 
-  test "it should associate a LogSection to a budget" do
-    budget = insert(:budget)
-    changeset = LogSection.create_changeset(budget, @valid_attrs)
+  test "it should associate a LogSection to a moneylog" do
+    moneylog = insert(:moneylog)
+    changeset = LogSection.create_changeset(moneylog, @valid_attrs)
     assert changeset.valid?
-    assert changeset.changes.budget
+    assert changeset.changes.moneylog
   end
 
   test "it should unlink a LogSection from a WishListItem" do

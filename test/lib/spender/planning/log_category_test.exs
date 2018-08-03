@@ -20,11 +20,11 @@ defmodule Spender.Planning.LogCategoryTest do
       refute changeset.valid?
     end
 
-    test "create_changeset will create an LogCategory associated to budget" do
-      budget = insert(:budget)
-      changeset = LogCategory.create_changeset(budget, @valid_log)
+    test "create_changeset will create an LogCategory associated to moneylog" do
+      moneylog = insert(:moneylog)
+      changeset = LogCategory.create_changeset(moneylog, @valid_log)
       assert changeset.valid?
-      assert changeset.changes.budget
+      assert changeset.changes.moneylog
     end
   end
 end
