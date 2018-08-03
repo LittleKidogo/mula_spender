@@ -13,13 +13,13 @@ defmodule SpenderWeb.Schema.PlanningTypes do
 
   @desc "Input to add log sections to a MoneyLog"
   input_object :log_sections_input do
-    field :budget_id, non_null(:id)
+    field :moneylog_id, non_null(:id)
     field :sections, non_null(:integer)
   end
 
   @desc "Input to fetch sections"
   input_object :get_sections_input do
-    field :budget_id, non_null(:id)
+    field :moneylog_id, non_null(:id)
   end
 
   @desc "Input to update a logsection"
@@ -36,7 +36,7 @@ defmodule SpenderWeb.Schema.PlanningTypes do
     field :duration, :float
     field :name, :string
     field :section_position, :integer
-    field :budget_id, :id
+    field :moneylog_id, :id
   end
 
   @desc "An income in a MoneyLog"
@@ -47,7 +47,7 @@ defmodule SpenderWeb.Schema.PlanningTypes do
     field :name, :string
     field :type, :string
     field :id, :id
-    field :budget_id, :id
+    field :moneylog_id, :id
   end
 
   @desc "Input for an income log"
@@ -57,7 +57,7 @@ defmodule SpenderWeb.Schema.PlanningTypes do
     field :earn_date, :date
     field :name, non_null(:string)
     field :type, :string
-    field :budget_id, non_null(:id)
+    field :moneylog_id, non_null(:id)
   end
 
   @desc "Update input for an income log"

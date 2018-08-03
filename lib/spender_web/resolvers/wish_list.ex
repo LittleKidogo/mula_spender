@@ -2,15 +2,15 @@ defmodule SpenderWeb.Resolvers.WishList do
   alias Spender.{WishList, MoneyLogs}
 
   def get_items(_,%{input: params},_) do
-    with {:ok, budget} <- MoneyLogs.get_budget(params.budget_id),
-      {:ok, items} <- WishList.list_items(budget) do
+    with {:ok, moneylog} <- MoneyLogs.get_moneylog(params.moneylog_id),
+      {:ok, items} <- WishList.list_items(moneylog) do
         {:ok, items}
       end
   end
 
   def create_item(_,%{input: params}, _) do
-    with {:ok, budget} <- MoneyLogs.get_budget(params.budget_id),
-      {:ok, item} <- WishList.add_item(budget, params) do
+    with {:ok, moneylog} <- MoneyLogs.get_moneylog(params.moneylog_id),
+      {:ok, item} <- WishList.add_item(moneylog, params) do
       {:ok, item}
     end
   end

@@ -1,9 +1,9 @@
-defmodule Spender.MoneyLogs.Budget do
+defmodule Spender.MoneyLogs.Moneylog do
   use Ecto.Schema
   import Ecto.Changeset
   alias Spender.{
     MoneyLogs.Owner,
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     WishList.Item,
     Planning.LogSection,
     Planning.IncomeLog,
@@ -21,7 +21,7 @@ defmodule Spender.MoneyLogs.Budget do
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Phoenix.Param, key: :id}
 
-  schema "budgets" do
+  schema "moneylog" do
     field :amnt_in, :float
     field :amnt_out, :float
     field :end_date, :date
@@ -45,14 +45,14 @@ defmodule Spender.MoneyLogs.Budget do
   end
 
   @doc false
-  def changeset(%Budget{} = budget, attrs) do
-    budget
+  def changeset(%Moneylog{} = moneylog, attrs) do
+    moneylog
     |> cast(attrs, [:name, :refined, :amnt_in, :amnt_out, :is_active, :start_date, :end_date, :status])
     |> validate_required([:name])
   end
 
-  def update_status(budget, attrs) do
-    budget
+  def update_status(moneylog, attrs) do
+    moneylog
     |> changeset(attrs)
     |> cast(attrs, [:status])
     |> validate_inclusion(:status, ["new","planning","refined","active","expired"])

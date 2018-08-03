@@ -7,9 +7,9 @@ defmodule Spender.Using.ExpenseLog do
   import Ecto.Changeset
 
   alias Spender.{
-    MoneyLogs.Budget,
     Planning.LogCategory,
-    Using.ExpenseLog
+    Using.ExpenseLog,
+    MoneyLogs.Moneylog
   }
 
   @type t :: %__MODULE__{}
@@ -23,8 +23,9 @@ defmodule Spender.Using.ExpenseLog do
     field :desc, :string
     field :amount, :float
     field :expense_date, :date
-    belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
     belongs_to :logcategory, LogCategory, foreign_key: :logcategory_id, type: :binary_id
+    belongs_to :moneylog, Moneylog, foreign_key: :moneylog_id, type: :binary_id
+
   end
 
   @doc """

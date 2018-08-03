@@ -6,7 +6,7 @@ defmodule Spender.Planning.IncomeType do
   import Ecto.Changeset
 
   alias Spender.{
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     Planning.IncomeType
   }
 
@@ -19,7 +19,7 @@ defmodule Spender.Planning.IncomeType do
   schema "incometypes" do
     field(:name, :string)
     field(:balance, :float)
-    belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
+    belongs_to(:moneylog, Moneylog, foreign_key: :moneylog_id, type: :binary_id)
   end
 
   @doc """
@@ -37,10 +37,10 @@ defmodule Spender.Planning.IncomeType do
     This create changeset takes in a budget struct and map and proceeds to
     match it to the budget parameter in the schema
   """
-  @spec create_changeset(Budget.t(), map()) :: Ecto.Changeset.t()
-  def create_changeset(%Budget{} = budget, attrs) do
+  @spec create_changeset(Moneylog.t(), map()) :: Ecto.Changeset.t()
+  def create_changeset(%Moneylog{} = moneylog, attrs) do
     %IncomeType{}
     |> IncomeType.changeset(attrs)
-    |> put_assoc(:budget, budget)
+    |> put_assoc(:moneylog, moneylog)
   end
 end

@@ -6,7 +6,7 @@ defmodule Spender.Using.SavingsLog do
   import Ecto.Changeset
 
   alias Spender.{
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     Planning.LogCategory
   }
   #binary key setup
@@ -17,7 +17,7 @@ defmodule Spender.Using.SavingsLog do
     field(:name, :string)
     field(:amount, :float)
     belongs_to(:logcategory, LogCategory, foreign_key: :log_category_id, type: :binary_id)
-    belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
+    belongs_to(:moneylog, Moneylog, foreign_key: :moneylog_id, type: :binary_id)
   end
 
   @doc """

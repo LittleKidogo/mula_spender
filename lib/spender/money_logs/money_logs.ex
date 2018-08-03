@@ -1,50 +1,50 @@
 defmodule Spender.MoneyLogs do
   @moduledoc """
   This is the MoneyLogs Context this is used to deal with
-  CRUD actions for budgets
+  CRUD actions for moneylogs
   """
   import Ecto.Query, warn: false
   alias Spender.Repo
-  alias Spender.{ Accounts.User, MoneyLogs.Owner, MoneyLogs.Budget}
+  alias Spender.{ Accounts.User, MoneyLogs.Owner, MoneyLogs.Moneylog}
 
 
-  @spec list_budgets(Owner.t) :: {:ok, list(Budget.t)} | {:error, String.t}
-  def list_budgets(%{id: id} = _owner) do
-    with [_|_] = budgets <- Repo.all(Budget, [owner_id: id]) do
-      {:ok, budgets}
+  @spec list_moneylog(Owner.t) :: {:ok, list(Moneylog.t)} | {:error, String.t}
+  def list_moneylog(%{id: id} = _owner) do
+    with [_|_] = moneylog <- Repo.all(Moneylog, [owner_id: id]) do
+      {:ok, moneylog}
     else
       [] ->
         {:error, "user doesn't have any moneylogs"}
       end
   end
 
-  @spec delete_budget(Budget.t):: {:ok, Budget.t} | {:error, Ecto.Changeset.t()}
-  def delete_budget(%Budget{} = budget) do
-    with {:ok, %Budget{} = budget} <- Repo.delete(budget) do
-      {:ok, budget}
+  @spec delete_moneylog(Moneylog.t):: {:ok, Moneylog.t} | {:error, Ecto.Changeset.t()}
+  def delete_moneylog(%Moneylog{} = moneylog) do
+    with {:ok, %Moneylog{} = moneylog} <- Repo.delete(moneylog) do
+      {:ok, moneylog}
     end
   end
 
-  def create_budget(%Owner{} = owner, attrs \\ %{}) do
-    %Budget{}
-    |> Budget.changeset(attrs)
+  def create_moneylog(%Owner{} = owner, attrs \\ %{}) do
+    %Moneylog{}
+    |> Moneylog.changeset(attrs)
     |> Ecto.Changeset.put_change(:owner_id, owner.id)
     |> Repo.insert()
   end
 
-  def update_budget(%Budget{} = budget, attrs \\ %{}) do
-   budget
-   |> Budget.changeset(attrs)
+  def update_moneylog(%Moneylog{} = moneylog, attrs \\ %{}) do
+   moneylog
+   |> Moneylog.changeset(attrs)
    |> Repo.update()
   end
 
-  @spec get_budget(integer()) :: Budget.t | {:error, String.t}
-  def get_budget(id) do
-    with %Budget{} = budget <- Budget |> Repo.get(id) do
-      {:ok, budget}
+  @spec get_moneylog(integer()) :: Moneylog.t | {:error, String.t}
+  def get_moneylog(id) do
+    with %Moneylog{} = moneylog <- Moneylog |> Repo.get(id) do
+      {:ok, moneylog}
     else
       nil ->
-        {:error, "budget with id: #{id} not found"}
+        {:error, "moneylog with id: #{id} not found"}
     end
   end
 

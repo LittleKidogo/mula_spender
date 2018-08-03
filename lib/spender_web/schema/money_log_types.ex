@@ -2,7 +2,7 @@ defmodule SpenderWeb.Schema.MoneyLogTypes do
   use Absinthe.Schema.Notation
 
 
-  @desc "An owner of a budget in the system"
+  @desc "An owner of a moneylog in the system"
   object :owner do
     field :name, :string
     field :id, :id
@@ -11,7 +11,7 @@ defmodule SpenderWeb.Schema.MoneyLogTypes do
   end
 
   @desc "A Moneylog that belongs to a user"
-  object :budget do
+  object :moneylog do
     field :id, non_null(:id)
     field :owner_id, :integer
     field :amnt_in, :float
@@ -25,14 +25,14 @@ defmodule SpenderWeb.Schema.MoneyLogTypes do
   end
 
   @desc "Inputs for a MoneyLog"
-  input_object :budget_input do
+  input_object :moneylog_input do
     field :name, non_null(:string)
     field :start_date, :date
     field :end_date, :date
   end
 
   @desc "Update object for a moneylog"
-  input_object :budget_update do
+  input_object :moneylog_update do
     field :id, non_null(:id)
     field :owner_id, :id
     field :amnt_in, :float

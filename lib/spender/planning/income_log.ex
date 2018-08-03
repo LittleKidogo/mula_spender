@@ -3,7 +3,7 @@ defmodule Spender.Planning.IncomeLog do
   import Ecto.Changeset
   alias Spender.{
     Planning.IncomeLog,
-    MoneyLogs.Budget
+    MoneyLogs.Moneylog
   }
 
   @type t :: %__MODULE__{}
@@ -18,7 +18,7 @@ defmodule Spender.Planning.IncomeLog do
     field :earn_date, :date
     field :name, :string
     field :type, :string
-    belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
+    belongs_to :moneylog, Moneylog, foreign_key: :moneylog_id, type: :binary_id
 
     timestamps()
   end
@@ -30,9 +30,9 @@ defmodule Spender.Planning.IncomeLog do
     |> validate_required([:name, :amount])
   end
 
-  def create_changeset(%Budget{} = budget, attrs) do
+  def create_changeset(%Moneylog{} = moneylog, attrs) do
     %IncomeLog{}
     |> IncomeLog.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:budget, budget)
+    |> Ecto.Changeset.put_assoc(:moneylog, moneylog)
   end
 end

@@ -13,12 +13,12 @@ defmodule SpenderWeb.Schema.WishListTypes do
 
   @desc "input object for wishlist items"
   input_object :wish_list_items_input do
-    field :budget_id, non_null(:id)
+    field :moneylog_id, non_null(:id)
   end
 
   @desc "inputs object to create a wishlist item"
   input_object :wish_list_item_input do
-    field :budget_id, non_null(:id)
+    field :moneylog_id, non_null(:id)
     field :location, :string
     field :name, non_null(:string)
     field :price, non_null(:float)

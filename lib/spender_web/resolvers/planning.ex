@@ -45,16 +45,16 @@ defmodule SpenderWeb.Resolvers.Planning do
   """
   @spec get_sections(any(), map(), any()) :: {:ok, list(LogSection.t())} | {:error, String.t()}
   def get_sections(_,%{input: params}, _) do
-    with {:ok, budget} <- MoneyLogs.get_budget(params.budget_id),
-      {:ok, sections} <- Planning.get_sections(budget) do
+    with {:ok, moneylog} <- MoneyLogs.get_moneylog(params.moneylog_id),
+      {:ok, sections} <- Planning.get_sections(moneylog) do
         {:ok, sections}
       end
   end
 
   def add_sections(_,%{input: params}, _) do
-    with {:ok, budget} <- MoneyLogs.get_budget(params.budget_id),
-    {:ok, sectioned_budget} <- Planning.add_sections(budget, params.sections) do
-      {:ok, sectioned_budget}
+    with {:ok, moneylog} <- MoneyLogs.get_moneylog(params.moneylog_id),
+    {:ok, sectioned_moneylog} <- Planning.add_sections(moneylog, params.sections) do
+      {:ok, sectioned_moneylog}
     end
   end
 
@@ -66,8 +66,8 @@ defmodule SpenderWeb.Resolvers.Planning do
   end
 
   def add_income(_, %{input: params}, _) do
-    with {:ok, budget} <- MoneyLogs.get_budget(params.budget_id),
-      {:ok, incomelog} <- Planning.add_income(budget, params) do
+    with {:ok, moneylog} <- MoneyLogs.get_moneylog(params.moneylog_id),
+      {:ok, incomelog} <- Planning.add_income(moneylog, params) do
         {:ok, incomelog}
       end
   end

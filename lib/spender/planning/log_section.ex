@@ -3,7 +3,7 @@ defmodule Spender.Planning.LogSection do
   import Ecto.Changeset
   alias Spender.{
     Planning.LogSection,
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     WishList.Item
   }
 
@@ -18,7 +18,7 @@ defmodule Spender.Planning.LogSection do
     field :duration, :float
     field :name, :string
     field :section_position, :integer
-    belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
+    belongs_to :moneylog, Moneylog, foreign_key: :moneylog_id, type: :binary_id
     many_to_many :wishlist_items, Item, join_through: "logsections_items", join_keys: [log_section_id: :id, wishlist_item_id: :id], on_replace: :delete
 
 
@@ -36,11 +36,11 @@ defmodule Spender.Planning.LogSection do
   This function takes a MoneyLog and a map of attributes the proceeds to use these
   attributes to create a LogSection Struct
   """
-  @spec create_changeset(Budget.t(), map()) :: Ecto.Changeset.t()
-  def create_changeset(%Budget{} = budget, attrs) do
+  @spec create_changeset(Moneylog.t(), map()) :: Ecto.Changeset.t()
+  def create_changeset(%Moneylog{} = moneylog, attrs) do
     %LogSection{}
     |> changeset(attrs)
-    |> put_assoc(:budget, budget)
+    |> put_assoc(:moneylog, moneylog)
   end
 
   @doc """

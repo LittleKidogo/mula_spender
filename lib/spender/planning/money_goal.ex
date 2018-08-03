@@ -4,7 +4,7 @@ defmodule Spender.Planning.MoneyGoal do
   import Ecto.Changeset
 
   alias Spender.{
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     Planning.MoneyGoal
   }
 
@@ -18,7 +18,7 @@ defmodule Spender.Planning.MoneyGoal do
     field :name, :string
     field :location, :string
     field :price, :float
-    belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
+    belongs_to :moneylog, Moneylog, foreign_key: :moneylog_id, type: :binary_id
 
     timestamps()
   end
@@ -30,11 +30,11 @@ defmodule Spender.Planning.MoneyGoal do
     |> validate_required([:name, :price])
   end
 
-  @spec create_changeset(Budget.t, map) :: Ecto.Changeset.t()
-  def create_changeset(%Budget{} = budget, attrs) do
+  @spec create_changeset(Moneylog.t, map) :: Ecto.Changeset.t()
+  def create_changeset(%Moneylog{} = moneylog, attrs) do
     %MoneyGoal{}
     |> changeset(attrs)
-    |> put_assoc(:budget, budget)
+    |> put_assoc(:moneylog, moneylog)
   end
 
 end

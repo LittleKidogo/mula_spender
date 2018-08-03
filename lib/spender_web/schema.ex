@@ -31,17 +31,17 @@ defmodule SpenderWeb.Schema do
       resolve &Resolvers.Planning.get_sections/3
     end
 
-    @desc "Gets all Wishlist Items in a budget"
+    @desc "Gets all Wishlist Items in a moneylog"
     field :wish_list_items, list_of(:wish_list_item) do
       arg :input, non_null(:wish_list_items_input)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.WishList.get_items/3
     end
 
-    @desc "Lists all budgets for a user"
-    field :budgets, list_of(:budget) do
+    @desc "Lists all moneylogs for a user"
+    field :moneylog, list_of(:moneylog) do
       middleware Middleware.Authorize, :any
-      resolve &Resolvers.Owner.get_budgets/3
+      resolve &Resolvers.Owner.get_moneylog/3
     end
 
     @desc "Lists all users on the system"
@@ -101,10 +101,10 @@ defmodule SpenderWeb.Schema do
     end
 
     @desc "Deletes an exisiting MoneyLog"
-    field :delete_budget, :budget do
-      arg :input, non_null(:budget_update)
+    field :delete_moneylog, :moneylog do
+      arg :input, non_null(:moneylog_update)
       middleware Middleware.Authorize, :any
-      resolve &Resolvers.Owner.delete_budget/3
+      resolve &Resolvers.Owner.delete_moneylog/3
     end
 
     @desc "Deletes a WishList Item"
@@ -122,7 +122,7 @@ defmodule SpenderWeb.Schema do
     end
 
     @desc "Add sections to a MoneyLog"
-    field :add_log_sections, :budget do
+    field :add_log_sections, :moneylog do
       arg :input, non_null(:log_sections_input)
       middleware Middleware.Authorize, :any
       resolve &Resolvers.Planning.add_sections/3
@@ -149,18 +149,18 @@ defmodule SpenderWeb.Schema do
       resolve &Resolvers.User.update_user/3
     end
 
-    @desc "Creates a budget for an owner"
-    field :create_budget, :budget  do
-      arg :input, non_null(:budget_input)
+    @desc "Creates a moneylog for an owner"
+    field :create_moneylog, :moneylog  do
+      arg :input, non_null(:moneylog_input)
       middleware Middleware.Authorize, :any
-      resolve &Resolvers.Owner.create_budget/3
+      resolve &Resolvers.Owner.create_moneylog/3
     end
 
-    @desc "Updates a given budget"
-    field :update_budget, :budget do
-      arg :input, non_null(:budget_update)
+    @desc "Updates a given moneylog"
+    field :update_moneylog, :moneylog do
+      arg :input, non_null(:moneylog_update)
       middleware Middleware.Authorize, :any
-      resolve &Resolvers.Owner.update_budget/3
+      resolve &Resolvers.Owner.update_moneylog/3
     end
   end
 end

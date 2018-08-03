@@ -6,7 +6,7 @@ defmodule Spender.Using.PaymentMethod do
   import Ecto.Changeset
 
   alias Spender.{
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     Using.PaymentMethod
   }
 
@@ -19,7 +19,7 @@ defmodule Spender.Using.PaymentMethod do
   schema "payment_methods" do
     field(:name, :string)
     field(:balance, :float)
-    belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
+    belongs_to(:moneylog, Moneylog, foreign_key: :moneylog_id, type: :binary_id)
   end
 
   @doc """
@@ -38,10 +38,10 @@ defmodule Spender.Using.PaymentMethod do
     This function takes in a struct and a map containing parameters,
     It proceeds to match the parameters in the schema above
   """
-  @spec create_changeset(Budget.t(), map()) :: Ecto.Changeset.t()
-  def create_changeset(%Budget{} = budget, attrs) do
+  @spec create_changeset(Moneylog.t(), map()) :: Ecto.Changeset.t()
+  def create_changeset(%Moneylog{} = moneylog, attrs) do
     %PaymentMethod{}
     |> PaymentMethod.changeset(attrs)
-    |> put_assoc(:budget, budget)
+    |> put_assoc(:moneylog, moneylog)
   end
 end

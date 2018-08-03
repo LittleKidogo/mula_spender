@@ -7,31 +7,31 @@ defmodule SpenderWeb.Resolvers.Owner do
     end
   end
 
-  def get_budgets(_,_,%{context: context}) do
+  def get_moneylog(_,_,%{context: context}) do
    with {:ok, owner} <- MoneyLogs.get_owner(context[:current_user]),
-      {:ok, budgets} <- MoneyLogs.list_budgets(owner) do
-      {:ok, budgets}
+      {:ok, moneylog} <- MoneyLogs.list_moneylog(owner) do
+      {:ok, moneylog}
    end
   end
 
-  def create_budget(_,%{input: args},%{context: context}) do
+  def create_moneylog(_,%{input: args},%{context: context}) do
     with {:ok, owner} <- MoneyLogs.fetch_or_create_owner(context[:current_user]),
-      {:ok, budget} <- MoneyLogs.create_budget(owner, args) do
-        {:ok, budget}
+      {:ok, moneylog} <- MoneyLogs.create_moneylog(owner, args) do
+        {:ok, moneylog}
       end
   end
 
-  def update_budget(_,%{input: args}, _) do
-    with {:ok, budget} <- MoneyLogs.get_budget(args.id),
-      {:ok, updated_budget} <- MoneyLogs.update_budget(budget, args) do
-        {:ok, updated_budget}
+  def update_moneylog(_,%{input: args}, _) do
+    with {:ok, moneylog} <- MoneyLogs.get_moneylog(args.id),
+      {:ok, updated_moneylog} <- MoneyLogs.update_moneylog(moneylog, args) do
+        {:ok, updated_moneylog}
     end
   end
 
-  def delete_budget(_,%{input: args},_) do
-    with {:ok, budget} <- MoneyLogs.get_budget(args.id),
-      {:ok, deleted_budget} <- MoneyLogs.delete_budget(budget) do
-        {:ok, deleted_budget}
+  def delete_moneylog(_,%{input: args},_) do
+    with {:ok, moneylog} <- MoneyLogs.get_moneylog(args.id),
+      {:ok, deleted_moneylog} <- MoneyLogs.delete_moneylog(moneylog) do
+        {:ok, deleted_moneylog}
       end
   end
 end

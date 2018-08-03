@@ -2,7 +2,7 @@ defmodule Spender.WishList.Item do
   use Ecto.Schema
   import Ecto.Changeset
   alias Spender.{
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     WishList.Item,
     Planning.LogSection
   }
@@ -19,7 +19,7 @@ defmodule Spender.WishList.Item do
     field :price, :float
     field :qpm, :integer, default: 1
     field :type, :string
-    belongs_to :budget, Budget, foreign_key: :budget_id, type: :binary_id
+    belongs_to :moneylog, Moneylog, foreign_key: :moneylog_id, type: :binary_id
     many_to_many :log_sections, LogSection, join_through: "logsections_items", join_keys: [wishlist_item_id: :id, log_section_id: :id], on_replace: :delete
     timestamps()
   end
@@ -31,11 +31,11 @@ defmodule Spender.WishList.Item do
     |> validate_required([:name, :price])
   end
 
-  @spec create_changeset(Budget.t, map) :: Ecto.Changeset.t()
-  def create_changeset(%Budget{} = budget, attrs) do
+  @spec create_changeset(Moneylog.t, map) :: Ecto.Changeset.t()
+  def create_changeset(%Moneylog{} = moneylog, attrs) do
     %Item{}
     |> changeset(attrs)
-    |> put_assoc(:budget, budget)
+    |> put_assoc(:moneylog, moneylog)
   end
 
   @doc """

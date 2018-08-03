@@ -8,7 +8,7 @@ defmodule Spender.Planning do
   alias Spender.{
     Repo,
     MoneyLogs,
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     Planning.LogSection,
     Planning.IncomeLog,
     WishList.Item
@@ -25,8 +25,8 @@ defmodule Spender.Planning do
     item = item |> Repo.preload(:log_sections)
 
     with {:ok, %Item{} = updated_item} <- Item.add_to_section(item, logsection) |> Repo.update(),
-        %Item{} = loaded_item <- Repo.preload(updated_item, :budget),
-        {:ok, _budget} <- update_budget_status(loaded_item.budget),
+        %Item{} = loaded_item <- Repo.preload(updated_item, :moneylog),
+        {:ok, _moneylog} <- update_moneylog_status(loaded_item.moneylog),
       %LogSection{} = loaded_section <- logsection |> Repo.preload(:wishlist_items)  do
         {:ok, loaded_section}
       end
@@ -65,9 +65,9 @@ defmodule Spender.Planning do
     |> Repo.update()
   end
 
-  @spec add_income(Budget.t, map) :: {:ok, IncomeLog.t} | {:error, Ecto.Changeset.t()}
-  def add_income(%Budget{} = budget, attrs) do
-    budget
+  @spec add_income(Moneylog.t, map) :: {:ok, IncomeLog.t} | {:error, Ecto.Changeset.t()}
+  def add_income(%Moneylog{} = moneylog, attrs) do
+    moneylog
     |> IncomeLog.create_changeset(attrs)
     |> Repo.insert()
   end
@@ -93,9 +93,9 @@ defmodule Spender.Planning do
     end
   end
 
-  @spec get_sections(Budget.t) ::  {:ok, list(LogSection.t)} | {:error, String.t()}
-  def get_sections(%{id: id, name: name } = _budget) do
-    query = from l in LogSection, where: l.budget_id == ^id
+  @spec get_sections(Moneylog.t) ::  {:ok, list(LogSection.t)} | {:error, String.t()}
+  def get_sections(%{id: id, name: name } = _moneylog) do
+    query = from l in LogSection, where: l.moneylog_id == ^id
 
     with [_|_] = sections <- Repo.all(query) do
       {:ok, sections}
@@ -105,64 +105,64 @@ defmodule Spender.Planning do
 
   end
 
-  @spec add_sections(Budget.t, integer()) :: {:ok, Budget.t} | {:error, String.t()}
-  def add_sections(%Budget{} =  budget, num_sections) do
-    with {:ok, budget} <- check_budget_dates(budget),
-      {:ok, sectioned_budget} <- do_add_sections(budget, num_sections) do
-        {:ok, sectioned_budget}
+  @spec add_sections(Moneylog.t, integer()) :: {:ok, Moneylog.t} | {:error, String.t()}
+  def add_sections(%Moneylog{} =  moneylog, num_sections) do
+    with {:ok, moneylog} <- check_moneylog_dates(moneylog),
+      {:ok, sectioned_moneylog} <- do_add_sections(moneylog, num_sections) do
+        {:ok, sectioned_moneylog}
       end
   end
 
-  @spec do_add_sections(Budget.t, integer()) :: {:ok, Budget.t}
-  defp do_add_sections(%Budget{start_date: s_date, end_date: e_date} = budget, num_sections) do
+  @spec do_add_sections(Moneylog.t, integer()) :: {:ok, Moneylog.t}
+  defp do_add_sections(%Moneylog{start_date: s_date, end_date: e_date} = moneylog, num_sections) do
     # get time diff between start date & end date
     spread = Date.diff(e_date, s_date)
     # get section duration by dividing time_diff by num_sections
     section_length = spread/num_sections
 
-    sectioned_budget = do_save_section(budget, %{num: num_sections, length: section_length})
+    sectioned_moneylog = do_save_section(moneylog, %{num: num_sections, length: section_length})
 
-    {:ok, sectioned_budget}
+    {:ok, sectioned_moneylog}
   end
 
-  @spec do_save_section(Budget.t , map) :: Budget.t
-  defp do_save_section(%Budget{id: id} =  _budget, %{num: num, length: _length}) when num < 1 do
-    Budget
+  @spec do_save_section(Moneylog.t , map) :: Moneylog.t
+  defp do_save_section(%Moneylog{id: id} =  _moneylog, %{num: num, length: _length}) when num < 1 do
+    Moneylog
     |> Repo.get(id)
     |> Repo.preload(:logsections)
   end
 
-  @spec do_save_section(Budget.t, map) :: any()
-  defp do_save_section(%Budget{} = budget, %{num: num, length: length} = details) do
+  @spec do_save_section(Moneylog.t, map) :: any()
+  defp do_save_section(%Moneylog{} = moneylog, %{num: num, length: length} = details) do
     section_details = %{name: "Section #{num}", duration: length, section_position: num}
 
-    budget
+    moneylog
     |> LogSection.create_changeset(section_details)
     |> Repo.insert()
 
-    do_save_section(budget, %{details | num: num - 1})
+    do_save_section(moneylog, %{details | num: num - 1})
   end
 
-  @spec check_budget_dates(Budget.t) :: {:ok, Budget.t} | {:error, String.t()}
-  defp check_budget_dates(%Budget{} = budget) do
+  @spec check_moneylog_dates(Moneylog.t) :: {:ok, Moneylog.t} | {:error, String.t()}
+  defp check_moneylog_dates(%Moneylog{} = moneylog) do
     cond do
-      budget.start_date == nil ->
-        {:error, "#{budget.name} needs a start date and an end date"}
-      budget.end_date == nil ->
-        {:error, "#{budget.name} needs a start date and an end date"}
+      moneylog.start_date == nil ->
+        {:error, "#{moneylog.name} needs a start date and an end date"}
+      moneylog.end_date == nil ->
+        {:error, "#{moneylog.name} needs a start date and an end date"}
       true ->
-        {:ok, budget}
+        {:ok, moneylog}
     end
   end
 
-  @spec update_budget_status(Budget.t) :: {:ok, Budget.t}
-  defp update_budget_status(%Budget{status: status} = budget) do
+  @spec update_moneylog_status(Moneylog.t) :: {:ok, Moneylog.t}
+  defp update_moneylog_status(%Moneylog{status: status} = moneylog) do
     case status do
       "planning" ->
-        {:ok, updated_budget} = budget |> MoneyLogs.update_budget(%{status: "refined"})
-        {:ok, updated_budget}
+        {:ok, updated_moneylog} = moneylog |> MoneyLogs.update_moneylog(%{status: "refined"})
+        {:ok, updated_moneylog}
         _ ->
-        {:ok, budget}
+        {:ok, moneylog}
     end
   end
 end

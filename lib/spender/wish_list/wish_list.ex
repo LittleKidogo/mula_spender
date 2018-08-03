@@ -8,16 +8,16 @@ defmodule Spender.WishList do
 
   alias Spender.{
     MoneyLogs,
-    MoneyLogs.Budget,
+    MoneyLogs.Moneylog,
     WishList.Item
   }
 
   @doc """
-  Lists all wishlist items in a budget
+  Lists all wishlist items in a moneylog
   """
-  @spec list_items(Budget.t)::{:ok, list(Item.t)} | {:error, String.t()}
-  def list_items(%{id: id, name: name} = _budget) do
-    query = from i in Item, where: i.budget_id == ^id
+  @spec list_items(Moneylog.t)::{:ok, list(Item.t)} | {:error, String.t()}
+  def list_items(%{id: id, name: name} = _moneylog) do
+    query = from i in Item, where: i.moneylog_id == ^id
 
     with [_|_] = items <- Repo.all(query) do
       {:ok, items}
@@ -27,15 +27,15 @@ defmodule Spender.WishList do
   end
 
   @doc """
-  Adds a wishlist item to a budget and upates the budget to planning if neccessary
+  Adds a wishlist item to a moneylog and upates the moneylog to planning if neccessary
   """
-  @spec  add_item(Budget.t, map) :: {:ok, Item.t} | {:error, Changeset.t()}
-  def add_item(%{status: status} = budget, attrs) do
+  @spec  add_item(Moneylog.t, map) :: {:ok, Item.t} | {:error, Changeset.t()}
+  def add_item(%{status: status} = moneylog, attrs) do
     case status do
       "new" ->
-        {:ok, updated_budget} = budget |> MoneyLogs.update_budget(%{status: "planning"})
-        do_add_item(updated_budget, attrs)
-        _ -> do_add_item(budget, attrs)
+        {:ok, updated_moneylog} = moneylog |> MoneyLogs.update_moneylog(%{status: "planning"})
+        do_add_item(updated_moneylog, attrs)
+        _ -> do_add_item(moneylog, attrs)
     end
   end
 
@@ -69,10 +69,10 @@ defmodule Spender.WishList do
   end
 
   @doc false
-  defp do_add_item(budget, attrs) do
+  defp do_add_item(moneylog, attrs) do
     %Item{}
     |> Item.changeset(attrs)
-    |> Changeset.put_assoc(:budget, budget)
+    |> Changeset.put_assoc(:moneylog, moneylog)
     |> Repo.insert()
   end
 end
