@@ -15,7 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :spender, SpenderWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "${HOST}", port: "${PORT}"],
+  url: [host: "mula.co.za", port: "${PORT}"],
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true, # automatically serve the application when it staterts
   root: ".", # use this as the server root
