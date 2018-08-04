@@ -36,7 +36,7 @@ defmodule Spender.Using.ExpenseLogTest do
       logcategories = insert(:logcategory)
       changeset = ExpenseLog.log_changeset(logcategories, @valid_expense)
       assert changeset.valid?
-      assert changeset.changes.logcategory
+      assert changeset.changes.logcategories
     end
 
     test "paymentmethod_changeset will associate expenselog to the paymentmethod id" do
