@@ -6,7 +6,6 @@ defmodule SpenderWeb.Resolvers.Planning do
   """
   alias Spender.{
     MoneyLogs,
-    MoneyLogs.Budget,
     Planning,
     Planning.LogSection,
     WishList,

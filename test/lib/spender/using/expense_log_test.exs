@@ -31,7 +31,7 @@ defmodule Spender.Using.ExpenseLogTest do
       assert changeset.valid?
       assert changeset.changes.budget
     end
-
+    
     test "log_changeset will associate expenselog to logcategory_id" do
       logcategories = insert(:logcategory)
       changeset = ExpenseLog.log_changeset(logcategories, @valid_expense)

@@ -7,6 +7,7 @@ defmodule Spender.Using.ExpenseLog do
   import Ecto.Changeset
 
   alias Spender.{
+
     MoneyLogs.Budget
     Planning.LogCategory,
     Using.ExpenseLog,
@@ -20,6 +21,7 @@ defmodule Spender.Using.ExpenseLog do
   @derive {Phoenix.Param, key: :id}
 
   schema "expenselogs" do
+
     field(:name, :string)
     field(:desc, :string)
     field(:amount, :float)
@@ -27,6 +29,7 @@ defmodule Spender.Using.ExpenseLog do
     belongs_to(:budget, Budget, foreign_key: :budget_id, type: :binary_id)
     belongs_to(:logcategory, LogCategory, foreign_key: :logcategory_id, type: :binary_id)
     belongs_to(:paymentmethod, PaymentMethod, foreign_key: :paymentmethod_id, type: :binary_id)
+
   end
 
   @doc """
@@ -50,7 +53,7 @@ defmodule Spender.Using.ExpenseLog do
     |> ExpenseLog.changeset(attrs)
     |> put_assoc(:budget, budget)
   end
-
+  
   @doc """
   This changeset function takes in a logcategory struct and map containing parameters
   It proceeds to match the parameters in the the map the schema above
@@ -71,5 +74,6 @@ defmodule Spender.Using.ExpenseLog do
     %ExpenseLog{}
     |> ExpenseLog.changeset(attrs)
     |> put_assoc(:paymentmethod, paymentmethod)
+    |> put_assoc(:logcategory, logcategory)
   end
 end
