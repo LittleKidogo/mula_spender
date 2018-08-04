@@ -81,6 +81,10 @@ jobs:
      - run:
         name: Get Dependecies
         command: mix deps.get
+     # SSH KEYS FOR CIRCLE
+     - add_ssh_keys:
+        fingerprints:
+          - "e7:da:d1:bd:71:96:ca:11:28:77:12:29:d8:0a:f4:9a"
      - run:
         name: Make deploy scripts executable
         command: find ci/staging/ -type f -iname "*.sh" -exec chmod +x {} \;
