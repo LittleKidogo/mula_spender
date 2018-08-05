@@ -38,11 +38,11 @@ defmodule Spender.Using.ExpenseLog do
    |> cast(attrs, [:name, :desc, :amount])
    |> validate_required([:name, :amount])
  end
- @spec create_changeset(Budget.t(), map) :: Changeset.t()
- def create_changeset(%Budget{} = budget, attrs) do
+ @spec create_changeset(Moneylog.t(), map) :: Changeset.t()
+ def create_changeset(%Moneylog{} = moneylog, attrs) do
    %ExpenseLog{}
    |> ExpenseLog.changeset(attrs)
-   |> put_assoc(:budget, budget)
+   |> put_assoc(:moneylog, moneylog)
   end
   @spec log_changeset(LogCategory.t(), map) :: Changeset.t()
   def log_changeset(%LogCategory{} = logcategory, attrs \\ %{}) do

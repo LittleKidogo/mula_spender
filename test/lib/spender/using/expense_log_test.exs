@@ -25,14 +25,14 @@ defmodule Spender.Using.ExpenseLogTest do
       refute changeset.valid?
     end
 
-    test "create_changeset will associate the payment method to the budget id" do
-      budget = insert(:budget)
-      changeset = ExpenseLog.create_changeset(budget, @valid_expense)
+    test "create_changeset will associate the payment method to the moneylog id" do
+      moneylog = insert(:moneylog)
+      changeset = ExpenseLog.create_changeset(moneylog, @valid_expense)
       assert changeset.valid?
-      assert changeset.changes.budget
+      assert changeset.changes.moneylog
     end
 
-    test "log_changeset will associate the paymnet method to the budget id" do
+    test "log_changeset will associate the paymnet method to the moneylog id" do
       logcategories = insert(:logcategory)
       changeset = ExpenseLog.log_changeset(logcategories, @valid_expense)
       assert changeset.valid?

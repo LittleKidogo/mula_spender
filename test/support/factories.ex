@@ -37,14 +37,14 @@ defmodule Spender.Factories do
     %Spender.WishList.Item{
       name: sequence(:name, &"item-#{&1}"),
       price: 24.78,
-      budget: build(:budget)
+      moneylog: build(:moneylog)
     }
   end
 
   def log_section_factory do
     %Spender.Planning.LogSection{
       name: sequence(:name, &"section-#{&1}"),
-      budget: build(:budget)
+      moneylog: build(:moneylog)
     }
   end
 
@@ -52,14 +52,14 @@ defmodule Spender.Factories do
     %Spender.Planning.IncomeLog{
       name: sequence(:name, &"income-#{&1}"),
       amount: 5690.90,
-      budget: build(:budget)
+      moneylog: build(:moneylog)
     }
   end
 
   def logcategory_factory do
     %Spender.Planning.LogCategory{
       name: sequence(:name, &"category-#{&1}"),
-      budget: build(:budget)
+      moneylog: build(:moneylog)
     }
   end
 
