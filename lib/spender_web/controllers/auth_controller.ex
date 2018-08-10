@@ -71,10 +71,10 @@ defmodule SpenderWeb.AuthController do
   end
 
   @spec insert_or_update_user(map) :: {:ok, User.t()} | {:error, any()}
-  defp insert_or_update_user(%{email: email} = map) do
+  defp insert_or_update_user(%{email: email} =  map) do
     case Accounts.get_by_email(email) do
       nil ->
-        Accounts.create_user(changeset)
+        Accounts.create_user(map)
 
       user ->
         {:ok, user}
